@@ -4,7 +4,7 @@ include '../Model/Account.php';
 
 $connection = getConnection();
 
-function getAccount($email, $password): bool {
+function checkAccount($email, $password): bool {
     global $connection;
     $cipherPassword = sha1($password);
     $query = "select * from Account where email = '$email' and password = '$cipherPassword'";

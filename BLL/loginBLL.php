@@ -8,7 +8,7 @@ if (isset($_POST["login"])) {
     $email = $_POST["email"];
     $password = $_POST["password"];
 
-    if (getAccount($email, $password)) {
+    if (checkAccount($email, $password)) {
         $_SESSION["didLogin"] = true;
         echo '<script>
         alert("Login succesful")
