@@ -6,27 +6,16 @@
     <title>Document</title>
 </head>
 <?php
+include '../../Common/commonfunction.php';
 session_start();
 
-if (isset($_SESSION["didLogin"])) {
-    if (!$_SESSION["didLogin"]) {
-        header("Location: /QuanLySinhVien/GUI/Login/loginUI.php");
-    }
-} else {
-    header("Location: /QuanLySinhVien/GUI/Login/loginUI.php");
-}
-
-function logout() {
-    $_SESSION["didLogin"] = false;
-    header("Location: /QuanLySinhVien/index.php");
-}
-
+navigateIfNeed('teacher');
 if (isset($_GET["logout"])) {
     logout();
 }
 ?>
 <body>
-    Home
+    Student
     <form method="get">
         <button name="logout">Logout</button>
     </form>

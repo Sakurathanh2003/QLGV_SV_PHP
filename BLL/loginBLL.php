@@ -9,7 +9,11 @@ if (isset($_POST["login"])) {
     $password = $_POST["password"];
 
     if (checkAccount($email, $password)) {
+        $account = getAccount($email);
+
         $_SESSION["didLogin"] = true;
+        $_SESSION["role"] = $account->getRole();
+
         echo '<script>
         alert("Login succesful")
         document.location = "/QuanLySinhVien/index.php"
@@ -21,7 +25,8 @@ if (isset($_POST["login"])) {
         document.location = "/QuanLySinhVien/index.php"
         </script>'; 
     }
-} else {
-    header("Location: /QuanLySinhVien/index.php");
+    return;
 }
+
+header("Location: /QuanLySinhVien/index.php");
 ?>

@@ -12,7 +12,7 @@ session_start();
 
 if (isset($_SESSION["didLogin"])) {
     if ($_SESSION["didLogin"]) {
-        header("Location: /QuanLySinhVien/GUI/Home/home.html");
+        header("Location: /QuanLySinhVien/index.php");
     }
 }
 ?>
