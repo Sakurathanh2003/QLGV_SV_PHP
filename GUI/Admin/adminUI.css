@@ -160,3 +160,12 @@ body {
 .sidebar.active ul li .tooltip {
     display: none;
 }
+
+.content {
+    margin-left: 100px;
+    transition: .5s ease;
+}
+
+.content.active {
+    margin-left: 260px;
+}

@@ -30,32 +30,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <ul class="list">
             <li class="list-item active">
-                <a href="#">
+                <a href="#" onClick="openTab('dashboardTab');">
                     <i class='bx bxs-dashboard' ></i>
                     <span class="links-name">Dashboard</span>
                 </a>
                 <span class="tooltip">Dashboard</span>
             </li>
             <li class="list-item">
-                <a href="#">
-                    <i class='bx bxs-dashboard' ></i>
-                    <span class="links-name">Dashboard</span>
+                <a href="#" onClick="openTab('studentTab');">
+                    <i class='bx bxs-graduation'></i>
+                    <span class="links-name">Student</span>
                 </a>
-                <span class="tooltip">Dashboard</span>
+                <span class="tooltip">Student</span>
             </li>
             <li class="list-item">
-                <a href="#">
-                    <i class='bx bxs-dashboard' ></i>
-                    <span class="links-name">Dashboard</span>
+                <a href="#" onClick="openTab('teacherTab');">
+                    <i class='bx bx-body'></i>
+                    <span class="links-name">Teacher</span>
                 </a>
-                <span class="tooltip">Dashboard</span>
-            </li>
-            <li class="list-item">
-                <a href="#">
-                    <i class='bx bxs-dashboard' ></i>
-                    <span class="links-name">Dashboard</span>
-                </a>
-                <span class="tooltip">Dashboard</span>
+                <span class="tooltip">Teacher</span>
             </li>
         </ul>
 
@@ -69,15 +62,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </li>
             </ul>
         </form>
-        <script>
-            function login() {
-                document.getElementById('logoutForm').submit();
-            }
-        </script>
     </div>
-
     <!--Content-->
+    <div class="content">
+        <div class="header">
+            Xin chao
+        </div>
+        <div id="dashboardTab" class="tab">
+            <?php
+                include "../Admin/Tab/dashboardTabUI.php";
+            ?>
+        </div>
+        
+        <div id="studentTab" class="tab" style="display: none">
+            <?php
+                include "../Admin/Tab/studentTabUI.php";
+            ?>
+        </div>
 
+        <div id= "teacherTab" class="tab" style="display: none">
+            <?php
+                 include "../Admin/Tab/teacherTabUI.php";
+            ?>
+        </div>
+    </div>
     <script src="adminUI.js"></script>
 </body>
 </html>
