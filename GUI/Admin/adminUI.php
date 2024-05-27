@@ -1,6 +1,6 @@
 <?php
-require '../../BLL/adminBLL.php';
-require '../../Common/commonfunction.php';
+require_once '../../BLL/adminBLL.php';
+require_once '../../Common/commonfunction.php';
 
 navigateIfNeed('admin');
 
@@ -15,8 +15,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="adminUI.css">
 </head>
-<link rel="stylesheet" href="adminUI.css">
 <body>
     <!--Left side bar-->
     <div class="sidebar">
@@ -29,20 +29,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
 
         <ul class="list">
-            <li class="list-item active">
-                <a href="#" onClick="openTab('dashboardTab');">
+            <li
+                <?php 
+                    if ($_SESSION["currentTab"] != "DashboardTab") {
+                        echo 'class="list-item"';
+                    } else {
+                        echo 'class="list-item active"';
+                    }
+                ?>
+            >
+                <a href="#Dashboard" onClick="openTab('dashboardTab');">
                     <i class='bx bxs-dashboard' ></i>
                     <span class="links-name">Dashboard</span>
                 </a>
             </li>
-            <li class="list-item">
-                <a href="#" onClick="openTab('studentTab');">
+            <li
+                <?php 
+                    if ($_SESSION["currentTab"] != "StudentTab") {
+                        echo 'class="list-item"';
+                    } else {
+                        echo 'class="list-item active"';
+                    }
+                ?>
+            >
+                <a href="#Student" onClick="openTab('studentTab');">
                     <i class='bx bxs-graduation'></i>
                     <span class="links-name">Student</span>
                 </a>
             </li>
-            <li class="list-item">
-                <a href="#" onClick="openTab('teacherTab');">
+            <li
+                <?php 
+                    if ($_SESSION["currentTab"] != "TeacherTab") {
+                        echo 'class="list-item"';
+                    } else {
+                        echo 'class="list-item active"';
+                    }
+                ?>
+            >
+                <a href="#Teacher" onClick="openTab('teacherTab');">
                     <i class='bx bx-body'></i>
                     <span class="links-name">Teacher</span>
                 </a>
@@ -67,19 +91,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <?php include "nav.php";?>
         
         <!--TAB-->
-        <div id="dashboardTab" class="tab">
+        <div id="dashboardTab" class="tab" 
+            <?php 
+                if ($_SESSION["currentTab"] != "DashboardTab") {
+                    echo 'style="display: none"';
+                }
+            ?>
+        >
             <?php
                 include "../Admin/Tab/dashboardTabUI.php";
             ?>
         </div>
         
-        <div id="studentTab" class="tab" style="display: none">
+        <div id="studentTab" class="tab" 
+            <?php 
+                if ($_SESSION["currentTab"] != "StudentTab") {
+                    echo 'style="display: none"';
+                }
+            ?>
+        >
             <?php
                 include "../Admin/Tab/studentTabUI.php";
             ?>
         </div>
 
-        <div id= "teacherTab" class="tab" style="display: none">
+        <div id= "teacherTab" class="tab"
+            <?php 
+                if ($_SESSION["currentTab"] != "TeacherTab") {
+                    echo 'style="display: none"';
+                }
+            ?>
+        >
             <?php
                  include "../Admin/Tab/teacherTabUI.php";
             ?>

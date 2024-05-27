@@ -3,7 +3,11 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-include($_SERVER['DOCUMENT_ROOT'].'/QuanLySinhVien/Model/Teacher.php');
+try {
+    require_once 'ConnectDB.php';
+    include($_SERVER['DOCUMENT_ROOT'].'/QuanLySinhVien/Model/Teacher.php');
+} catch (Exception $e) {
+}
 
 function getAllTeachers() {
     $connection = getConnection();
@@ -19,6 +23,18 @@ function getAllTeachers() {
         }
     }
 
+    $connection->close();
     return $teachers;
+}
+
+function addTeacher($name, $email, $gender,$address, $phoneNumber, $birthDay) {
+    $connection = getConnection();
+    $query = 'insert into Teacher(name, email, gender, address, phoneNumber, birthday) VALUES (?,?,?,?,?,?)';
+    $stmp = $connection->prepare($query);
+    $stmp->bind_param("ssisss", $name, $email, $gender, $address, $phoneNumber, $birthDay);
+    $stmp->execute();
+
+    $stmp->close();
+    $connection->close();
 }
 ?>

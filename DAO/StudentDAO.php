@@ -3,8 +3,11 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-include 'ConnectDB.php';
-include($_SERVER['DOCUMENT_ROOT'].'/QuanLySinhVien/Model/Student.php');
+try {
+    require_once 'ConnectDB.php';
+    include($_SERVER['DOCUMENT_ROOT'].'/QuanLySinhVien/Model/Student.php');
+} catch (Exception $e) {
+}
 
 function getAllStudents() {
     $connection = getConnection();
@@ -19,7 +22,7 @@ function getAllStudents() {
             array_push($teachers, $item);
         }
     }
-
+    $connection->close();
     return $teachers;
 }
 ?>

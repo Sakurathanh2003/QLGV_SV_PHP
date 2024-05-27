@@ -9,6 +9,7 @@
 .top .card {
     background-color: white;
     border-radius: 20px;
+    border: 1px solid black;
     width: calc((100% - 20px * 5) / 4);
     height: 130px;
     padding: 25px;

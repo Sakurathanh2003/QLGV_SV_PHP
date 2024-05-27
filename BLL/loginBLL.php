@@ -18,6 +18,7 @@ if (isset($_POST["login"])) {
         $_SESSION["didLogin"] = true;
         $_SESSION["role"] = $account->getRole();
         $_SESSION["name"] = $account->getName();
+        $_SESSION["currentTab"] = "DashboardTab";
 
         echo '<script>
         alert("Login succesful")
