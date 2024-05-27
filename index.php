@@ -1,4 +1,6 @@
 <?php
+include "./DAO/ConnectDB.php";
+
 session_start();
 
 if (isset($_SESSION["didLogin"])) {

@@ -1,6 +1,6 @@
 <?php
-include '../../Common/commonfunction.php';
-session_start();
+require '../../BLL/adminBLL.php';
+require '../../Common/commonfunction.php';
 
 navigateIfNeed('admin');
 
@@ -14,9 +14,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin</title>
-    <link rel="stylesheet" href="adminUI.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
+<link rel="stylesheet" href="adminUI.css">
 <body>
     <!--Left side bar-->
     <div class="sidebar">
@@ -34,21 +34,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <i class='bx bxs-dashboard' ></i>
                     <span class="links-name">Dashboard</span>
                 </a>
-                <span class="tooltip">Dashboard</span>
             </li>
             <li class="list-item">
                 <a href="#" onClick="openTab('studentTab');">
                     <i class='bx bxs-graduation'></i>
                     <span class="links-name">Student</span>
                 </a>
-                <span class="tooltip">Student</span>
             </li>
             <li class="list-item">
                 <a href="#" onClick="openTab('teacherTab');">
                     <i class='bx bx-body'></i>
                     <span class="links-name">Teacher</span>
                 </a>
-                <span class="tooltip">Teacher</span>
             </li>
         </ul>
 
@@ -63,11 +60,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </ul>
         </form>
     </div>
+
     <!--Content-->
     <div class="content">
-        <div class="header">
-            Xin chao
-        </div>
+        <!--Navigation bar-->
+        <?php include "nav.php";?>
+        
+        <!--TAB-->
         <div id="dashboardTab" class="tab">
             <?php
                 include "../Admin/Tab/dashboardTabUI.php";

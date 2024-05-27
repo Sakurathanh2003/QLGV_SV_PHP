@@ -1,16 +1,11 @@
 <?php
-    $localhost = "localhost";
-    $username = "root";
-    $password = "";
-    $database = "qlsv";
     function getConnection() {
-        global $localhost, $username, $password, $database;
-        $conn = new mysqli($localhost, $username, $password, $database);
-        
-        if ($conn->connect_error) {
-            die("". $conn->connect_error);
-        }
-        
+        $localhost = "localhost";
+        $username = "root";
+        $password = "";
+        $database = "qlsv";
+
+        $conn = mysqli_connect($localhost,$username,$password,$database);
         return $conn;
     }
 ?>

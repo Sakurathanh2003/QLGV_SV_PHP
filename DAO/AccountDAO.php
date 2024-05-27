@@ -1,11 +1,13 @@
 <?php
-include '../DAO/ConnectDB.php';
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+include 'ConnectDB.php';
 include '../Model/Account.php';
 
-$connection = getConnection();
-
 function checkAccount($email, $password): bool {
-    global $connection;
+    $connection = getConnection();
     $cipherPassword = sha1($password);
     $query = "select * from Account where email = '$email' and password = '$cipherPassword'";
     $result = $connection->query($query);
@@ -20,7 +22,7 @@ function checkAccount($email, $password): bool {
 }
 
 function getAccount($email) {
-    global $connection;
+    $connection = getConnection();
     $query = "select * from Account where email = '$email'";
     $result = $connection->query($query);
     

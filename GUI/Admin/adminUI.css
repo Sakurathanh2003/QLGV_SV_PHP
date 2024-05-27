@@ -9,11 +9,12 @@
 
 body {
     min-height: 100vh;
-    background: pink no-repeat;
+    background: white no-repeat;
     background-size: cover;
     background-position: center;
 }
 
+/* SIDE BAR */
 .sidebar {
     position: fixed;
     top: 0;
@@ -161,11 +162,15 @@ body {
     display: none;
 }
 
+/* CONTENT */
 .content {
-    margin-left: 100px;
+    position: relative;
+    width: calc(100% - 80px);
+    left: 80px;
     transition: .5s ease;
 }
 
 .content.active {
-    margin-left: 260px;
+    width: calc(100% - 240px);
+    left: 240px;
 }
