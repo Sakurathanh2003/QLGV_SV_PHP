@@ -1,20 +1,14 @@
 <?php
 class Account {
-    public $id;
     public $name;
     public $email;
     public $password;
     public $role;
-    public function __construct($id, $name, $email, $password, $role) {
-        $this->id = $id;
+    public function __construct($name, $email, $password, $role) {
         $this->name = $name;
         $this->email = $email;
         $this->password = $password;
         $this->role = $role;
-    }
-
-    public function getId() {
-        return $this->id;
     }
 
     public function getName() {

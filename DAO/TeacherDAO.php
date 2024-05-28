@@ -37,4 +37,29 @@ function addTeacher($name, $email, $gender,$address, $phoneNumber, $birthDay) {
     $stmp->close();
     $connection->close();
 }
+
+function removeTeacher($id) {
+    $connection = getConnection();
+    $query = 'delete from Teacher where id = ?';
+    $stmp = $connection->prepare($query);
+    $stmp->bind_param("i", $id);
+    $stmp->execute();
+
+    $stmp->close();
+    $connection->close();
+}
+
+function getTeacherBy($id) {
+    $connection = getConnection();
+    $query = 'select * from Teacher where id = '.$id;
+    $result = $connection->query($query);
+    $connection->close();
+    
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $item = new Teacher($row["id"], $row["name"], $row["email"], $row["gender"], $row["address"], $row["phoneNumber"], $row["birthday"]);
+            return $item;
+        }
+    }
+}
 ?>

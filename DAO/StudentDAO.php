@@ -14,16 +14,16 @@ function getAllStudents() {
     $query = "select * from Student";
 
     $result = $connection->query($query);
-    $teachers = [];
+    $students = [];
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-            $item = new Teacher($row["id"], $row["name"], $row["email"], $row["gender"], $row["address"], $row["phoneNumber"], $row["birthday"]);
-            array_push($teachers, $item);
+            $item = new Student($row["id"], $row["name"], $row["email"], $row["gender"], $row["address"], $row["phoneNumber"], $row["birthday"]);
+            array_push($students, $item);
         }
     }
     $connection->close();
-    return $teachers;
+    return $students;
 }
 
 function addStudent($name, $email, $gender,$address, $phoneNumber, $birthDay) {
@@ -35,5 +35,29 @@ function addStudent($name, $email, $gender,$address, $phoneNumber, $birthDay) {
 
     $stmp->close();
     $connection->close();
+}
+
+function removeStudent($id) {
+    $connection = getConnection();
+    $query = 'delete from Student where id = ?';
+    $stmp = $connection->prepare($query);
+    $stmp->bind_param("i", $id);
+    $stmp->execute();
+
+    $stmp->close();
+    $connection->close();
+}
+
+function getStudentBy($id) {
+    $connection = getConnection();
+    $query = 'select * from Student where id = '.$id;
+    $result = $connection->query($query);
+    $connection->close();
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $item = new Student($row["id"], $row["name"], $row["email"], $row["gender"], $row["address"], $row["phoneNumber"], $row["birthday"]);
+            return $item;
+        }
+    }
 }
 ?>

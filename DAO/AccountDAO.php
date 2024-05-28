@@ -33,7 +33,7 @@ function getAccount($email) {
     
     if ($result->num_rows == 1) {
         $row = $result->fetch_assoc();
-        $item = new Account($row["id"], $row["name"], $row["email"], $row["password"], $row["role"]);
+        $item = new Account($row["name"], $row["email"], $row["password"], $row["role"]);
         $connection->close();
         return $item;
     }
@@ -51,4 +51,15 @@ function addAccount($name,$email,$password,$role) {
     $stmp->close();
     $connection->close();
 }
+
+function removeAccount($email) {
+    $connection = getConnection();
+    $query = 'delete from Account where email = ?';
+    $stmp = $connection->prepare($query);
+    $stmp->bind_param("s", $email);
+    $stmp->execute();
+
+    $stmp->close();
+    $connection->close();
+} 
 ?>

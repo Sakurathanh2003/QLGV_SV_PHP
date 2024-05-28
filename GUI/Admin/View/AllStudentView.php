@@ -5,15 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-
 </head>
 <?php
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-
-session_start();
 require_once '../../../BLL/adminBLL.php';
+
 ?>
 <style>
 .teacherTable {
@@ -82,8 +80,15 @@ tr:not(:last-child) td{
                         <td>'.$student->get_phoneNumber().'</td>
                         <td>'.$student->get_birthDay().'</td>
                         <td>
-                            <i class="bx bxs-edit-alt bx-sm" style="color: blue;" ></i>
-                            <i class="bx bx-trash bx-sm" style="color: red;"></i>
+                            <form action="DetailStudentView.php" method="get">
+                            <input  type="hidden"
+                                    name="id"
+                                    value="'.$student->get_id().'">
+
+                            <button type="submit">
+                                <i class="bx bxs-edit-alt bx-sm" style="color: blue;" ></i>
+                            </button>
+                        </form>
                         </td>
                     </tr>
                     ';

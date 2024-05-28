@@ -15,7 +15,7 @@ function navigateIfNeed($role) {
     }
 }
 function logout() {
-    $_SESSION["didLogin"] = false;
+    session_unset();
     header("Location: /QuanLySinhVien/index.php");
 }
 ?>

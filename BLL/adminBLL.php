@@ -3,6 +3,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+include($_SERVER['DOCUMENT_ROOT'].'/QuanLySinhVien/Common/commonfunction.php');
 include($_SERVER['DOCUMENT_ROOT'].'/QuanLySinhVien/DAO/AccountDAO.php');
 include($_SERVER['DOCUMENT_ROOT'].'/QuanLySinhVien/DAO/TeacherDAO.php');
 include($_SERVER['DOCUMENT_ROOT'].'/QuanLySinhVien/DAO/StudentDAO.php');
@@ -34,6 +35,26 @@ function allTeachers() {
 
 function allStudent() {
     return getAllStudents();
+}
+
+function deleteStudent($id) {
+    $student = getStudentBy($id);
+    removeStudent($id);
+    removeAccount($student->get_email());
+}
+
+function deleteTeacher($id) {
+    $teacher = getTeacherBy($id);
+    removeTeacher($id);
+    removeAccount($teacher->get_email());
+}
+
+function studentByID($id) {
+    return getStudentBy($id);
+}
+
+function teacherByID($id) {
+    return getTeacherBy($id);
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

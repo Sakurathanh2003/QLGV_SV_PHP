@@ -1,12 +1,12 @@
 <?php
 require_once '../../BLL/adminBLL.php';
-require_once '../../Common/commonfunction.php';
 
 navigateIfNeed('admin');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     logout();
 } 
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
