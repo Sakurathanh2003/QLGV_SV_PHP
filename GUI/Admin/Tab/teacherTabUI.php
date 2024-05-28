@@ -87,13 +87,9 @@
 
 .teacherTable tr {
     height: 40px;
-    border-top: 1px solid black;
-    
+    border-bottom: 1px solid black;
 }
 
-tr:not(:last-child) td{
-  border-bottom: 1px solid gray;
-}
 </style>
 <script>
     function viewAllTeacher() {
@@ -110,10 +106,10 @@ tr:not(:last-child) td{
         <div class="main">
             <table class="teacherTable">
                 <tr>
-                    <th>TeacherID</th>
-                    <th>Teacher's name</th>
-                    <th>Teacher's email</th>
-                    <th>Phone Number</th>
+                    <th style="text-align: center; border-radius: 10px 0px 0px 0px;">TeacherID</th>
+                    <th style="text-align: center;">Teacher's name</th>
+                    <th style="text-align: center;">Teacher's email</th>
+                    <th style="text-align: center; border-radius: 0px 10px 0px 0px;">Phone Number</th>
                 </tr>
                 <?php
                     $teachers = allTeachers();

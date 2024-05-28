@@ -8,39 +8,22 @@ include($_SERVER['DOCUMENT_ROOT'].'/QuanLySinhVien/DAO/AccountDAO.php');
 include($_SERVER['DOCUMENT_ROOT'].'/QuanLySinhVien/DAO/TeacherDAO.php');
 include($_SERVER['DOCUMENT_ROOT'].'/QuanLySinhVien/DAO/StudentDAO.php');
 include($_SERVER['DOCUMENT_ROOT'].'/QuanLySinhVien/DAO/ClassDAO.php');
+include($_SERVER['DOCUMENT_ROOT'].'/QuanLySinhVien/DAO/ClassDetailDAO.php');
+
 
 function getName() {
     $name = $_SESSION["name"];
     return $name;
 }
 
+// MARK: - Teacher
 function numberOfTeachers() {
     $teachers = getAllTeachers();
     return count($teachers);
 }
 
-function numberOfStudents() {
-    $students = getAllStudents();
-    return count($students);
-}
-
-function numberOfClasses() {
-    $classes = getAllClasses();
-    return count($classes);
-}
-
 function allTeachers() {
     return getAllTeachers();
-}
-
-function allStudent() {
-    return getAllStudents();
-}
-
-function deleteStudent($id) {
-    $student = getStudentBy($id);
-    removeStudent($id);
-    removeAccount($student->get_email());
 }
 
 function deleteTeacher($id) {
@@ -49,12 +32,43 @@ function deleteTeacher($id) {
     removeAccount($teacher->get_email());
 }
 
+function teacherByID($id) {
+    return getTeacherBy($id);
+}
+
+// MARK: - Student
+function numberOfStudents() {
+    $students = getAllStudents();
+    return count($students);
+}
+
+function allStudent() {
+    return getAllStudents();
+}
+
 function studentByID($id) {
     return getStudentBy($id);
 }
 
-function teacherByID($id) {
-    return getTeacherBy($id);
+function deleteStudent($id) {
+    $student = getStudentBy($id);
+    removeStudent($id);
+    removeAccount($student->get_email());
+}
+
+// MARK: - Class
+function numberOfClasses() {
+    $classes = getAllClasses();
+    return count($classes);
+}
+
+function allClasses() {
+    return getAllClasses();
+}
+
+function numberOfStudentInClass($classID) {
+    $list = getClassDetail($classID);
+    return count($list);
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -68,9 +82,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $teacherPassword = $_POST['teacherPassword'] ?? '';
         $_SESSION["currentTab"] = "TeacherTab";
 
-        addAccount($teacherName, $teacherEmail, $teacherPassword, "teacher");
-        addTeacher($teacherName, $teacherEmail, $teacherGender, $teacherAddress, $teacherPhoneNumber, $teacherBirthday);
-        header("Location: /QuanLySinhVien/index.php");
+        try {
+            addAccount($teacherName, $teacherEmail, $teacherPassword, "teacher");
+            addTeacher($teacherName, $teacherEmail, $teacherGender, $teacherAddress, $teacherPhoneNumber, $teacherBirthday);
+            header("Location: /QuanLySinhVien/index.php");
+        } catch (Exception $e) {
+            echo '<script>
+            alert("'.$e->getMessage().'")
+            document.location = "/QuanLySinhVien/index.php"
+            </script>';
+        }
     }
 
     if (isset($_POST["addStudentForm"])) {
@@ -83,9 +104,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $studentPassword = $_POST['studentPassword'] ?? '';
         $_SESSION["currentTab"] = "StudentTab";
 
-        addAccount($studentName, $studentEmail, $studentPassword, "student");
-        addStudent($studentName, $studentEmail, $studentGender, $studentAddress, $studentPhoneNumber, $studentBirthday);
-        header("Location: /QuanLySinhVien/index.php");
+        try {
+            addAccount($studentName, $studentEmail, $studentPassword, "student");
+            addStudent($studentName, $studentEmail, $studentGender, $studentAddress, $studentPhoneNumber, $studentBirthday);
+            header("Location: /QuanLySinhVien/index.php");
+        } catch (Exception $e) {
+            echo '<script>
+            alert("'.$e->getMessage().'")
+            document.location = "/QuanLySinhVien/index.php"
+            </script>';
+        }
+    }
+
+    if (isset($_POST["addClassForm"])) {
+        $className = $_POST['className'] ?? '';
+        $teacherID = $_POST['teacherID'] ?? '';
+        $_SESSION["currentTab"] = "ClassTab";
+
+        // try {
+        //     addClass($className, $teacherID);
+        //     header("Location: /QuanLySinhVien/index.php");
+        // } catch (Exception $e) {
+        //     echo '<script>
+        //     alert("'.$e->getMessage().'")
+        //     document.location = "/QuanLySinhVien/index.php"
+        //     </script>';
+        // }
     }
 }
 ?>

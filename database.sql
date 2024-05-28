@@ -36,11 +36,15 @@ create table if not exists Student(
 create table if not exists Class(
     id int(11) not null AUTO_INCREMENT primary key,
     name longtext not null,
-    teacherID int(11) not null
+    teacherID int(11) not null,
+    foreign key(teacherID) references Teacher(id)
 );
 
 create table if not exists ClassDetail(
+    id int(11) not null AUTO_INCREMENT primary key,
     classID int(11) not null,
     teacherID int(11) not null,
-    studentID int(11) not null
+    studentID int(11) not null,
+    foreign key(teacherID) references Teacher(id),
+    foreign key(studentID) references Student(id)
 );

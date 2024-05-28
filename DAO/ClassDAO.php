@@ -15,10 +15,46 @@ function getAllClasses() {
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             $class = new SchoolClass($row["id"], $row["name"], $row["teacherID"]);
-            array_push($teachers, $class);
+            array_push($classes, $class);
         }
     }
 
     return $classes;
+}
+
+function addClass($name, $teacherID) {
+    $connection = getConnection();
+    $query = 'insert into Class(name, teacherID) VALUES (?,?)';
+    $stmp = $connection->prepare($query);
+    $stmp->bind_param("si", $name, $teacherID);
+    $stmp->execute();
+
+    $stmp->close();
+    $connection->close();
+}
+
+function removeClass($id) {
+    $connection = getConnection();
+    $query = 'delete from Class where id = ?';
+    $stmp = $connection->prepare($query);
+    $stmp->bind_param("i", $id);
+    $stmp->execute();
+
+    $stmp->close();
+    $connection->close();
+}
+
+function getClassBy($id) {
+    $connection = getConnection();
+    $query = 'select * from Class where id = '.$id;
+    $result = $connection->query($query);
+    $connection->close();
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $item = new SchoolClass($row["id"], $row["name"], $row["teacherID"]);
+            return $item;
+        }
+    }
 }
 ?>

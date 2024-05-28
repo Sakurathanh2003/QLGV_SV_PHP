@@ -42,14 +42,23 @@ function getAccount($email) {
 function addAccount($name,$email,$password,$role) {
     $connection = getConnection();
     $query = "insert into Account(name, email, password, role) values (?,?,?,?)";
-    $stmp = $connection->prepare($query);
-    $newPassword = sha1($password);
-
-    $stmp->bind_param("ssss", $name, $email, $newPassword, $role);
-    $stmp->execute();
-
-    $stmp->close();
-    $connection->close();
+    
+    try {
+        $stmp = $connection->prepare($query);
+        $newPassword = sha1($password);
+        $stmp->bind_param("ssss", $name, $email, $newPassword, $role);
+        $stmp->execute();
+        $stmp->close();
+    } catch (mysqli_sql_exception $e) {
+        if ($e->getCode() == 1062) {
+            // Duplicate entry error code
+            throw new Exception("Duplicate entry '$email' for key 'PRIMARY'");
+        } else {
+            throw $e; // Re-throw if it's a different error
+        }
+    } finally {
+        $connection->close();
+    }
 }
 
 function removeAccount($email) {

@@ -5,14 +5,14 @@
     font-family: 'Poppins';
 }
 
-.teacherTabContent {
+.studentTabContent {
     display: flex;
     align-items: top;
     justify-content: space-between;
     padding: 20px;
 }
 
-.teacherTabContent .table {
+.studentTabContent .table {
     border: 1px solid black;
     border-radius: 20px;
     width: calc((100% - 40px) / 6 * 4);
@@ -21,7 +21,7 @@
     padding: 10px;
 }
 
-.teacherTabContent .addView {
+.studentTabContent .addView {
     border: 1px solid black;
     border-radius: 20px;
     width: calc((100% - 40px) / 6 * 2);
@@ -73,20 +73,20 @@
 }
 
 /* TABLE */
-.teacherTable {
+.studentTable {
     width: 100%;
     height: 100%;
     border-collapse: collapse;
 }
 
-.teacherTable th {
+.studentTable th {
     text-align: left;
     background-color: black;
     color: white;
     min-width: 20px;
 }
 
-.teacherTable tr {
+.studentTable tr {
     height: 40px;
     border-top: 1px solid black;
     
@@ -101,7 +101,7 @@ tr:not(:last-child) td{
         window.location.href = "../Admin/View/AllStudentView.php";
     }
 </script>
-<div class="teacherTabContent">
+<div class="studentTabContent">
     <div class="addView">
         <p class="headerTitle">Add Student</p>
 
@@ -144,7 +144,7 @@ tr:not(:last-child) td{
         </div>
 
         <div class="main">
-            <table class="teacherTable">
+            <table class="studentTable">
                 <tr>
                     <th>StudentID</th>
                     <th>Student's name</th>

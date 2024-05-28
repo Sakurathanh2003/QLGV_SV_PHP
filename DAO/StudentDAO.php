@@ -8,7 +8,6 @@ try {
     include($_SERVER['DOCUMENT_ROOT'].'/QuanLySinhVien/Model/Student.php');
 } catch (Exception $e) {
 }
-
 function getAllStudents() {
     $connection = getConnection();
     $query = "select * from Student";
