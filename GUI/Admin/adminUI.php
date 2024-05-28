@@ -71,6 +71,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <span class="links-name">Teacher</span>
                 </a>
             </li>
+            <li
+                <?php 
+                    if ($_SESSION["currentTab"] != "ClassTab") {
+                        echo 'class="list-item"';
+                    } else {
+                        echo 'class="list-item active"';
+                    }
+                ?>
+            >
+                <a href="#Class" onClick="openTab('classTab');">
+                    <i class='bx bx-door-open'></i>
+                    <span class="links-name">Class</span>
+                </a>
+            </li>
         </ul>
 
         <form action="" method="post" id="logoutForm">
@@ -124,6 +138,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         >
             <?php
                  include "../Admin/Tab/teacherTabUI.php";
+            ?>
+        </div>
+
+        <div id= "classTab" class="tab"
+            <?php 
+                if ($_SESSION["currentTab"] != "ClassTab") {
+                    echo 'style="display: none"';
+                }
+            ?>
+        >
+            <?php
+                 include "../Admin/Tab/classTabUI.php";
             ?>
         </div>
     </div>

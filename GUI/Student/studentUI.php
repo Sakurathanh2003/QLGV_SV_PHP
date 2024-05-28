@@ -6,10 +6,13 @@
     <title>Document</title>
 </head>
 <?php
-include '../../Common/commonfunction.php';
-session_start();
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
-navigateIfNeed('teacher');
+include '../../Common/commonfunction.php';
+
+navigateIfNeed('student');
 if (isset($_GET["logout"])) {
     logout();
 }

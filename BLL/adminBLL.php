@@ -31,4 +31,40 @@ function numberOfClasses() {
 function allTeachers() {
     return getAllTeachers();
 }
+
+function allStudent() {
+    return getAllStudents();
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST["addTeacherForm"])) {
+        $teacherName = $_POST['teacherName'] ?? '';
+        $teacherEmail = $_POST['teacherEmail'] ?? '';
+        $teacherGender = $_POST['teacherGender'] ?? '';
+        $teacherAddress = $_POST['teacherAddress'] ?? '';
+        $teacherPhoneNumber = $_POST['teacherPhoneNumber'] ?? '';
+        $teacherBirthday = $_POST['teacherBirthday'] ?? '';
+        $teacherPassword = $_POST['teacherPassword'] ?? '';
+        $_SESSION["currentTab"] = "TeacherTab";
+
+        addAccount($teacherName, $teacherEmail, $teacherPassword, "teacher");
+        addTeacher($teacherName, $teacherEmail, $teacherGender, $teacherAddress, $teacherPhoneNumber, $teacherBirthday);
+        header("Location: /QuanLySinhVien/index.php");
+    }
+
+    if (isset($_POST["addStudentForm"])) {
+        $studentName = $_POST['studentName'] ?? '';
+        $studentEmail = $_POST['studentEmail'] ?? '';
+        $studentGender = $_POST['studentGender'] ?? '';
+        $studentAddress = $_POST['studentAddress'] ?? '';
+        $studentPhoneNumber = $_POST['studentPhoneNumber'] ?? '';
+        $studentBirthday = $_POST['studentBirthday'] ?? '';
+        $studentPassword = $_POST['studentPassword'] ?? '';
+        $_SESSION["currentTab"] = "StudentTab";
+
+        addAccount($studentName, $studentEmail, $studentPassword, "student");
+        addStudent($studentName, $studentEmail, $studentGender, $studentAddress, $studentPhoneNumber, $studentBirthday);
+        header("Location: /QuanLySinhVien/index.php");
+    }
+}
 ?>

@@ -39,7 +39,6 @@ create table if not exists Class(
 );
 
 create table if not exists ClassDetail(
-    id int(11) not null AUTO_INCREMENT primary key,
     classID int(11) not null,
     teacherID int(11) not null,
     studentID int(11) not null

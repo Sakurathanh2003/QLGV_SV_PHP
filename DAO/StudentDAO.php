@@ -25,4 +25,15 @@ function getAllStudents() {
     $connection->close();
     return $teachers;
 }
+
+function addStudent($name, $email, $gender,$address, $phoneNumber, $birthDay) {
+    $connection = getConnection();
+    $query = 'insert into Student(name, email, gender, address, phoneNumber, birthday) VALUES (?,?,?,?,?,?)';
+    $stmp = $connection->prepare($query);
+    $stmp->bind_param("ssisss", $name, $email, $gender, $address, $phoneNumber, $birthDay);
+    $stmp->execute();
+
+    $stmp->close();
+    $connection->close();
+}
 ?>

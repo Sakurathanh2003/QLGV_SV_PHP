@@ -96,15 +96,15 @@ tr:not(:last-child) td{
 }
 </style>
 <script>
-    function viewAll() {
-        window.location.href = "../Admin/Tab/TeacherViewAllUI.php";
+    function viewAllTeacher() {
+        window.location.href = "../Admin/View/AllTeacherView.php";
     }
 </script>
 <div class="teacherTabContent">
     <div class="table">
         <div class="tableHeader">
             <p class="headerTitle">Teachers</p>
-            <button class="viewAllBtn" onclick="viewAll();">View All</button>
+            <button class="viewAllBtn" onclick="viewAllTeacher();">View All</button>
         </div>
 
         <div class="main">
@@ -136,7 +136,8 @@ tr:not(:last-child) td{
         <p class="headerTitle">Add Teachers</p>
 
         <div class="main">
-            <form action="/QuanLySinhVien/GUI/Admin/Tab/TeacherTabBLL.php" method="POST">
+            <form action="/QuanLySinhVien/BLL/adminBLL.php" method="POST">
+                <input type="hidden" name="addTeacherForm" value="yes" >
                 <p class="fieldName">Teacher Name</p>
                 <input type="text" class="textField" name="teacherName" placeholder="Enter teacher's name" required>
                 <p class="fieldName">Email</p>
