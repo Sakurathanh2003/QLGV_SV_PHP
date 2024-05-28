@@ -1,4 +1,10 @@
 <style>
+@import url("https://fonts.googleapis.com/css?family=Poppins");
+
+* {
+    font-family: 'Poppins';
+}
+
 .teacherTabContent {
     display: flex;
     align-items: top;
@@ -89,13 +95,17 @@ tr:not(:last-child) td{
   border-bottom: 1px solid gray;
 }
 </style>
+<script>
+    function viewAll() {
+        window.location.href = "../Admin/Tab/TeacherViewAllUI.php";
+    }
+</script>
 <div class="teacherTabContent">
     <div class="table">
         <div class="tableHeader">
             <p class="headerTitle">Teachers</p>
-            <button class="viewAllBtn">View All</button>
+            <button class="viewAllBtn" onclick="viewAll();">View All</button>
         </div>
-        
 
         <div class="main">
             <table class="teacherTable">
