@@ -43,24 +43,34 @@ function getClassDetail($classID) {
 // MARK: - Set
 function removeStudentInClass($classID, $studentID) {
     $connection = getConnection();
-    $query = 'delete from Class ClassDetail where classID = ? and studentID = ?';
-    $stmp = $connection->prepare($query);
-    $stmp->bind_param("ii", $classID, $studentID);
-    $stmp->execute();
-
-    $stmp->close();
-    $connection->close();
+    $query = 'delete from ClassDetail where classID = ? and studentID = ?';
+    
+    try {
+        $stmp = $connection->prepare($query);
+        $stmp->bind_param("ii", $classID, $studentID);
+        $stmp->execute();
+        $stmp->close();
+    } catch (mysqli_sql_exception $e) {
+        throw $e;
+    } finally {
+        $connection->close();
+    }
 }
 
 function removeClassDetailWithClassID($classID) {
     $connection = getConnection();
-    $query = 'delete from Class ClassDetail where classID = ?';
-    $stmp = $connection->prepare($query);
-    $stmp->bind_param("i", $classID);
-    $stmp->execute();
-
-    $stmp->close();
-    $connection->close();
+    $query = 'delete from ClassDetail where classID = ?';
+    
+    try {
+        $stmp = $connection->prepare($query);
+        $stmp->bind_param("i", $classID);
+        $stmp->execute();
+        $stmp->close();
+    } catch (mysqli_sql_exception $e) {
+        throw $e;
+    } finally {
+        $connection->close();
+    }
 }
 
 // function addClass($name, $teacherID) {

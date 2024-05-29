@@ -6,34 +6,6 @@
     <title>Document</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
-<?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-require_once '../../../BLL/adminBLL.php';
-
-$class = new SchoolClass("", "", "");
-
-if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    $id = $_GET["id"];
-    $class = classByID($id);
-}
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Delete class
-    if (isset($_POST["deleteBtn"])) {
-        $id = $_POST["id"];
-        deleteClass($id);
-        header("Location: /QuanLySinhVien/GUI/Admin/View/AllClassView.php");
-    }
-
-    // Delete Student in class 
-    if (isset($_POST["removeStudent"])) {
-        $id = $_POST["id"];
-        deleteStudentInClass($class->getId(), $id);
-    }
-}
-?>
 <style>
 @import url("https://fonts.googleapis.com/css?family=Poppins");
 
@@ -56,6 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 .main {
     padding-left: 60px;
+    padding-right: 60px;
     padding-top: 10px;
 }
 
@@ -118,6 +91,44 @@ tr:not(:last-child) td{
 td {
     text-align: center;
 }
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+require_once '../../../BLL/adminBLL.php';
+
+$class = new SchoolClass("", "", "");
+
+if ($_SERVER["REQUEST_METHOD"] == "GET") {
+    echo "get";
+    $id = $_GET["id"];
+    $class = classByID($id);
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $classID = $_POST["classID"];
+    $class = classByID($classID);
+
+    // Delete class
+    if (isset($_POST["deleteBtn"])) {
+        deleteClass($classID);
+        header("Location: /QuanLySinhVien/GUI/Admin/View/AllClassView.php");
+    }
+
+    // Delete Student in class 
+    if (isset($_POST["removeStudent"])) {
+        $studentID = $_POST["studentID"];
+        deleteStudentInClass($class->getId(), $studentID);
+    }
+
+    if (isset($_POST["addStudent"])) {
+        echo '<script>
+        alert("Hi")
+        document.location = "/QuanLySinhVien/index.php"
+        </script>';
+    }
+}
+?>
 </style>
 <body>
     <div id="nav">
@@ -126,8 +137,9 @@ td {
     </div>
     <div class="main">
         <form action="" method="POST">
+            <!-- Information of Class -->
             <input  type="hidden"
-                    name="id"
+                    name="classID"
                     value="<?php echo $class->getId();?>">
 
             <div class="field">
@@ -148,8 +160,18 @@ td {
                     ?>
                 </select>
             </div>
-            
-            <div class="allStudent">
+
+            <!-- Edit and Delete button -->
+            <button type="submit" name="editBtn" class="editBtn" >Edit</button>
+            <button type="submit" 
+                    name="deleteBtn" 
+                    class="deleteBtn"
+                    onclick="return confirm('Bạn có chắc muốn xóa sinh viên này không?')"
+                    >Delete</button>
+            <br>
+        </form>
+           <!-- Student Table -->
+           <div class="allStudent">
                 <p class="fieldName">All Students</p>
                 <table class="studentTable">
                     <tr>
@@ -175,22 +197,24 @@ td {
                                 <td>'.$student->get_phoneNumber().'</td>
                                 <td>'.$student->get_birthDay().'</td>
                                 <td>
-                                    <form action="" method="post">
                                     <input  type="hidden"
-                                            name="id"
+                                            name="studentID"
                                             value="'.$student->get_id().'">
+                                    <input  type="hidden"
+                                            name="classID"
+                                            value="'.$class->getId().'">
 
-                                    <button type="submit" name="removeStudent">
+                                    <button type="submit" 
+                                            name="removeStudent"
+                                            onclick="return confirm('."'Bạn có chắc muốn xóa sinh viên này không?'".')">
                                         <i class="bx bx-trash bx-sm" style="color: red;"></i>
                                     </button>
-                                </form>
                                 </td>
                             </tr>
                             ';
                         }
 
-                        if (count($students) == 0) {
-                            echo '
+                        echo '
                             <tr>
                                 <td>.</td>
                                 <td>.</td>
@@ -199,20 +223,20 @@ td {
                                 <td>.</td>
                                 <td>.</td>
                                 <td>.</td>
-                                <td>.</td>
+                                <td>
+                                    <form action="" method="post">
+                                        <input  type="hidden"
+                                                name="classID"
+                                                value="'.$class->getId().'">
+                                        <button type="submit" name="addStudent" style="border: none; background: white;">
+                                            <i class="bx bx-plus-circle bx-sm" style="color: red;"></i>
+                                        </button>
+                                    </form>
+                                </td>
                             </tr>';
-                        }
                     ?>
-            </table>
+                </table>
             </div>
-            <br>
-            <button type="submit" name="editBtn" class="editBtn" >Edit</button>
-            <button type="submit" 
-                    name="deleteBtn" 
-                    class="deleteBtn"
-                    onclick="return confirm('Bạn có chắc muốn xóa sinh viên này không?')"
-                    >Delete</button>
-        </form>
     </div>
 </body>
 <script>
@@ -221,4 +245,14 @@ td {
         window.location.href = "AllClassView.php";
     }
 </script>
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST["addStudent"])) {
+        echo '
+        <dir>
+    HEllo
+</dir>';
+    }
+}
+?>
 </html>

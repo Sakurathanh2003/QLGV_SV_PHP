@@ -36,12 +36,17 @@ function addClass($name, $teacherID) {
 function removeClass($id) {
     $connection = getConnection();
     $query = 'delete from Class where id = ?';
-    $stmp = $connection->prepare($query);
-    $stmp->bind_param("i", $id);
-    $stmp->execute();
-
-    $stmp->close();
-    $connection->close();
+    
+    try {
+        $stmp = $connection->prepare($query);
+        $stmp->bind_param("i", $id);
+        $stmp->execute();
+        $stmp->close();
+    } catch (mysqli_sql_exception $e) {
+        throw $e;
+    } finally {
+        $connection->close();
+    }
 }
 
 function getClassBy($id) {

@@ -46,5 +46,6 @@ create table if not exists ClassDetail(
     teacherID int(11) not null,
     studentID int(11) not null,
     foreign key(teacherID) references Teacher(id),
-    foreign key(studentID) references Student(id)
+    foreign key(studentID) references Student(id),
+    foreign key(classID) references Class(id)
 );

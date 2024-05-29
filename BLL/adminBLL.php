@@ -77,7 +77,7 @@ function studentsInClass($classID) {
     $list = getClassDetail($classID);
     $students = [];
     foreach ($list as $item) {
-        $student = getStudentBy($item->get_id());
+        $student = getStudentBy($item->getStudentID());
         array_push($students, $student);
     }
 
@@ -85,12 +85,26 @@ function studentsInClass($classID) {
 }
 
 function deleteStudentInClass($classID, $studentID) {
-    removeStudentInClass($studentID, $classID);
+    try {
+        removeStudentInClass($classID, $studentID);
+    } catch (Exception $e) {
+        echo '<script>
+        alert("'.$e->getMessage().'")
+        document.location = "/QuanLySinhVien/index.php"
+        </script>';
+    }
 }
 
 function deleteClass($id) {
-    removeClassDetailWithClassID($id);
-    removeClass($id);
+    try {
+        removeClassDetailWithClassID($id);
+        removeClass($id);
+    } catch (Exception $e) {
+        echo '<script>
+        alert("'.$e->getMessage().'")
+        document.location = "/QuanLySinhVien/index.php"
+        </script>';
+    }
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
