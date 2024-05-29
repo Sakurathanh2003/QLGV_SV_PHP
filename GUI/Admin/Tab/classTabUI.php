@@ -98,6 +98,11 @@ tr:not(:last-child) td{
 }
 
 </style>
+<script>
+    function viewAllClasses() {
+        window.location.href = "../Admin/View/AllClassView.php";
+    }
+</script>
 <div class="classTabContent">
     <div class="addView">
         <p class="headerTitle">Add Class</p>
@@ -126,7 +131,7 @@ tr:not(:last-child) td{
     <div class="table">
         <div class="tableHeader">
             <p class="headerTitle">Classes</p>
-            <button class="viewAllBtn" onclick="viewAllStudent();">View All</button>
+            <button class="viewAllBtn" onclick="viewAllClasses();">View All</button>
         </div>
 
         <div class="main">

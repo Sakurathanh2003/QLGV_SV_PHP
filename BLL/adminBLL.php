@@ -65,10 +65,32 @@ function numberOfClasses() {
 function allClasses() {
     return getAllClasses();
 }
-
+function classByID($id) {
+    return getClassBy($id);
+}
 function numberOfStudentInClass($classID) {
     $list = getClassDetail($classID);
     return count($list);
+}
+
+function studentsInClass($classID) {
+    $list = getClassDetail($classID);
+    $students = [];
+    foreach ($list as $item) {
+        $student = getStudentBy($item->get_id());
+        array_push($students, $student);
+    }
+
+    return $students;
+}
+
+function deleteStudentInClass($classID, $studentID) {
+    removeStudentInClass($studentID, $classID);
+}
+
+function deleteClass($id) {
+    removeClassDetailWithClassID($id);
+    removeClass($id);
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -121,15 +143,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $teacherID = $_POST['teacherID'] ?? '';
         $_SESSION["currentTab"] = "ClassTab";
 
-        // try {
-        //     addClass($className, $teacherID);
-        //     header("Location: /QuanLySinhVien/index.php");
-        // } catch (Exception $e) {
-        //     echo '<script>
-        //     alert("'.$e->getMessage().'")
-        //     document.location = "/QuanLySinhVien/index.php"
-        //     </script>';
-        // }
+        try {
+            addClass($className, $teacherID);
+            header("Location: /QuanLySinhVien/index.php");
+        } catch (Exception $e) {
+            echo '<script>
+            alert("'.$e->getMessage().'")
+            document.location = "/QuanLySinhVien/index.php"
+            </script>';
+        }
     }
 }
 ?>

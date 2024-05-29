@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>All Classes</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <?php
@@ -14,19 +14,19 @@ require_once '../../../BLL/adminBLL.php';
 
 ?>
 <style>
-.studentTable {
+.classTable {
     width: 100%;
     height: 100%;
     border-collapse: collapse;
 }
 
-.studentTable th {
+.classTable th {
     text-align: left;
     background-color: black;
     color: white;
 }
 
-.studentTable tr {
+.classTable tr {
     height: 40px;
     border-top: 1px solid black;
     
@@ -53,37 +53,31 @@ tr:not(:last-child) td{
 <body>
     <div id="nav">
         <i class='bx bx-arrow-back bx-md'></i>
-        <p class="title">Students</p>
+        <p class="title">Classes</p>
     </div>
     <div class="main">
-        <table class="studentTable">
+        <table class="classTable">
             <tr>
-                <th style="text-align: center">StudentID</th>
-                <th>Student's name</th>
-                <th>Student's email</th>
-                <th>Gender</th>
-                <th>Address</th>
-                <th>Phone Number</th>
-                <th>Birthday</th>
+                <th>ClassID</th>
+                <th>Class name</th>
+                <th>Teacher</th>
+                <th>Number Of Student</th>
                 <th>Action</th>
             </tr>
             <?php
-                $students = allStudent();
-                foreach ($students as $student) {
+                $classes = allClasses();
+                foreach ($classes as $class) {
                     echo '
                     <tr>
-                        <td style="text-align: center">'.$student->get_id().'</td>
-                        <td>'.$student->get_name().'</td>
-                        <td>'.$student->get_email().'</td>
-                        <td>'.$student->get_gender().'</td>
-                        <td>'.$student->get_address().'</td>
-                        <td>'.$student->get_phoneNumber().'</td>
-                        <td>'.$student->get_birthDay().'</td>
+                        <td>'.$class->getId().'</td>
+                        <td>'.$class->getName().'</td>
+                        <td>'.teacherByID($class->getTeacherID())->get_name().'</td>
+                        <td>'.numberOfStudentInClass($class->getId()).'</td>
                         <td>
-                            <form action="DetailStudentView.php" method="get">
+                            <form action="DetailClassView.php" method="get">
                             <input  type="hidden"
                                     name="id"
-                                    value="'.$student->get_id().'">
+                                    value="'.$class->getId().'">
 
                             <button type="submit">
                                 <i class="bx bxs-edit-alt bx-sm" style="color: blue;" ></i>
@@ -94,16 +88,7 @@ tr:not(:last-child) td{
                     ';
                 }
             ?>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
+            <td></td>
         </table>
     </div>
 </body>

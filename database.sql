@@ -9,7 +9,7 @@ create TABLE if not exists Account(
 );
 
 -- pass: Admin123@
-insert into Account(name, email, password, role) values ("Thanh", "admin@gmail.com", "b39abbe763440b02c231b2653ebd9da3ea78dcb1", "admin");
+insert into Account(name, email, password, role) values ("Admin", "admin@gmail.com", "b39abbe763440b02c231b2653ebd9da3ea78dcb1", "admin");
 
 create table if not exists Teacher(
     id int(11) not null AUTO_INCREMENT primary key,

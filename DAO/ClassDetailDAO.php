@@ -40,6 +40,29 @@ function getClassDetail($classID) {
     return $details;
 }
 
+// MARK: - Set
+function removeStudentInClass($classID, $studentID) {
+    $connection = getConnection();
+    $query = 'delete from Class ClassDetail where classID = ? and studentID = ?';
+    $stmp = $connection->prepare($query);
+    $stmp->bind_param("ii", $classID, $studentID);
+    $stmp->execute();
+
+    $stmp->close();
+    $connection->close();
+}
+
+function removeClassDetailWithClassID($classID) {
+    $connection = getConnection();
+    $query = 'delete from Class ClassDetail where classID = ?';
+    $stmp = $connection->prepare($query);
+    $stmp->bind_param("i", $classID);
+    $stmp->execute();
+
+    $stmp->close();
+    $connection->close();
+}
+
 // function addClass($name, $teacherID) {
 //     $connection = getConnection();
 //     $query = 'insert into Class(name, teacherID) VALUES (?,?)';
