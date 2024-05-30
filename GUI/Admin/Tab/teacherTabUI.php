@@ -112,7 +112,7 @@
                     <th style="text-align: center; border-radius: 0px 10px 0px 0px;">Phone Number</th>
                 </tr>
                 <?php
-                    $teachers = allTeachers();
+                    $teachers = AdminBLL::allTeachers();
                     foreach ($teachers as $teacher) {
                         echo '
                         <tr>

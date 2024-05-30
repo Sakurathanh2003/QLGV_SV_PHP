@@ -9,56 +9,58 @@ try {
 } catch (Exception $e) {
 }
 
-function getAllTeachers() {
-    $connection = getConnection();
-    $query = "select * from Teacher";
+class TeacherDAO {
+    public static function getAllTeachers() {
+        $connection = getConnection();
+        $query = "select * from Teacher";
 
-    $result = $connection->query($query);
-    $teachers = [];
+        $result = $connection->query($query);
+        $teachers = [];
 
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $item = new Teacher($row["id"], $row["name"], $row["email"], $row["gender"], $row["address"], $row["phoneNumber"], $row["birthday"]);
-            array_push($teachers, $item);
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $item = new Teacher($row["id"], $row["name"], $row["email"], $row["gender"], $row["address"], $row["phoneNumber"], $row["birthday"]);
+                array_push($teachers, $item);
+            }
         }
+
+        $connection->close();
+        return $teachers;
     }
 
-    $connection->close();
-    return $teachers;
-}
+    public static function addTeacher($name, $email, $gender,$address, $phoneNumber, $birthDay) {
+        $connection = getConnection();
+        $query = 'insert into Teacher(name, email, gender, address, phoneNumber, birthday) VALUES (?,?,?,?,?,?)';
+        $stmp = $connection->prepare($query);
+        $stmp->bind_param("ssisss", $name, $email, $gender, $address, $phoneNumber, $birthDay);
+        $stmp->execute();
 
-function addTeacher($name, $email, $gender,$address, $phoneNumber, $birthDay) {
-    $connection = getConnection();
-    $query = 'insert into Teacher(name, email, gender, address, phoneNumber, birthday) VALUES (?,?,?,?,?,?)';
-    $stmp = $connection->prepare($query);
-    $stmp->bind_param("ssisss", $name, $email, $gender, $address, $phoneNumber, $birthDay);
-    $stmp->execute();
+        $stmp->close();
+        $connection->close();
+    }
 
-    $stmp->close();
-    $connection->close();
-}
+    public static function removeTeacher($id) {
+        $connection = getConnection();
+        $query = 'delete from Teacher where id = ?';
+        $stmp = $connection->prepare($query);
+        $stmp->bind_param("i", $id);
+        $stmp->execute();
 
-function removeTeacher($id) {
-    $connection = getConnection();
-    $query = 'delete from Teacher where id = ?';
-    $stmp = $connection->prepare($query);
-    $stmp->bind_param("i", $id);
-    $stmp->execute();
+        $stmp->close();
+        $connection->close();
+    }
 
-    $stmp->close();
-    $connection->close();
-}
+    public static function getTeacherBy($id) {
+        $connection = getConnection();
+        $query = 'select * from Teacher where id = '.$id;
+        $result = $connection->query($query);
+        $connection->close();
 
-function getTeacherBy($id) {
-    $connection = getConnection();
-    $query = 'select * from Teacher where id = '.$id;
-    $result = $connection->query($query);
-    $connection->close();
-    
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $item = new Teacher($row["id"], $row["name"], $row["email"], $row["gender"], $row["address"], $row["phoneNumber"], $row["birthday"]);
-            return $item;
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $item = new Teacher($row["id"], $row["name"], $row["email"], $row["gender"], $row["address"], $row["phoneNumber"], $row["birthday"]);
+                return $item;
+            }
         }
     }
 }

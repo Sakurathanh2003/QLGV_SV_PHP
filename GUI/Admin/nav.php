@@ -35,7 +35,7 @@
     <a href="" class="profile" style="text-decoration: none; display: flex; color: black; align-items: center;">
         <p style="padding-right: 10px;">
             <?php
-                $name = getName();
+                $name = AdminBLL::getName();
                 echo "Hi, ".$name;
             ?>
         </p>

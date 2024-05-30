@@ -29,7 +29,7 @@
             <div class="main">
                 <p class="number">
                     <?php 
-                        echo numberOfStudents();
+                        echo AdminBLL::numberOfStudents();
                     ?>
                 </p>
                 <p class="title">Student</p>
@@ -40,7 +40,7 @@
             <div class="main">
                 <p class="number">
                     <?php 
-                        echo numberOfTeachers();
+                        echo AdminBLL::numberOfTeachers();
                     ?>
                 </p>
                 <p class="title">Teacher</p>
@@ -51,7 +51,7 @@
             <div class="main">
                 <p class="number">
                     <?php 
-                        echo numberOfClasses();
+                        echo AdminBLL::numberOfClasses();
                     ?>
                 </p>
                 <p class="title">Class</p>

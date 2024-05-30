@@ -13,20 +13,51 @@
     font-family: 'Poppins';
 }
 
-#nav {
+/* DIALOG ADD */
+.dialogAdd {
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    opacity: 0;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    transition: .3s ease;
+}
+
+.dialogAdd.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal {
+    background-color: white;
+    border-radius: 12px;
+    padding: 30px 50px;
+    width: 600px;
+    max-width: 100%;
+}
+
+/* MAIN VIEW */
+/* Navigation */
+#navigation {
     width: 100%;
     height: 50px;
     display: flex;
     align-items: center;
 }
 
-#nav .title {
+#navigation .title {
     font-size: 30px;
     font-weight: bold;
     padding-left: 30px;
 }
 
-.main {
+.mainView {
     padding-left: 60px;
     padding-right: 60px;
     padding-top: 10px;
@@ -102,74 +133,79 @@ $class = new SchoolClass("", "", "");
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     echo "get";
     $id = $_GET["id"];
-    $class = classByID($id);
+    $class = AdminBLL::classByID($id);
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $classID = $_POST["classID"];
-    $class = classByID($classID);
+    $class = AdminBLL::classByID($classID);
 
     // Delete class
     if (isset($_POST["deleteBtn"])) {
-        deleteClass($classID);
+        AdminBLL::deleteClass($classID);
         header("Location: /QuanLySinhVien/GUI/Admin/View/AllClassView.php");
     }
 
-    // Delete Student in class 
-    if (isset($_POST["removeStudent"])) {
-        $studentID = $_POST["studentID"];
-        deleteStudentInClass($class->getId(), $studentID);
+    if (isset($_POST["editBtn"])) {
+        $className = $_POST["classNameNew"];
+        $teacherID = $_POST["teacherIDNew"];   
+        AdminBLL::updateClass($classID, $className, $teacherID);
+        $class = AdminBLL::classByID($classID);
     }
 
-    if (isset($_POST["addStudent"])) {
-        echo '<script>
-        alert("Hi")
-        document.location = "/QuanLySinhVien/index.php"
-        </script>';
+    if (isset($_POST["addStudentForm"])) {
+        $studentID = $_POST["studentID"];
+        AdminBLL::addStudentInClass($classID, $studentID);
+    }
+
+    if (isset($_POST["removeStudentForm"])) {
+        $studentID = $_POST["removeStudentID"];
+        AdminBLL::deleteStudentInClass($class->getId(), $studentID);
     }
 }
 ?>
 </style>
 <body>
-    <div id="nav">
-        <i class='bx bx-arrow-back bx-md'></i>
-        <p class="title">Detail Class</p>
-    </div>
-    <div class="main">
-        <form action="" method="POST">
+    <div class="mainContainer">
+        <div id="navigation">
+            <i class='bx bx-arrow-back bx-md'></i>
+            <p class="title">Detail Class</p>
+        </div>
+        <div class="mainView">
+            <form action="" method="POST">
             <!-- Information of Class -->
-            <input  type="hidden"
-                    name="classID"
-                    value="<?php echo $class->getId();?>">
+                <input  type="hidden"
+                        name="classID"
+                        value="<?php echo $class->getId();?>">
 
-            <div class="field">
-                <p class="fieldName">Class Name: </p>
-                <input type="text" class="textField" name="studentName" value="<?php echo $class->getName(); ?>" placeholder="Enter class name" required>
-            </div>
+                <div class="field">
+                    <p class="fieldName">Class Name: </p>
+                    <input type="text" class="textField" name="classNameNew" value="<?php echo $class->getName(); ?>" placeholder="Enter class name" required>
+                </div>
 
-            <div class="field">
-                <p class="fieldName">Teacher</p>
-                <select id="gender" class="textField" name="teacherID" value="<?php echo $class->getTeacherID(); ?>" required>
-                    <?php
-                        $teachers = allTeachers();
-                        foreach ($teachers as $teacher) {
-                            echo '
-                            <option value="'.$teacher->get_id().'">'.$teacher->get_name()." (id: ".$teacher->get_id().")".'</option>
-                            ';
-                        }
-                    ?>
-                </select>
-            </div>
+                <div class="field">
+                    <p class="fieldName">Teacher</p>
+                    <select id="teacherIDNew" class="textField" name="teacherIDNew" value="<?php echo $class->getTeacherID(); ?>" required>
+                        <?php
+                            $teachers = AdminBLL::allTeachers();
+                            foreach ($teachers as $teacher) {
+                                echo '
+                                <option value="'.$teacher->get_id().'">'.$teacher->get_name()." (id: ".$teacher->get_id().")".'</option>
+                                ';
+                            }
+                        ?>
+                    </select>
+                </div>
 
-            <!-- Edit and Delete button -->
-            <button type="submit" name="editBtn" class="editBtn" >Edit</button>
-            <button type="submit" 
-                    name="deleteBtn" 
-                    class="deleteBtn"
-                    onclick="return confirm('Bạn có chắc muốn xóa sinh viên này không?')"
-                    >Delete</button>
-            <br>
-        </form>
+                <!-- Edit and Delete button -->
+                <button type="submit" name="editBtn" class="editBtn" >Edit</button>
+                <button type="submit" 
+                        name="deleteBtn" 
+                        class="deleteBtn"
+                        onclick="return confirm('Bạn có chắc muốn xóa lớp này không?')"
+                        >Delete</button>
+                <br>
+            </form>
            <!-- Student Table -->
            <div class="allStudent">
                 <p class="fieldName">All Students</p>
@@ -185,7 +221,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <th>Action</th>
                     </tr>
                     <?php
-                        $students = studentsInClass($class->getId());
+                        $students = AdminBLL::studentsInClass($class->getId());
                         foreach ($students as $student) {
                             echo '
                             <tr>
@@ -197,18 +233,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <td>'.$student->get_phoneNumber().'</td>
                                 <td>'.$student->get_birthDay().'</td>
                                 <td>
-                                    <input  type="hidden"
-                                            name="studentID"
-                                            value="'.$student->get_id().'">
-                                    <input  type="hidden"
-                                            name="classID"
-                                            value="'.$class->getId().'">
+                                    <form action="" method="post">
+                                        <input  type="hidden"
+                                        name="removeStudentID"
+                                        value="'.$student->get_id().'">
+                                        <input  type="hidden"
+                                                name="classID"
+                                                value="'.$class->getId().'">
 
-                                    <button type="submit" 
-                                            name="removeStudent"
-                                            onclick="return confirm('."'Bạn có chắc muốn xóa sinh viên này không?'".')">
-                                        <i class="bx bx-trash bx-sm" style="color: red;"></i>
-                                    </button>
+                                        <button type="submit" 
+                                                name="removeStudentForm"
+                                                onclick="return confirm('."'Bạn có chắc muốn xóa sinh viên này không?'".')">
+                                            <i class="bx bx-trash bx-sm" style="color: red;"></i>
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                             ';
@@ -224,35 +262,60 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <td>.</td>
                                 <td>.</td>
                                 <td>
-                                    <form action="" method="post">
-                                        <input  type="hidden"
-                                                name="classID"
-                                                value="'.$class->getId().'">
-                                        <button type="submit" name="addStudent" style="border: none; background: white;">
-                                            <i class="bx bx-plus-circle bx-sm" style="color: red;"></i>
-                                        </button>
-                                    </form>
+                                    <button id="addStudent" style="border: none; background: white;">
+                                        <i class="bx bx-plus-circle bx-sm" style="color: red;"></i>
+                                    </button>
                                 </td>
                             </tr>';
                     ?>
                 </table>
             </div>
+        </div>
+    </div>
+    <!-- DIALOG -->
+    <div class="dialogAdd" id="dialogAdd">
+        <div class="modal">
+            <h1>Add Student</h1>
+            <form action="" method="post">
+                <input  type="hidden"
+                        name="classID"
+                        value="<?php echo $class->getId();?>">
+
+                <p>Student: </p>
+                <select name="studentID" id="">
+                    <?php
+                         $students = AdminBLL::studentWithinClass($class->getId());
+
+                         foreach ($students as $student) {
+                            echo '
+                            <option value="'.$student->get_id().'">'.$student->get_name()." (id: ".$student->get_id().")".'</option>
+                            ';                         }
+                    ?>
+                    <option value=""></option>
+                </select><br><br>
+                <button id="close">Close</button>
+                <button name="addStudentForm">Add</button>
+            </form>
+            
+        </div>
     </div>
 </body>
 <script>
-    var element = document.getElementById("nav"); //grab the element
+    var element = document.getElementById("navigation"); //grab the element
     element.onclick = function() {
         window.location.href = "AllClassView.php";
     }
+
+    const open = document.getElementById("addStudent");
+    const dialog = document.getElementById("dialogAdd");
+    const close = document.getElementById("close");
+
+    open.addEventListener('click', () => {
+        dialog.classList.add('show');
+    })
+
+    close.addEventListener('click', () => {
+        dialog.classList.remove('show');
+    })
 </script>
-<?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST["addStudent"])) {
-        echo '
-        <dir>
-    HEllo
-</dir>';
-    }
-}
-?>
 </html>

@@ -65,14 +65,14 @@ tr:not(:last-child) td{
                 <th>Action</th>
             </tr>
             <?php
-                $classes = allClasses();
+                $classes = AdminBLL::allClasses();
                 foreach ($classes as $class) {
                     echo '
                     <tr>
                         <td>'.$class->getId().'</td>
                         <td>'.$class->getName().'</td>
-                        <td>'.teacherByID($class->getTeacherID())->get_name().'</td>
-                        <td>'.numberOfStudentInClass($class->getId()).'</td>
+                        <td>'.AdminBLL::teacherByID($class->getTeacherID())->get_name().'</td>
+                        <td>'.AdminBLL::numberOfStudentInClass($class->getId()).'</td>
                         <td>
                             <form action="DetailClassView.php" method="get">
                             <input  type="hidden"

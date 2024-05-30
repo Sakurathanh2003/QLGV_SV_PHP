@@ -49,3 +49,12 @@ create table if not exists ClassDetail(
     foreign key(studentID) references Student(id),
     foreign key(classID) references Class(id)
 );
+
+create table if not exists Score( 
+    id int(11) not null AUTO_INCREMENT primary key, 
+    studentID int(11) not null, 
+    classID int(11) not null, 
+    score1 double, 
+    score2 double, 
+    total double 
+);

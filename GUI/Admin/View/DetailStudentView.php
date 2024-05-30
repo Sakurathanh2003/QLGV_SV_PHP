@@ -16,13 +16,13 @@ $student = new Student("", "", "", "", "", "", "");
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $id = $_GET["id"];
-    $student = studentByID($id);
+    $student = AdminBLL::studentByID($id);
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["deleteBtn"])) {
         $id = $_POST["id"];
-        deleteStudent($id);
+        AdminBLL::deleteStudent($id);
         header("Location: /QuanLySinhVien/GUI/Admin/View/AllStudentView.php");
     }
 }

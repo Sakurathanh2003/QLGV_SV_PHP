@@ -69,7 +69,7 @@ tr:not(:last-child) td{
                 <th>Action</th>
             </tr>
             <?php
-                $teachers = allTeachers();
+                $teachers = AdminBLL::allTeachers();
                 foreach ($teachers as $teacher) {
                     echo '
                     <tr>

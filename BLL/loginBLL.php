@@ -12,8 +12,8 @@ if (isset($_POST["login"])) {
     $email = $_POST["email"];
     $password = $_POST["password"];
 
-    if (checkAccount($email, $password)) {
-        $account = getAccount($email);
+    if (AccountDAO::checkAccount($email, $password)) {
+        $account = AccountDAO::getAccount($email);
 
         $_SESSION["didLogin"] = true;
         $_SESSION["role"] = $account->getRole();

@@ -115,7 +115,7 @@ tr:not(:last-child) td{
                 <p class="fieldName">Teacher</p>
                 <select id="gender" class="textField" name="teacherID" required>
                     <?php
-                        $teachers = allTeachers();
+                        $teachers = AdminBLL::allTeachers();
                         foreach ($teachers as $teacher) {
                             echo '
                             <option value="'.$teacher->get_id().'">'.$teacher->get_name()." (id: ".$teacher->get_id().")".'</option>
@@ -143,14 +143,14 @@ tr:not(:last-child) td{
                     <th>Number Of Student</th>
                 </tr>
                 <?php
-                    $classes = allClasses();
+                    $classes = AdminBLL::allClasses();
                     foreach ($classes as $class) {
                         echo '
                         <tr>
                             <td>'.$class->getId().'</td>
                             <td>'.$class->getName().'</td>
-                            <td>'.teacherByID($class->getTeacherID())->get_name().'</td>
-                            <td>'.numberOfStudentInClass($class->getId()).'</td>
+                            <td>'.AdminBLL::teacherByID($class->getTeacherID())->get_name().'</td>
+                            <td>'.AdminBLL::numberOfStudentInClass($class->getId()).'</td>
                         </tr>
                         ';
                     }

@@ -16,13 +16,13 @@ $teacher = new Teacher("", "", "", "", "", "", "");
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $id = $_GET["id"];
-    $teacher = teacherByID($id);
+    $teacher = AdminBLL::teacherByID($id);
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["deleteBtn"])) {
         $id = $_POST["id"];
-        deleteTeacher($id);
+        AdminBLL::deleteTeacher($id);
         header("Location: /QuanLySinhVien/GUI/Admin/View/AllTeacherView.php");
     }
 }

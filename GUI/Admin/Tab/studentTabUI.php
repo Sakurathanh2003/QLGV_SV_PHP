@@ -152,7 +152,7 @@ tr:not(:last-child) td{
                     <th>Phone Number</th>
                 </tr>
                 <?php
-                    $teachers = allStudent();
+                    $teachers = AdminBLL::allStudent();
                     foreach ($teachers as $teacher) {
                         echo '
                         <tr>
