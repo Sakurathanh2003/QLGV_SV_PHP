@@ -24,6 +24,20 @@ function login() {
     document.getElementById('logoutForm').submit();
 }
 
+
+function saveTab(tabName) {
+	var form_data = new FormData();
+
+	form_data.append('currentTab', tabName);
+
+	var ajax_request = new XMLHttpRequest();
+
+	ajax_request.open('POST', 'adminUI.php');
+
+	ajax_request.send(form_data);
+}
+
+// MARK: - Open Tab
 function openTab(tabName) {
     var i, x;
     x = document.getElementsByClassName("tab");
@@ -32,4 +46,5 @@ function openTab(tabName) {
     }
 
     document.getElementById(tabName).style.display = "block";
+    saveTab(tabName);
 }
