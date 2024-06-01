@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <style>
 @import url("https://fonts.googleapis.com/css?family=Poppins");
@@ -126,6 +127,7 @@ td {
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+
 require_once '../../../BLL/adminBLL.php';
 
 $class = new SchoolClass("", "", "");
@@ -185,12 +187,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 <div class="field">
                     <p class="fieldName">Teacher</p>
-                    <select id="teacherIDNew" class="textField" name="teacherIDNew" value="<?php echo $class->getTeacherID(); ?>" required>
+                    <script>
+                        $(document).ready(function() {
+                            $('#teacherIDNew').val('<?php echo $class->getTeacherID(); ?>');
+                        });
+                    </script>
+                    <select id="teacherIDNew" class="textField" name="teacherIDNew" required>
                         <?php
                             $teachers = AdminBLL::allTeachers();
                             foreach ($teachers as $teacher) {
                                 echo '
-                                <option value="'.$teacher->get_id().'">'.$teacher->get_name()." (id: ".$teacher->get_id().")".'</option>
+                                <option value="'.$teacher->getID().'">'.AdminBLL::getTeacherName($teacher->getID())." (id: ".$teacher->getID().")".'</option>
                                 ';
                             }
                         ?>
@@ -221,22 +228,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <th>Action</th>
                     </tr>
                     <?php
-                        $students = AdminBLL::studentsInClass($class->getId());
+                        $students = AdminBLL::studentsInClass($class->getID());
                         foreach ($students as $student) {
                             echo '
                             <tr>
-                                <td style="text-align: center">'.$student->get_id().'</td>
-                                <td>'.$student->get_name().'</td>
-                                <td>'.$student->get_email().'</td>
-                                <td>'.$student->get_gender().'</td>
-                                <td>'.$student->get_address().'</td>
-                                <td>'.$student->get_phoneNumber().'</td>
-                                <td>'.$student->get_birthDay().'</td>
+                                <td style="text-align: center">'.$student->getID().'</td>
+                                <td>'.AdminBLL::getStudentName($student->getID()).'</td>
+                                <td>'.AdminBLL::getStudentEmail($student->getID()).'</td>
+                                <td>'.$student->getGender().'</td>
+                                <td>'.$student->getAddress().'</td>
+                                <td>'.$student->getPhoneNumber().'</td>
+                                <td>'.$student->getBirthDay().'</td>
                                 <td>
                                     <form action="" method="post">
                                         <input  type="hidden"
                                         name="removeStudentID"
-                                        value="'.$student->get_id().'">
+                                        value="'.$student->getID().'">
                                         <input  type="hidden"
                                                 name="classID"
                                                 value="'.$class->getId().'">
@@ -288,8 +295,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                          foreach ($students as $student) {
                             echo '
-                            <option value="'.$student->get_id().'">'.$student->get_name()." (id: ".$student->get_id().")".'</option>
-                            ';                         }
+                            <option value="'.$student->getID().'">'.AdminBLL::getStudentName($student->getID())." (id: ".$student->getID().")".'</option>
+                            ';                         
+                        }
                     ?>
                     <option value=""></option>
                 </select><br><br>

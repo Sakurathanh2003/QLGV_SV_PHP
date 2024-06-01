@@ -23,8 +23,17 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id = $_POST["id"];
     if (isset($_POST["deleteBtn"])) {
-        AdminBLL::deleteTeacher($id);
-        header("Location: /QuanLySinhVien/GUI/Admin/View/AllTeacherView.php");
+        try {
+            AdminBLL::deleteTeacher($id);
+            echo '<script>
+                alert("Xoá thành công!")
+                document.location = "/QuanLySinhVien/GUI/Admin/View/AllTeacherView.php"
+                </script>';
+        } catch (Exception $e) {
+            echo '<script>
+                alert("'.$e->getMessage().'")
+                </script>';
+        }
     }
 
     if (isset($_POST["editBtn"])) {

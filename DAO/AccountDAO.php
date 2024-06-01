@@ -11,10 +11,9 @@ try {
 
 class AccountDAO {
     //MARK: - Get
-    public static function isExitsAccount($email, $password): bool {
+    public static function isExitsAccount($email): bool {
         $connection = getConnection();
-        $cipherPassword = sha1($password);
-        $query = "select * from Account where email = '$email' and password = '$cipherPassword'";
+        $query = "select * from Account where email = '$email'";
         $result = $connection->query($query);
         $connection->close();
         

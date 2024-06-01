@@ -1,8 +1,8 @@
 <?php
 class ClassDetail {
-    public $id;
-    public $classID;
-    public $studentID;
+    private $id;
+    private $classID;
+    private $studentID;
 
     public function __construct($id, $classID, $studentID) {
         $this->id = $id;
@@ -16,6 +16,10 @@ class ClassDetail {
 
     public function getStudentID() {
         return $this->studentID;
+    }
+
+    public function getClassID() {
+        return $this->classID;
     }
 }
 ?>

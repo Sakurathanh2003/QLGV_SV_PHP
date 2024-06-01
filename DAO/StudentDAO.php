@@ -42,6 +42,20 @@ class StudentDAO {
         }
     }
 
+    public static function getStudentByAccountID($accountID) {
+        $connection = getConnection();
+        $query = 'select * from Student where accountID = '.$accountID;
+        $result = $connection->query($query);
+        $connection->close();
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $item = new Student($row["id"], $row["accountID"], $row["gender"], $row["address"], $row["phoneNumber"], $row["birthday"]);
+                return $item;
+            }
+        }
+    }
+
     //MARK: - Add
     public static function addStudent($accountID, $gender,$address, $phoneNumber, $birthDay) {
         $connection = getConnection();

@@ -9,6 +9,8 @@ include($_SERVER['DOCUMENT_ROOT'].'/QuanLySinhVien/DAO/TeacherDAO.php');
 include($_SERVER['DOCUMENT_ROOT'].'/QuanLySinhVien/DAO/StudentDAO.php');
 include($_SERVER['DOCUMENT_ROOT'].'/QuanLySinhVien/DAO/ClassDAO.php');
 include($_SERVER['DOCUMENT_ROOT'].'/QuanLySinhVien/DAO/ClassDetailDAO.php');
+include($_SERVER['DOCUMENT_ROOT'].'/QuanLySinhVien/DAO/ScoreDAO.php');
+
 
 class AdminBLL {
     public static function getName() {
@@ -45,8 +47,13 @@ class AdminBLL {
     // - SET
     public static function deleteTeacher($id) {
         $teacher = TeacherDAO::getTeacherBy($id);
-        AccountDAO::removeAccount($teacher->getAccountID());
-        TeacherDAO::removeTeacher($id);
+
+        try {
+            TeacherDAO::removeTeacher($id);
+            AccountDAO::removeAccount($teacher->getAccountID());
+        } catch (Exception $e) {
+            throw $e;
+        }
     }
 
     public static function addTeacher($teacherName, $teacherEmail,$teacherPassword, $teacherGender, $teacherAddress, $teacherPhoneNumber, $teacherBirthday) {
@@ -104,8 +111,15 @@ class AdminBLL {
 
     public static function deleteStudent($id) {
         $student = StudentDAO::getStudentBy($id);
-        AccountDAO::removeAccount($student->getAccountID());
-        StudentDAO::removeStudent($id);
+        
+        try {
+            ScoreDAO::removeScoreOfStudent($id);
+            ClassDetailDAO::removeStudent($id);
+            StudentDAO::removeStudent($id);
+            AccountDAO::removeAccount($student->getAccountID());
+        } catch (Exception $e) {
+            throw $e;
+        }
     }
 
     public static function addStudent($name, $email,$password, $gender, $address, $phoneNumber, $birthday) {
@@ -148,6 +162,29 @@ class AdminBLL {
         return ClassDAO::getClassBy($id);
     }
 
+    public static function deleteClass($id) {
+        try {
+            ClassDetailDAO::removeClassDetailWithClassID($id);
+            ClassDAO::removeClass($id);
+        } catch (Exception $e) {
+            echo '<script>
+            alert("'.$e->getMessage().'")
+            document.location = "/QuanLySinhVien/index.php"
+            </script>';
+        }
+    }
+
+    public static function updateClass($classID, $className, $teacherID) {
+        try {
+            ClassDAO::updateClass($classID, $className, $teacherID);
+        } catch (Exception $e) {
+            echo '<script>
+            alert("'.$e->getMessage().'")
+            document.location = "/QuanLySinhVien/index.php"
+            </script>';
+        }
+    }
+
     //MARK: - ClassStudent
     public static function numberOfStudentInClass($classID) {
         $list = ClassDetailDAO::getClassDetail($classID);
@@ -181,6 +218,7 @@ class AdminBLL {
 
     public static function deleteStudentInClass($classID, $studentID) {
         try {
+            ScoreDAO::removeScoreOfStudent($studentID, $classID);
             ClassDetailDAO::removeStudentInClass($classID, $studentID);
         } catch (Exception $e) {
             echo '<script>
@@ -192,31 +230,8 @@ class AdminBLL {
     
     public static function addStudentInClass($classID, $studentID) {
         try {
-            $class = AdminBLL::classByID($classID);
-            ClassDetailDAO::addClassDetail($classID, $class->getTeacherID(), $studentID);
-        } catch (Exception $e) {
-            echo '<script>
-            alert("'.$e->getMessage().'")
-            document.location = "/QuanLySinhVien/index.php"
-            </script>';
-        }
-    }
-    
-    public static function deleteClass($id) {
-        try {
-            ClassDetailDAO::removeClassDetailWithClassID($id);
-            ClassDAO::removeClass($id);
-        } catch (Exception $e) {
-            echo '<script>
-            alert("'.$e->getMessage().'")
-            document.location = "/QuanLySinhVien/index.php"
-            </script>';
-        }
-    }
-
-    public static function updateClass($classID, $className, $teacherID) {
-        try {
-            ClassDAO::updateClass($classID, $className, $teacherID);
+            ClassDetailDAO::addClassDetail($classID, $studentID);
+            ScoreDAO::addScore($studentID, $classID, null, null, null);
         } catch (Exception $e) {
             echo '<script>
             alert("'.$e->getMessage().'")

@@ -53,5 +53,7 @@ create table if not exists Score(
     classID int(11) not null, 
     score1 double, 
     score2 double,
-    score3 double
+    score3 double,
+    foreign key(studentID) references Student(id),
+    foreign key(classID) references Class(id)
 );

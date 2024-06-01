@@ -10,7 +10,7 @@
     background-color: white;
     border-radius: 20px;
     border: 1px solid black;
-    width: calc((100% - 20px * 4) / 3);
+    width: calc((100% - 20px * 3) / 2);
     height: 130px;
     padding: 25px;
     display: flex;
@@ -29,7 +29,7 @@
             <div class="main">
                 <p class="number">
                     <?php 
-                        echo AdminBLL::numberOfStudents();
+                        echo 0;
                     ?>
                 </p>
                 <p class="title">Student</p>
@@ -40,23 +40,12 @@
             <div class="main">
                 <p class="number">
                     <?php 
-                        echo AdminBLL::numberOfTeachers();
+                        echo 0;
                     ?>
                 </p>
                 <p class="title">Teacher</p>
             </div>
             <i class='bx bx-body bx-md' style="color: red"></i>
-        </div>
-        <div class="card">
-            <div class="main">
-                <p class="number">
-                    <?php 
-                        echo AdminBLL::numberOfClasses();
-                    ?>
-                </p>
-                <p class="title">Class</p>
-            </div>
-            <i class='bx bx-door-open bx-md'></i>
         </div>
     </div>
 </div>

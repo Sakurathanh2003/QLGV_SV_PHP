@@ -32,8 +32,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id = $_POST["id"];
 
     if (isset($_POST["deleteBtn"])) {
-        AdminBLL::deleteStudent($id);
-        header("Location: /QuanLySinhVien/GUI/Admin/View/AllStudentView.php");
+        try {
+            AdminBLL::deleteStudent($id);
+            echo '<script>
+            alert("Xoá thành công!")
+            document.location = "/QuanLySinhVien/GUI/Admin/View/AllTeacherView.php"
+            </script>';
+        } catch (Exception $e) {
+            echo '<script>
+            alert("'.$e->getMessage().'")
+            </script>';
+        }
     }
 
     if (isset($_POST["editBtn"])) {
@@ -47,8 +56,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         try {
             AdminBLL::updateStudent($id, $name, $email, $password, $gender, $address, $phoneNumber, $birthday);
+            echo '<script>
+            alert("Sửa thành công!")
+            </script>';
         } catch (Exception $e) {
-            echo $e;
+            echo '<script>
+            alert("'.$e->getMessage().'")
+            </script>';
         }
     }
 
