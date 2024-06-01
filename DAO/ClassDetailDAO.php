@@ -15,7 +15,7 @@ class ClassDetailDAO {
     
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
-                $detail = new ClassDetail($row["id"], $row["classID"], $row["teacherID"], $row["studentID"]);
+                $detail = new ClassDetail($row["id"], $row["classID"], $row["studentID"]);
                 array_push($details, $detail);
             }
         }
@@ -31,7 +31,7 @@ class ClassDetailDAO {
 
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
-                $detail = new ClassDetail($row["id"], $row["classID"], $row["teacherID"], $row["studentID"]);
+                $detail = new ClassDetail($row["id"], $row["classID"], $row["studentID"]);
                 array_push($details, $detail);
             }
         }
@@ -70,28 +70,13 @@ class ClassDetailDAO {
         }
     }
 
-    public static function addClassDetail($classID, $teacherID, $studentID) {
+    public static function addClassDetail($classID, $studentID) {
         $connection = getConnection();
-        $query = 'insert into ClassDetail(classID, teacherID, studentID) VALUES (?,?, ?)';
+        $query = 'insert into ClassDetail(classID, studentID) VALUES (?, ?)';
         
         try {
             $stmp = $connection->prepare($query);
             $stmp->bind_param("iii", $classID, $teacherID, $studentID);
-            $stmp->execute();
-            $stmp->close();
-        } catch (mysqli_sql_exception $e) {
-            throw $e;
-        } finally {
-            $connection->close();
-        }
-    }
-
-    public static function updateClassDetail($classID, $teacherID) {
-        $connection = getConnection();
-        $query = 'update ClassDetail set teacherID = ? where classID = ?';
-        try {
-            $stmp = $connection->prepare($query);
-            $stmp->bind_param("ii", $teacherID, $classID);
             $stmp->execute();
             $stmp->close();
         } catch (mysqli_sql_exception $e) {

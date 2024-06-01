@@ -15,7 +15,7 @@ class AdminBLL {
         $name = $_SESSION["name"];
         return $name;
     }
-
+    //MARK: - Teacher
     public static function numberOfTeachers() {
         $teachers = TeacherDAO::getAllTeachers();
         return count($teachers);
@@ -35,6 +35,7 @@ class AdminBLL {
         return TeacherDAO::getTeacherBy($id);
     }
 
+    //MARK: - Student
     public static function numberOfStudents() {
         $students = StudentDAO::getAllStudents();
         return count($students);
@@ -54,6 +55,7 @@ class AdminBLL {
         AccountDAO::removeAccount($student->get_email());
     }
 
+    //MARK: - Class
     public static function numberOfClasses() {
         $classes = ClassDAO::getAllClasses();
         return count($classes);
@@ -65,6 +67,8 @@ class AdminBLL {
     public static function classByID($id) {
         return ClassDAO::getClassBy($id);
     }
+
+    //MARK: - ClassStudent
     public static function numberOfStudentInClass($classID) {
         $list = ClassDetailDAO::getClassDetail($classID);
         return count($list);
@@ -132,7 +136,6 @@ class AdminBLL {
 
     public static function updateClass($classID, $className, $teacherID) {
         try {
-            ClassDetailDAO::updateClassDetail($classID, $teacherID);
             ClassDAO::updateClass($classID, $className, $teacherID);
         } catch (Exception $e) {
             echo '<script>
