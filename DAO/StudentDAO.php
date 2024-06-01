@@ -10,6 +10,7 @@ try {
 }
 
 class StudentDAO {
+    //MARK: - Get
     public static function getAllStudents() {
         $connection = getConnection();
         $query = "select * from Student";
@@ -19,7 +20,7 @@ class StudentDAO {
     
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
-                $item = new Student($row["id"], $row["name"], $row["email"], $row["gender"], $row["address"], $row["phoneNumber"], $row["birthday"]);
+                $item = new Student($row["id"], $row["accountID"], $row["gender"], $row["address"], $row["phoneNumber"], $row["birthday"]);
                 array_push($students, $item);
             }
         }
@@ -27,17 +28,33 @@ class StudentDAO {
         return $students;
     }
 
-    public static function addStudent($name, $email, $gender,$address, $phoneNumber, $birthDay) {
+    public static function getStudentBy($id) {
         $connection = getConnection();
-        $query = 'insert into Student(name, email, gender, address, phoneNumber, birthday) VALUES (?,?,?,?,?,?)';
+        $query = 'select * from Student where id = '.$id;
+        $result = $connection->query($query);
+        $connection->close();
+        
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $item = new Student($row["id"], $row["accountID"], $row["gender"], $row["address"], $row["phoneNumber"], $row["birthday"]);
+                return $item;
+            }
+        }
+    }
+
+    //MARK: - Add
+    public static function addStudent($accountID, $gender,$address, $phoneNumber, $birthDay) {
+        $connection = getConnection();
+        $query = 'insert into Student(accountID, gender, address, phoneNumber, birthday) VALUES (?,?,?,?,?)';
         $stmp = $connection->prepare($query);
-        $stmp->bind_param("ssisss", $name, $email, $gender, $address, $phoneNumber, $birthDay);
+        $stmp->bind_param("iissss", $accountID, $gender, $address, $phoneNumber, $birthDay);
         $stmp->execute();
     
         $stmp->close();
         $connection->close();
     }
 
+    //MARK: - Delete
     public static function removeStudent($id) {
         $connection = getConnection();
         $query = 'delete from Student where id = ?';
@@ -47,19 +64,6 @@ class StudentDAO {
     
         $stmp->close();
         $connection->close();
-    }
-
-    public static function getStudentBy($id) {
-        $connection = getConnection();
-        $query = 'select * from Student where id = '.$id;
-        $result = $connection->query($query);
-        $connection->close();
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                $item = new Student($row["id"], $row["name"], $row["email"], $row["gender"], $row["address"], $row["phoneNumber"], $row["birthday"]);
-                return $item;
-            }
-        }
     }
 }
 ?>

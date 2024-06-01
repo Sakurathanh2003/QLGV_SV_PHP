@@ -96,16 +96,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <form action="" method="POST">
             <input  type="hidden"
                     name="id"
-                    value="<?php echo $student->get_id();?>">
+                    value="<?php echo $student->getID();?>">
 
             <div class="field">
                 <p class="fieldName">Student Name: </p>
-                <input type="text" class="textField" name="studentName" value="<?php echo $student->get_name(); ?>" placeholder="Enter student's name" required>
+                <input type="text" class="textField" name="studentName" value="<?php echo AdminBLL::getStudentName($student->getID()); ?>" placeholder="Enter student's name" required>
             </div>
 
             <div class="field">
                 <p class="fieldName">Email: </p>
-                <input type="text" class="textField" name="studentEmail" value="<?php echo $student->get_email(); ?>" placeholder="Enter email" required>
+                <input type="text" class="textField" name="studentEmail" value="<?php echo AdminBLL::getStudentEmail($student->getID()); ?>" placeholder="Enter email" required>
             </div>
 
             <div class="field">
@@ -118,17 +118,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <div class="field">
                 <p class="fieldName">Address: </p>
-                <input type="text" class="textField" placeholder="Enter address" value="<?php echo $student->get_address(); ?>" name="studentAddress" required>
+                <input type="text" class="textField" placeholder="Enter address" value="<?php echo $student->getAddress(); ?>" name="studentAddress" required>
             </div>
 
             <div class="field">
                 <p class="fieldName">Phone Number: </p>
-                <input type="text" class="textField" placeholder="Enter phone number" value="<?php echo $student->get_phoneNumber(); ?>" name="studentPhoneNumber" required>
+                <input type="text" class="textField" placeholder="Enter phone number" value="<?php echo $student->getPhoneNumber(); ?>" name="studentPhoneNumber" required>
             </div>
 
             <div class="field">
                 <p class="fieldName">Birthday: </p>
-                <input type="date" class="textField" name="studentBirthday" value="<?php echo $student->get_birthDay(); ?>" required>
+                <input type="date" class="textField" name="studentBirthday" value="<?php echo $student->getBirthDay(); ?>" required>
             </div>
 
             <div class="field">

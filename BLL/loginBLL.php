@@ -12,7 +12,7 @@ if (isset($_POST["login"])) {
     $email = $_POST["email"];
     $password = $_POST["password"];
 
-    if (AccountDAO::checkAccount($email, $password)) {
+    if (AccountDAO::isExitsAccount($email, $password)) {
         $account = AccountDAO::getAccount($email);
 
         $_SESSION["didLogin"] = true;

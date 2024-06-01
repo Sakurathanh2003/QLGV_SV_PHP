@@ -10,20 +10,19 @@ try {
 }
 
 class AccountDAO {
-    public static function checkAccount($email, $password): bool {
+    //MARK: - Get
+    public static function isExitsAccount($email, $password): bool {
         $connection = getConnection();
         $cipherPassword = sha1($password);
         $query = "select * from Account where email = '$email' and password = '$cipherPassword'";
         $result = $connection->query($query);
         $connection->close();
         
-        if ($result->num_rows == 1) {
-            $row = $result->fetch_assoc();
-            $item = new Account($row["id"], $row["name"], $row["email"], $row["password"], $row["role"]);
+        if ($result->num_rows > 0) {
             return true;
-        } else {
-            return false;
-        }
+        } 
+        
+        return false;
     }
 
     public static function getAccount($email) {
@@ -33,34 +32,45 @@ class AccountDAO {
         
         if ($result->num_rows == 1) {
             $row = $result->fetch_assoc();
-            $item = new Account($row["name"], $row["email"], $row["password"], $row["role"]);
+            $item = new Account($row["id"], $row["name"], $row["email"], $row["password"], $row["role"]);
             $connection->close();
             return $item;
         }
     }
 
+    public static function getAccountByID($id) {
+        $connection = getConnection();
+        $query = "select * from Account where id = '$id'";
+        $result = $connection->query($query);
+        
+        if ($result->num_rows == 1) {
+            $row = $result->fetch_assoc();
+            $item = new Account($row["id"], $row["name"], $row["email"], $row["password"], $row["role"]);
+            $connection->close();
+            return $item;
+        }
+    }
+
+    //MARK: - Add
     public static function addAccount($name,$email,$password,$role) {
         $connection = getConnection();
         $query = "insert into Account(name, email, password, role) values (?,?,?,?)";
-        
+        $stmp = $connection->prepare($query);
+
         try {
-            $stmp = $connection->prepare($query);
             $newPassword = sha1($password);
             $stmp->bind_param("ssss", $name, $email, $newPassword, $role);
             $stmp->execute();
-            $stmp->close();
+            return $stmp->insert_id;
         } catch (mysqli_sql_exception $e) {
-            if ($e->getCode() == 1062) {
-                // Duplicate entry error code
-                throw new Exception("Duplicate entry '$email' for key 'PRIMARY'");
-            } else {
-                throw $e; // Re-throw if it's a different error
-            }
+            throw $e;
         } finally {
+            $stmp->close();
             $connection->close();
         }
     }
 
+    //MARK: - Delete
     public static function removeAccount($email) {
         $connection = getConnection();
         $query = 'delete from Account where email = ?';
@@ -71,5 +81,52 @@ class AccountDAO {
         $stmp->close();
         $connection->close();
     } 
+
+    //MARK: - Update
+    public static function updateName($id, $name) {
+        $connection = getConnection();
+        $query = 'update Account set name = ? where id = ?';
+        try {
+            $stmp = $connection->prepare($query);
+            $stmp->bind_param("si", $name, $id);
+            $stmp->execute();
+            $stmp->close();
+        } catch (mysqli_sql_exception $e) {
+            throw $e;
+        } finally {
+            $connection->close();
+        }
+    }
+
+    public static function updateEmail($id, $email) {
+        $connection = getConnection();
+        $query = 'update Account set email = ? where id = ?';
+        try {
+            $stmp = $connection->prepare($query);
+            $stmp->bind_param("si", $email, $id);
+            $stmp->execute();
+            $stmp->close();
+        } catch (mysqli_sql_exception $e) {
+            throw $e;
+        } finally {
+            $connection->close();
+        }
+    }
+
+    public static function updatePassword($id, $password) {
+        $connection = getConnection();
+        $hashValue = sha1($password);
+        $query = 'update Account set password = ? where id = ?';
+        try {
+            $stmp = $connection->prepare($query);
+            $stmp->bind_param("si", $hashValue, $id);
+            $stmp->execute();
+            $stmp->close();
+        } catch (mysqli_sql_exception $e) {
+            throw $e;
+        } finally {
+            $connection->close();
+        }
+    }
 }
 ?>

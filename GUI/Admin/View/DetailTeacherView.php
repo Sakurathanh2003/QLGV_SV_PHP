@@ -20,10 +20,24 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $id = $_POST["id"];
+    $teacher = AdminBLL::teacherByID($id);
+
     if (isset($_POST["deleteBtn"])) {
-        $id = $_POST["id"];
         AdminBLL::deleteTeacher($id);
         header("Location: /QuanLySinhVien/GUI/Admin/View/AllTeacherView.php");
+    }
+
+    if (isset($_POST["editBtn"])) {
+        $teacherName = $_POST['teacherName'] ?? '';
+        $teacherEmail = $_POST['teacherEmail'] ?? '';
+        $teacherGender = $_POST['teacherGender'] ?? '';
+        $teacherAddress = $_POST['teacherAddress'] ?? '';
+        $teacherPhoneNumber = $_POST['teacherPhoneNumber'] ?? '';
+        $teacherBirthday = $_POST['teacherBirthday'] ?? '';
+        $teacherPassword = $_POST['teacherPassword'] ?? '';
+        AdminBLL::updateTeacher($id, $teacherName, $teacherEmail, $teacherPassword, $teacherGender, $teacherAddress, $teacherPhoneNumber, $teacherBirthday);
+        $teacher = AdminBLL::teacherByID($id);
     }
 }
 ?>
@@ -96,16 +110,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <form action="" method="POST">
             <input  type="hidden"
                     name="id"
-                    value="<?php echo $teacher->get_id();?>">
+                    value="<?php echo $teacher->getID();?>">
 
             <div class="field">
                 <p class="fieldName">Teacher Name: </p>
-                <input type="text" class="textField" name="studentName" value="<?php echo $teacher->get_name(); ?>" placeholder="Enter student's name" required>
+                <input type="text" class="textField" name="studentName" value="<?php echo AdminBLL::getTeacherName($teacher->getID()); ?>" placeholder="Enter student's name" required>
             </div>
 
             <div class="field">
                 <p class="fieldName">Email: </p>
-                <input type="text" class="textField" name="studentEmail" value="<?php echo $teacher->get_email(); ?>" placeholder="Enter email" required>
+                <input type="text" class="textField" name="studentEmail" value="<?php echo AdminBLL::getTeacherEmail($teacher->getID()); ?>" placeholder="Enter email" required>
             </div>
 
             <div class="field">
@@ -118,17 +132,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <div class="field">
                 <p class="fieldName">Address: </p>
-                <input type="text" class="textField" placeholder="Enter address" value="<?php echo $teacher->get_address(); ?>" name="studentAddress" required>
+                <input type="text" class="textField" placeholder="Enter address" value="<?php echo $teacher->getAddress(); ?>" name="studentAddress" required>
             </div>
 
             <div class="field">
                 <p class="fieldName">Phone Number: </p>
-                <input type="text" class="textField" placeholder="Enter phone number" value="<?php echo $teacher->get_phoneNumber(); ?>" name="studentPhoneNumber" required>
+                <input type="text" class="textField" placeholder="Enter phone number" value="<?php echo $teacher->getPhoneNumber(); ?>" name="studentPhoneNumber" required>
             </div>
 
             <div class="field">
                 <p class="fieldName">Birthday: </p>
-                <input type="date" class="textField" name="studentBirthday" value="<?php echo $teacher->get_birthDay(); ?>" required>
+                <input type="date" class="textField" name="studentBirthday" value="<?php echo $teacher->getBirthDay(); ?>" required>
             </div>
 
             <div class="field">
@@ -141,7 +155,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             
             <br>
-            <button type="submit" name="editBtn" class="editBtn" >Edit</button>
+            <button type="submit" 
+                    name="editBtn" 
+                    class="editBtn" 
+                    onclick="return confirm('Bạn có chắc muốn sửa giáo viên này không?')"
+                    >Edit</button>
             <button type="submit" 
                     name="deleteBtn" 
                     class="deleteBtn"

@@ -71,7 +71,7 @@ tr:not(:last-child) td{
                     <tr>
                         <td>'.$class->getId().'</td>
                         <td>'.$class->getName().'</td>
-                        <td>'.AdminBLL::teacherByID($class->getTeacherID())->get_name().'</td>
+                        <td>'.AdminBLL::getTeacherName($class->getTeacherID()).'</td>
                         <td>'.AdminBLL::numberOfStudentInClass($class->getId()).'</td>
                         <td>
                             <form action="DetailClassView.php" method="get">

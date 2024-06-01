@@ -2,7 +2,8 @@ create database qlsv;
 use qlsv;
 
 create TABLE if not exists Account(
-    email varchar(100) not null primary key,
+    id int(11) not null AUTO_INCREMENT primary key,
+    email varchar(100) not null UNIQUE,
     name longtext not null,
     password longtext not null,
     role longtext not null
@@ -13,24 +14,22 @@ insert into Account(name, email, password, role) values ("Admin", "admin@gmail.c
 
 create table if not exists Teacher(
     id int(11) not null AUTO_INCREMENT primary key,
-    name longtext not null,
-    email varchar(100) not null,
+    accountID int(11) not null,
     gender boolean not null,
     address longtext not null,
     phoneNumber varchar(15) not null,
     birthday date not null,
-    foreign key(email) references Account(email)
+    foreign key(accountID) references Account(id)
 );
 
 create table if not exists Student(
     id int(11) not null AUTO_INCREMENT primary key,
-    name longtext not null,
+    accountID int(11) not null,
     gender boolean not null,
-    email varchar(100) not null,
     address longtext not null,
     phoneNumber varchar(15) not null,
     birthday date not null,
-    foreign key(email) references Account(email)
+	foreign key(accountID) references Account(id)
 );
 
 create table if not exists Class(
@@ -53,6 +52,6 @@ create table if not exists Score(
     studentID int(11) not null, 
     classID int(11) not null, 
     score1 double, 
-    score2 double, 
-    total double 
+    score2 double,
+    score3 double
 );

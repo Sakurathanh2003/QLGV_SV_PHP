@@ -1,48 +1,42 @@
 <?php
 class Student {
     public $id;
-    public $name;
-    public $email;
+    public $accountID;
     public $gender;
     public $address;
     public $phoneNumber;
     public $birthDay;
 
-    public function __construct($id, $name, $email, $gender, $address, $phoneNumber, $birthDay) {
+    public function __construct($id, $accountID, $gender, $address, $phoneNumber, $birthDay) {
         $this->id = $id;
-        $this->name = $name;
-        $this->email = $email;
+        $this->accountID = $accountID;
         $this->gender = $gender;
         $this->address = $address;
         $this->phoneNumber = $phoneNumber;
         $this->birthDay = $birthDay;
     }
 
-    public function get_id() {
+    public function getID() {
         return $this->id;
     }
 
-    public function get_name() {
-        return $this->name;
+    public function getAccountID() {
+        return $this->accountID;
     }
 
-    public function get_email() {
-        return $this->email;
-    }
-
-    public function get_gender() {
+    public function getGender() {
         return $this->gender;
     }
 
-    public function get_address() {
+    public function getAddress() {
         return $this->address;
     }
 
-    public function get_phoneNumber() {
+    public function getPhoneNumber() {
         return $this->phoneNumber;
     }
 
-    public function get_birthDay() {
+    public function getBirthDay() {
         return $this->birthDay;
     }
 }

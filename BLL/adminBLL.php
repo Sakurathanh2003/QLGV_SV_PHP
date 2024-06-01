@@ -16,6 +16,7 @@ class AdminBLL {
         return $name;
     }
     //MARK: - Teacher
+    // - GET
     public static function numberOfTeachers() {
         $teachers = TeacherDAO::getAllTeachers();
         return count($teachers);
@@ -25,14 +26,51 @@ class AdminBLL {
         return TeacherDAO::getAllTeachers();
     }
 
-    public static function deleteTeacher($id) {
-        $teacher = TeacherDAO::getTeacherBy($id);
-        TeacherDAO::removeTeacher($id);
-        AccountDAO::removeAccount($teacher->get_email());
-    }
-
     public static function teacherByID($id) {
         return TeacherDAO::getTeacherBy($id);
+    }
+
+    public static function getTeacherName($id) {
+        $teacher = AdminBLL::teacherByID($id);
+        $account = AccountDAO::getAccountByID($teacher->getAccountID());
+        return $account->getName();
+    }
+
+    public static function getTeacherEmail($id) {
+        $teacher = AdminBLL::studentByID($id);
+        $account = AccountDAO::getAccountByID($teacher->getAccountID());
+        return $account->getEmail();
+    }
+
+    // - SET
+    public static function deleteTeacher($id) {
+        $teacher = TeacherDAO::getTeacherBy($id);
+        AccountDAO::removeAccount($teacher->getAccountID());
+        TeacherDAO::removeTeacher($id);
+    }
+
+    public static function addTeacher($teacherName, $teacherEmail,$teacherPassword, $teacherGender, $teacherAddress, $teacherPhoneNumber, $teacherBirthday) {
+        try {
+            $accountID = AccountDAO::addAccount($teacherName, $teacherEmail, $teacherPassword, "teacher");
+            TeacherDAO::addTeacher($accountID, $teacherGender, $teacherAddress, $teacherPhoneNumber, $teacherBirthday);
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    public static function updateTeacher($id, $teacherName, $teacherEmail,$teacherPassword, $teacherGender, $teacherAddress, $teacherPhoneNumber, $teacherBirthday) {
+        try {
+            AccountDAO::updateEmail($id, $teacherEmail);
+            AccountDAO::updateName($id, $teacherName);
+
+            if (isset($teacherPassword)) {
+                AccountDAO::updatePassword($id, $teacherPassword);
+            }
+
+            TeacherDAO::addTeacher($teacherName, $teacherEmail, $teacherGender, $teacherAddress, $teacherPhoneNumber, $teacherBirthday);
+        } catch (Exception $e) {
+            throw $e;
+        }
     }
 
     //MARK: - Student
@@ -49,10 +87,22 @@ class AdminBLL {
         return StudentDAO::getStudentBy($id);
     }
 
+    public static function getStudentName($id) {
+        $student = AdminBLL::studentByID($id);
+        $account = AccountDAO::getAccountByID($student->getAccountID());
+        return $account->getName();
+    }
+    public static function getStudentEmail($id) {
+        $student = AdminBLL::studentByID($id);
+        $account = AccountDAO::getAccountByID($student->getAccountID());
+        return $account->getEmail();
+    }
+
+
     public static function deleteStudent($id) {
         $student = StudentDAO::getStudentBy($id);
+        AccountDAO::removeAccount($student->getAccountID());
         StudentDAO::removeStudent($id);
-        AccountDAO::removeAccount($student->get_email());
     }
 
     //MARK: - Class
@@ -155,11 +205,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $teacherPhoneNumber = $_POST['teacherPhoneNumber'] ?? '';
         $teacherBirthday = $_POST['teacherBirthday'] ?? '';
         $teacherPassword = $_POST['teacherPassword'] ?? '';
-        $_SESSION["currentTab"] = "TeacherTab";
 
         try {
-            AccountDAO::addAccount($teacherName, $teacherEmail, $teacherPassword, "teacher");
-            TeacherDAO::addTeacher($teacherName, $teacherEmail, $teacherGender, $teacherAddress, $teacherPhoneNumber, $teacherBirthday);
+            AdminBLL::addTeacher($teacherName, $teacherEmail, $teacherPassword, $teacherGender, $teacherAddress, $teacherPhoneNumber, $teacherBirthday);
             header("Location: /QuanLySinhVien/index.php");
         } catch (Exception $e) {
             echo '<script>
@@ -177,7 +225,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $studentPhoneNumber = $_POST['studentPhoneNumber'] ?? '';
         $studentBirthday = $_POST['studentBirthday'] ?? '';
         $studentPassword = $_POST['studentPassword'] ?? '';
-        $_SESSION["currentTab"] = "StudentTab";
 
         try {
             AccountDAO::addAccount($studentName, $studentEmail, $studentPassword, "student");
@@ -194,7 +241,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["addClassForm"])) {
         $className = $_POST['className'] ?? '';
         $teacherID = $_POST['teacherID'] ?? '';
-        $_SESSION["currentTab"] = "ClassTab";
 
         try {
             ClassDAO::addClass($className, $teacherID);
