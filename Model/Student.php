@@ -25,7 +25,11 @@ class Student {
     }
 
     public function getGender() {
-        return $this->gender;
+        if ($this->gender = 1) {
+            return 'Female';
+        }
+
+        return 'Male';
     }
 
     public function getAddress() {

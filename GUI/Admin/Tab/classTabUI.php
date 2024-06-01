@@ -118,7 +118,7 @@ tr:not(:last-child) td{
                         $teachers = AdminBLL::allTeachers();
                         foreach ($teachers as $teacher) {
                             echo '
-                            <option value="'.$teacher->get_id().'">'.$teacher->get_name()." (id: ".$teacher->get_id().")".'</option>
+                            <option value="'.$teacher->getID().'">'.AdminBLL::getTeacherName($teacher->getID())." (id: ".$teacher->getID().")".'</option>
                             ';
                         }
                     ?>

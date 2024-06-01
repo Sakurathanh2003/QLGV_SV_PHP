@@ -116,10 +116,10 @@
                     foreach ($teachers as $teacher) {
                         echo '
                         <tr>
-                            <td>'.$teacher->get_id().'</td>
-                            <td>'.$teacher->get_name().'</td>
-                            <td>'.$teacher->get_email().'</td>
-                            <td>'.$teacher->get_phoneNumber().'</td>
+                            <td>'.$teacher->getID().'</td>
+                            <td>'.AdminBLL::getTeacherName($teacher->getID()).'</td>
+                            <td>'.AdminBLL::getTeacherEmail($teacher->getID()).'</td>
+                            <td>'.$teacher->getPhoneNumber().'</td>
                         </tr>
                         ';
                     }
@@ -134,23 +134,35 @@
         <div class="main">
             <form action="/QuanLySinhVien/BLL/adminBLL.php" method="POST">
                 <input type="hidden" name="addTeacherForm" value="yes" >
+                <!-- Name -->
                 <p class="fieldName">Teacher Name</p>
                 <input type="text" class="textField" name="teacherName" placeholder="Enter teacher's name" required>
+                
+                <!-- Email -->
                 <p class="fieldName">Email</p>
                 <input type="text" class="textField" name="teacherEmail" placeholder="Enter email" required>
+                
+                <!-- Gender -->
                 <p class="fieldName">Gender</p>
-                <select id="gender" class="textField" name="teacherGender" required>
+                <select class="textField" name="teacherGender" required>
                     <option value="0">Male</option>
                     <option value="1">Female</option>
                 </select>
+
+                <!-- Address -->
                 <p class="fieldName">Address</p>
                 <input type="text" class="textField" placeholder="Enter address" name="teacherAddress" required>
+                
+                <!-- Phone -->
                 <p class="fieldName">Phone Number</p>
                 <input type="text" class="textField" placeholder="Enter phone number" name="teacherPhoneNumber" required>
+                
+                <!-- Birthday -->
                 <p class="fieldName">Birthday</p>
                 <input type="date" class="textField" name="teacherBirthday" required>
+                
+                <!-- Password -->
                 <p class="fieldName">Password</p>
-
                 <input  type="password" 
                         class="textField" 
                         placeholder="Enter password" 

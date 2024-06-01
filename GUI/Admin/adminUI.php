@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="adminUI.css">
 </head>
-<body>  
+<body>
     <!--Left side bar-->
     <div class="sidebar">
         <div class="logo-content">
@@ -126,10 +126,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             ?>
         </div>
 
-        <div id="teacherTab" class="tab" <?php
-        if ($_SESSION["currentTab"] != "teacherTab") {
-            echo 'style="display: none"';
-        }
+        <div id="teacherTab" class="tab" 
+        <?php
+            if ($_SESSION["currentTab"] != "teacherTab") {
+                echo 'style="display: none"';
+            }
         ?>>
             <?php
             include "../Admin/Tab/teacherTabUI.php";
@@ -148,5 +149,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
     <script src="adminUI.js"></script>
 </body>
-
 </html>

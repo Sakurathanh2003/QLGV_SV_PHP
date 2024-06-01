@@ -108,23 +108,35 @@ tr:not(:last-child) td{
         <div class="main">
             <form action="/QuanLySinhVien/BLL/adminBLL.php" method="POST">
                 <input type="hidden" name="addStudentForm" value="yes" >
+                <!-- Name -->
                 <p class="fieldName">Student Name</p>
                 <input type="text" class="textField" name="studentName" placeholder="Enter student's name" required>
+
+                <!-- Email -->
                 <p class="fieldName">Email</p>
                 <input type="text" class="textField" name="studentEmail" placeholder="Enter email" required>
+
+                <!-- Gender -->
                 <p class="fieldName">Gender</p>
-                <select id="gender" class="textField" name="studentGender" required>
+                <select class="textField" name="studentGender" required>
                     <option value="0">Male</option>
                     <option value="1">Female</option>
                 </select>
+
+                <!-- Address -->
                 <p class="fieldName">Address</p>
                 <input type="text" class="textField" placeholder="Enter address" name="studentAddress" required>
+
+                <!-- Phone -->
                 <p class="fieldName">Phone Number</p>
                 <input type="text" class="textField" placeholder="Enter phone number" name="studentPhoneNumber" required>
+
+                <!-- Birthday -->
                 <p class="fieldName">Birthday</p>
                 <input type="date" class="textField" name="studentBirthday" required>
-                <p class="fieldName">Password</p>
 
+                <!-- Password -->
+                <p class="fieldName">Password</p>
                 <input  type="password" 
                         class="textField" 
                         placeholder="Enter password" 
@@ -152,14 +164,14 @@ tr:not(:last-child) td{
                     <th>Phone Number</th>
                 </tr>
                 <?php
-                    $teachers = AdminBLL::allStudent();
-                    foreach ($teachers as $teacher) {
+                    $students = AdminBLL::allStudent();
+                    foreach ($students as $student) {
                         echo '
                         <tr>
-                            <td style="text-align:center;">'.$teacher->get_id().'</td>
-                            <td>'.$teacher->get_name().'</td>
-                            <td>'.$teacher->get_email().'</td>
-                            <td>'.$teacher->get_phoneNumber().'</td>
+                            <td style="text-align:center;">'.$student->getID().'</td>
+                            <td>'.AdminBLL::getStudentName($student->getID()).'</td>
+                            <td>'.AdminBLL::getStudentEmail($student->getID()).'</td>
+                            <td>'.$student->getPhoneNumber().'</td>
                         </tr>
                         ';
                     }

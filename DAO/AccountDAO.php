@@ -71,29 +71,35 @@ class AccountDAO {
     }
 
     //MARK: - Delete
-    public static function removeAccount($email) {
+    public static function removeAccount($id) {
         $connection = getConnection();
-        $query = 'delete from Account where email = ?';
+        $query = 'delete from Account where id = ?';
         $stmp = $connection->prepare($query);
-        $stmp->bind_param("s", $email);
-        $stmp->execute();
-    
-        $stmp->close();
-        $connection->close();
+
+        try {
+            $stmp->bind_param("i", $id);
+            $stmp->execute();
+        } catch (mysqli_sql_exception $e) {
+            throw $e;
+        } finally {
+            $stmp->close();
+            $connection->close();
+        }
     } 
 
     //MARK: - Update
     public static function updateName($id, $name) {
         $connection = getConnection();
         $query = 'update Account set name = ? where id = ?';
+        $stmp = $connection->prepare($query);
+
         try {
-            $stmp = $connection->prepare($query);
             $stmp->bind_param("si", $name, $id);
             $stmp->execute();
-            $stmp->close();
         } catch (mysqli_sql_exception $e) {
             throw $e;
         } finally {
+            $stmp = $connection->prepare($query);
             $connection->close();
         }
     }
@@ -117,14 +123,15 @@ class AccountDAO {
         $connection = getConnection();
         $hashValue = sha1($password);
         $query = 'update Account set password = ? where id = ?';
+        $stmp = $connection->prepare($query);
+
         try {
-            $stmp = $connection->prepare($query);
             $stmp->bind_param("si", $hashValue, $id);
             $stmp->execute();
-            $stmp->close();
         } catch (mysqli_sql_exception $e) {
             throw $e;
         } finally {
+            $stmp->close();
             $connection->close();
         }
     }

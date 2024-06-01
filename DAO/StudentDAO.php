@@ -33,7 +33,7 @@ class StudentDAO {
         $query = 'select * from Student where id = '.$id;
         $result = $connection->query($query);
         $connection->close();
-        
+
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 $item = new Student($row["id"], $row["accountID"], $row["gender"], $row["address"], $row["phoneNumber"], $row["birthday"]);
@@ -47,11 +47,16 @@ class StudentDAO {
         $connection = getConnection();
         $query = 'insert into Student(accountID, gender, address, phoneNumber, birthday) VALUES (?,?,?,?,?)';
         $stmp = $connection->prepare($query);
-        $stmp->bind_param("iissss", $accountID, $gender, $address, $phoneNumber, $birthDay);
-        $stmp->execute();
-    
-        $stmp->close();
-        $connection->close();
+
+        try {
+            $stmp->bind_param("iisss", $accountID, $gender, $address, $phoneNumber, $birthDay);
+            $stmp->execute();
+        } catch (mysqli_sql_exception $e) {
+            throw $e;
+        } finally {
+            $stmp->close();
+            $connection->close();
+        }
     }
 
     //MARK: - Delete
@@ -59,11 +64,33 @@ class StudentDAO {
         $connection = getConnection();
         $query = 'delete from Student where id = ?';
         $stmp = $connection->prepare($query);
-        $stmp->bind_param("i", $id);
-        $stmp->execute();
-    
-        $stmp->close();
-        $connection->close();
+
+        try {
+            $stmp->bind_param("i", $id);
+            $stmp->execute();
+        } catch (mysqli_sql_exception $e) {
+            throw $e;
+        } finally {
+            $stmp->close();
+            $connection->close();
+        }
+    }
+
+    //MARK: - Update
+    public static function updateStudent($id, $gender, $address, $phoneNumber, $birthDay) {
+        $connection = getConnection();
+        $query = 'update Student set gender = ?, address = ?, phoneNumber = ?, birthday = ? where id = ?';
+        $stmp = $connection->prepare($query);
+
+        try {
+            $stmp->bind_param("isssi", $gender, $address, $phoneNumber, $birthDay, $id);
+            $stmp->execute();
+        } catch (mysqli_sql_exception $e) {
+            throw $e;
+        } finally {
+            $stmp = $connection->prepare($query);
+            $connection->close();
+        }
     }
 }
 ?>

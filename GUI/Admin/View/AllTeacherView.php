@@ -73,18 +73,18 @@ tr:not(:last-child) td{
                 foreach ($teachers as $teacher) {
                     echo '
                     <tr>
-                        <td>'.$teacher->get_id().'</td>
-                        <td>'.$teacher->get_name().'</td>
-                        <td>'.$teacher->get_email().'</td>
-                        <td>'.$teacher->get_gender().'</td>
-                        <td>'.$teacher->get_address().'</td>
-                        <td>'.$teacher->get_phoneNumber().'</td>
-                        <td>'.$teacher->get_birthDay().'</td>
+                        <td>'.$teacher->getID().'</td>
+                        <td>'.AdminBLL::getTeacherName($teacher->getID()).'</td>
+                        <td>'.AdminBLL::getTeacherEmail($teacher->getID()).'</td>
+                        <td>'.$teacher->getGender().'</td>
+                        <td>'.$teacher->getAddress().'</td>
+                        <td>'.$teacher->getPhoneNumber().'</td>
+                        <td>'.$teacher->getBirthDay().'</td>
                         <td>
                             <form action="DetailTeacherView.php" method="get">
                             <input  type="hidden"
                                     name="id"
-                                    value="'.$teacher->get_id().'">
+                                    value="'.$teacher->getID().'">
 
                             <button type="submit">
                                 <i class="bx bxs-edit-alt bx-sm" style="color: blue;" ></i>

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <?php
 ini_set('display_errors', 1);
@@ -25,6 +26,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         AdminBLL::deleteStudent($id);
         header("Location: /QuanLySinhVien/GUI/Admin/View/AllStudentView.php");
     }
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $id = $_POST["id"];
+
+    if (isset($_POST["deleteBtn"])) {
+        AdminBLL::deleteStudent($id);
+        header("Location: /QuanLySinhVien/GUI/Admin/View/AllStudentView.php");
+    }
+
+    if (isset($_POST["editBtn"])) {
+        $name = $_POST['name'] ?? '';
+        $email = $_POST['email'] ?? '';
+        $gender = $_POST['gender'] ?? '';
+        $address = $_POST['address'] ?? '';
+        $phoneNumber = $_POST['phoneNumber'] ?? '';
+        $birthday = $_POST['birthday'] ?? '';
+        $password = $_POST['password'] ?? '';
+
+        try {
+            AdminBLL::updateStudent($id, $name, $email, $password, $gender, $address, $phoneNumber, $birthday);
+        } catch (Exception $e) {
+            echo $e;
+        }
+    }
+
+    $student = AdminBLL::studentByID($id);
 }
 ?>
 <style>
@@ -95,22 +123,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="main">
         <form action="" method="POST">
             <input  type="hidden"
-                    name="id"
-                    value="<?php echo $student->getID();?>">
+                        name="id"
+                        value="<?php echo $student->getID();?>">
 
             <div class="field">
                 <p class="fieldName">Student Name: </p>
-                <input type="text" class="textField" name="studentName" value="<?php echo AdminBLL::getStudentName($student->getID()); ?>" placeholder="Enter student's name" required>
+                <input type="text" class="textField" name="name" value="<?php echo AdminBLL::getStudentName($student->getID()); ?>" placeholder="Enter name" required>
             </div>
 
             <div class="field">
                 <p class="fieldName">Email: </p>
-                <input type="text" class="textField" name="studentEmail" value="<?php echo AdminBLL::getStudentEmail($student->getID()); ?>" placeholder="Enter email" required>
+                <input type="text" class="textField" name="email" value="<?php echo AdminBLL::getStudentEmail($student->getID()); ?>" placeholder="Enter email" required>
             </div>
 
             <div class="field">
                 <p class="fieldName">Gender: </p>
-                <select id="gender" class="textField" name="studentGender" value="<?php echo $student->gender; ?>" required>
+                <script>
+                    $(document).ready(function() {
+                        $('#gender').val('<?php echo $student->gender;?>');
+                    });
+                </script>
+                <select id="gender" class="textField" name="gender" required>
                     <option value="0">Male</option>
                     <option value="1">Female</option>
                 </select>
@@ -118,17 +151,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <div class="field">
                 <p class="fieldName">Address: </p>
-                <input type="text" class="textField" placeholder="Enter address" value="<?php echo $student->getAddress(); ?>" name="studentAddress" required>
+                <input type="text" class="textField" name="address" placeholder="Enter address" value="<?php echo $student->getAddress(); ?>"  required>
             </div>
 
             <div class="field">
                 <p class="fieldName">Phone Number: </p>
-                <input type="text" class="textField" placeholder="Enter phone number" value="<?php echo $student->getPhoneNumber(); ?>" name="studentPhoneNumber" required>
+                <input type="text" class="textField" name="phoneNumber" placeholder="Enter phone number" value="<?php echo $student->getPhoneNumber(); ?>"  required>
             </div>
 
             <div class="field">
                 <p class="fieldName">Birthday: </p>
-                <input type="date" class="textField" name="studentBirthday" value="<?php echo $student->getBirthDay(); ?>" required>
+                <input type="date" class="textField" name="birthday" value="<?php echo $student->getBirthDay(); ?>" required>
             </div>
 
             <div class="field">
@@ -136,12 +169,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input  type="password" 
                         class="textField" 
                         placeholder="Enter password" 
-                        name="studentPassword" 
+                        name="password" 
                         pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
             </div>
             
             <br>
-            <button type="submit" name="editBtn" class="editBtn" >Edit</button>
+            <button type="submit" 
+                    name="editBtn"
+                    class="editBtn" 
+                    onclick="return confirm('Bạn có chắc muốn sửa sinh viên này không?')"
+                    >Edit</button>
             <button type="submit" 
                     name="deleteBtn" 
                     class="deleteBtn"

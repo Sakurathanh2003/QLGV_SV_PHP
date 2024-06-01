@@ -28,7 +28,7 @@ class TeacherDAO {
         $connection->close();
         return $teachers;
     }
-    
+
     public static function getTeacherBy($id) {
         $connection = getConnection();
         $query = 'select * from Teacher where id = '.$id;
@@ -48,7 +48,7 @@ class TeacherDAO {
         $connection = getConnection();
         $query = 'insert into Teacher(accountID, gender, address, phoneNumber, birthday) VALUES (?,?,?,?,?)';
         $stmp = $connection->prepare($query);
-        $stmp->bind_param("iissss", $accountID, $gender, $address, $phoneNumber, $birthDay);
+        $stmp->bind_param("iisss", $accountID, $gender, $address, $phoneNumber, $birthDay);
         $stmp->execute();
     
         $stmp->close();
@@ -65,6 +65,23 @@ class TeacherDAO {
 
         $stmp->close();
         $connection->close();
+    }
+
+    //MARK: - Update
+    public static function updateTeacher($id, $gender, $address, $phoneNumber, $birthDay) {
+        $connection = getConnection();
+        $query = 'update Teacher set gender = ?, address = ?, phoneNumber = ?, birthday = ? where id = ?';
+        $stmp = $connection->prepare($query);
+
+        try {
+            $stmp->bind_param("isssi", $gender, $address, $phoneNumber, $birthDay, $id);
+            $stmp->execute();
+        } catch (mysqli_sql_exception $e) {
+            throw $e;
+        } finally {
+            $stmp = $connection->prepare($query);
+            $connection->close();
+        }
     }
 }
 ?>
