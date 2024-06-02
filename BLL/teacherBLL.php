@@ -13,6 +13,7 @@ include($_SERVER['DOCUMENT_ROOT'].'/QuanLySinhVien/DAO/ScoreDAO.php');
 
 
 class TeacherBLL {
+    //MARK: - Persional Information
     public static function getAccountID() {
         return $_SESSION['id'];
     }
@@ -40,7 +41,21 @@ class TeacherBLL {
         return $classes;
     }
 
-    //MARK: - Class Detail
+    public static function getTotalStudents() {
+        $classes = TeacherBLL::getClass();
+        $students = [];
+
+        foreach ($classes as $class) {
+            $studentInClass = TeacherBLL::studentsInClass($class->getID());
+            foreach ($studentInClass as $student) {
+                $students[$student->getID()] = $student;
+            }
+        }
+
+        return count($students);
+    }
+
+    //MARK: - Detail in Class
     public static function studentsInClass($classID) {
         $list = ClassDetailDAO::getClassDetail($classID);
         $students = [];
@@ -52,11 +67,16 @@ class TeacherBLL {
         return $students;
     }
 
-    //MARK: - Score
+    //MARK: - Score of student
     public static function ScoreOfStudent($classID, $studentID) {
         return ScoreDAO::getScoreOfStudent($classID, $studentID);
     }
 
+    public static function updateScore($scoreID, $score1, $score2, $score3) {
+        ScoreDAO::updateScore($scoreID, $score1, $score2, $score3);
+    }
+
+    //MARK: - Student Information
     public static function getStudentName($id) {
         $student = StudentDAO::getStudentBy($id);
         $account = AccountDAO::getAccountByID($student->getAccountID());
@@ -66,10 +86,6 @@ class TeacherBLL {
         $student = StudentDAO::getStudentBy($id);
         $account = AccountDAO::getAccountByID($student->getAccountID());
         return $account->getEmail();
-    }
-
-    public static function updateScore($scoreID, $score1, $score2, $score3) {
-        ScoreDAO::updateScore($scoreID, $score1, $score2, $score3);
     }
 }
 ?>

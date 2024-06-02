@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="logo-content">
             <div class="logo">
                 <i class='bx bxs-invader'></i>
-                <h3>Student</h3>
+                <h3>Sinh viên</h3>
             </div>
             <i class='bx bx-menu' id="btn"></i>
         </div>
@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 ?>>
                     <a href="#Class" onClick="openTab('scoreTab');">
                         <i class='bx bx-door-open'></i>
-                        <span class="links-name">Class</span>
+                        <span class="links-name">Kết quả học tập</span>
                     </a>
                 </li>
             </form>
@@ -66,7 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <li>
                     <a href="#" onClick="login();">
                         <i class='bx bx-log-out'></i>
-                        <span class="links-name">Logout</span>
+                        <span class="links-name">Đăng xuất</span>
                     </a>
                 </li>
             </ul>

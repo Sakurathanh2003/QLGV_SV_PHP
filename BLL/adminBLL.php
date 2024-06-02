@@ -10,6 +10,7 @@ include($_SERVER['DOCUMENT_ROOT'].'/QuanLySinhVien/DAO/StudentDAO.php');
 include($_SERVER['DOCUMENT_ROOT'].'/QuanLySinhVien/DAO/ClassDAO.php');
 include($_SERVER['DOCUMENT_ROOT'].'/QuanLySinhVien/DAO/ClassDetailDAO.php');
 include($_SERVER['DOCUMENT_ROOT'].'/QuanLySinhVien/DAO/ScoreDAO.php');
+include($_SERVER['DOCUMENT_ROOT'].'/QuanLySinhVien/DAO/MajorDAO.php');
 
 
 class AdminBLL {
@@ -17,6 +18,40 @@ class AdminBLL {
         $name = $_SESSION["name"];
         return $name;
     }
+    //MARK: - Major
+    public static function majors() {
+        return MajorDAO::getAllMajor();
+    }
+
+    public static function majorByID($majorID) {
+        return MajorDAO::getMajorBy($majorID);
+    }
+
+    public static function addMajor($name) {
+        MajorDAO::addMajor($name);
+    }
+
+    public static function studentInMajor($majorID) {
+        $students = StudentDAO::getStudentsByMajorID($majorID);
+        return $students;
+    }
+
+    public static function deleteMajor($id) {
+        try {
+            MajorDAO::removeMajor($id);
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    public static function updateMajor($id, $name) {
+        try {
+            MajorDAO::updateMajor($id, $name);
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
     //MARK: - Teacher
     // - GET
     public static function numberOfTeachers() {
@@ -108,6 +143,9 @@ class AdminBLL {
         return $account->getEmail();
     }
 
+    public static function getStudentMajor($student) {
+        return MajorDAO::getMajorBy($student->getMajorID());
+    }
 
     public static function deleteStudent($id) {
         $student = StudentDAO::getStudentBy($id);
@@ -122,16 +160,16 @@ class AdminBLL {
         }
     }
 
-    public static function addStudent($name, $email,$password, $gender, $address, $phoneNumber, $birthday) {
+    public static function addStudent($name, $email,$password, $gender, $address, $phoneNumber, $birthday, $majorID) {
         try {
             $accountID = AccountDAO::addAccount($name, $email, $password, "student");
-            StudentDAO::addStudent($accountID, $gender, $address, $phoneNumber, $birthday);
+            StudentDAO::addStudent($accountID, $majorID, $gender, $address, $phoneNumber, $birthday);
         } catch (Exception $e) {
             throw $e;
         }
     }
 
-    public static function updateStudent($id, $name, $email,$password, $gender, $address, $phoneNumber, $birthday) {
+    public static function updateStudent($id, $name, $email,$password, $gender, $address, $phoneNumber, $birthday, $majorID) {
         try {
             $teacher = AdminBLL::studentByID($id);
             $account = AccountDAO::getAccountByID($teacher->getAccountID());
@@ -143,7 +181,7 @@ class AdminBLL {
                 AccountDAO::updatePassword($id, $password);
             }
 
-            StudentDAO::updateStudent($id, $gender, $address, $phoneNumber, $birthday);
+            StudentDAO::updateStudent($id, $gender, $address, $phoneNumber, $birthday, $majorID);
         } catch (Exception $e) {
             throw $e;
         }
@@ -270,9 +308,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $phoneNumber = $_POST['studentPhoneNumber'] ?? '';
         $birthday = $_POST['studentBirthday'] ?? '';
         $password = $_POST['studentPassword'] ?? '';
+        $majorID = $_POST['majorID'];
 
         try {
-            AdminBLL::addStudent($name, $email, $password, $gender, $address, $phoneNumber, $birthday);
+            AdminBLL::addStudent($name, $email, $password, $gender, $address, $phoneNumber, $birthday, $majorID);
             header("Location: /QuanLySinhVien/index.php");
         } catch (Exception $e) {
             echo '<script>
@@ -288,6 +327,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         try {
             ClassDAO::addClass($className, $teacherID);
+            header("Location: /QuanLySinhVien/index.php");
+        } catch (Exception $e) {
+            echo '<script>
+            alert("'.$e->getMessage().'")
+            document.location = "/QuanLySinhVien/index.php"
+            </script>';
+        }
+    }
+
+    if (isset($_POST["addMajorForm"])) {
+        $name = $_POST['majorName'] ?? '';
+
+        try {
+            AdminBLL::addMajor($name);
             header("Location: /QuanLySinhVien/index.php");
         } catch (Exception $e) {
             echo '<script>

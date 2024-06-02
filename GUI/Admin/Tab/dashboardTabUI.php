@@ -20,7 +20,7 @@
 
 .top .card .main .number {
     font-size: 25px;
-    font-weight: bold;
+    font-weight:900;
 }
 </style>
 <div>
@@ -32,9 +32,9 @@
                         echo AdminBLL::numberOfStudents();
                     ?>
                 </p>
-                <p class="title">Student</p>
+                <p class="title">Sinh viên</p>
             </div>
-            <i class='bx bxs-graduation bx-md' style="color: blue"></i>
+            <img src="../../resources/image/student.png" alt="" style="width: 50px;">
         </div>
         <div class="card">
             <div class="main">
@@ -43,9 +43,9 @@
                         echo AdminBLL::numberOfTeachers();
                     ?>
                 </p>
-                <p class="title">Teacher</p>
+                <p class="title">Giảng viên</p>
             </div>
-            <i class='bx bx-body bx-md' style="color: red"></i>
+            <img src="../../resources/image/teacher.png" alt="" style="width: 50px;">
         </div>
         <div class="card">
             <div class="main">
@@ -54,9 +54,14 @@
                         echo AdminBLL::numberOfClasses();
                     ?>
                 </p>
-                <p class="title">Class</p>
+                <p class="title">Lớp học</p>
             </div>
-            <i class='bx bx-door-open bx-md'></i>
+            <img src="../../resources/image/class.png" alt="" style="width: 50px;">
         </div>
+    </div>
+    <div id='calendar' style="padding: 30px;">
+        <?php
+        require_once '../../Common/Calendar.php';
+        ?>
     </div>
 </div>

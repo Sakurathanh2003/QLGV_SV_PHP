@@ -10,6 +10,7 @@ include($_SERVER['DOCUMENT_ROOT'].'/QuanLySinhVien/DAO/StudentDAO.php');
 include($_SERVER['DOCUMENT_ROOT'].'/QuanLySinhVien/DAO/ClassDAO.php');
 include($_SERVER['DOCUMENT_ROOT'].'/QuanLySinhVien/DAO/ClassDetailDAO.php');
 include($_SERVER['DOCUMENT_ROOT'].'/QuanLySinhVien/DAO/ScoreDAO.php');
+include($_SERVER['DOCUMENT_ROOT'].'/QuanLySinhVien/DAO/MajorDAO.php');
 
 class StudentBLL {
     public static function getAccountID() {
@@ -48,6 +49,11 @@ class StudentBLL {
         $studentID = StudentBLL::getStudentID();
         $score = ScoreDAO::getScoreOfStudent($classID, $studentID);
         return $score;
+    }
+
+    public static function getMajor() {
+        $student = StudentBLL::getStudent();
+        return MajorDAO::getMajorBy($student->getMajorID());
     }
 }
 ?>

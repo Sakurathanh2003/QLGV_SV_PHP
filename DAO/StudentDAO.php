@@ -20,7 +20,7 @@ class StudentDAO {
     
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
-                $item = new Student($row["id"], $row["accountID"], $row["gender"], $row["address"], $row["phoneNumber"], $row["birthday"]);
+                $item = new Student($row["id"], $row["accountID"],$row["majorID"], $row["gender"], $row["address"], $row["phoneNumber"], $row["birthday"]);
                 array_push($students, $item);
             }
         }
@@ -36,10 +36,28 @@ class StudentDAO {
 
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
-                $item = new Student($row["id"], $row["accountID"], $row["gender"], $row["address"], $row["phoneNumber"], $row["birthday"]);
+                $item = new Student($row["id"], $row["accountID"],$row["majorID"], $row["gender"], $row["address"], $row["phoneNumber"], $row["birthday"]);
                 return $item;
             }
         }
+    }
+
+    public static function getStudentsByMajorID($majorID) {
+        $connection = getConnection();
+        $query = 'select * from Student where majorID = '.$majorID;
+        $result = $connection->query($query);
+        $connection->close();
+
+        $students = [];
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $item = new Student($row["id"], $row["accountID"],$row["majorID"], $row["gender"], $row["address"], $row["phoneNumber"], $row["birthday"]);
+                array_push($students, $item);
+            }
+        }
+
+        return $students;
     }
 
     public static function getStudentByAccountID($accountID) {
@@ -50,20 +68,20 @@ class StudentDAO {
 
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
-                $item = new Student($row["id"], $row["accountID"], $row["gender"], $row["address"], $row["phoneNumber"], $row["birthday"]);
+                $item = new Student($row["id"], $row["accountID"],$row["majorID"], $row["gender"], $row["address"], $row["phoneNumber"], $row["birthday"]);
                 return $item;
             }
         }
     }
 
     //MARK: - Add
-    public static function addStudent($accountID, $gender,$address, $phoneNumber, $birthDay) {
+    public static function addStudent($accountID, $majorID, $gender,$address, $phoneNumber, $birthDay) {
         $connection = getConnection();
-        $query = 'insert into Student(accountID, gender, address, phoneNumber, birthday) VALUES (?,?,?,?,?)';
+        $query = 'insert into Student(accountID, majorID, gender, address, phoneNumber, birthday) VALUES (?, ?,?,?,?,?)';
         $stmp = $connection->prepare($query);
 
         try {
-            $stmp->bind_param("iisss", $accountID, $gender, $address, $phoneNumber, $birthDay);
+            $stmp->bind_param("iiisss", $accountID, $majorID, $gender, $address, $phoneNumber, $birthDay);
             $stmp->execute();
         } catch (mysqli_sql_exception $e) {
             throw $e;
@@ -91,13 +109,13 @@ class StudentDAO {
     }
 
     //MARK: - Update
-    public static function updateStudent($id, $gender, $address, $phoneNumber, $birthDay) {
+    public static function updateStudent($id, $gender, $address, $phoneNumber, $birthDay, $majorID) {
         $connection = getConnection();
-        $query = 'update Student set gender = ?, address = ?, phoneNumber = ?, birthday = ? where id = ?';
+        $query = 'update Student set majorID = ?, gender = ?, address = ?, phoneNumber = ?, birthday = ? where id = ?';
         $stmp = $connection->prepare($query);
 
         try {
-            $stmp->bind_param("isssi", $gender, $address, $phoneNumber, $birthDay, $id);
+            $stmp->bind_param("iisssi", $majorID, $gender, $address, $phoneNumber, $birthDay, $id);
             $stmp->execute();
         } catch (mysqli_sql_exception $e) {
             throw $e;

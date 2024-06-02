@@ -22,6 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id = $_POST["id"];
+    
     if (isset($_POST["deleteBtn"])) {
         try {
             AdminBLL::deleteTeacher($id);

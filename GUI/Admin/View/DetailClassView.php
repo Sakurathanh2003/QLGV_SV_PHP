@@ -8,10 +8,10 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <style>
-@import url("https://fonts.googleapis.com/css?family=Poppins");
+@import url("https://fonts.googleapis.com/css?family=Lexend Deca");
 
 * {
-    font-family: 'Poppins';
+    font-family: 'Lexend Deca';
 }
 
 /* DIALOG ADD */
@@ -66,7 +66,7 @@
 
 .fieldName {
     font-size: 20px;
-    width: 200px;
+    width: 350px;
 }
 
 .field {
@@ -171,22 +171,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="mainContainer">
         <div id="navigation">
             <i class='bx bx-arrow-back bx-md'></i>
-            <p class="title">Detail Class</p>
+            <p class="title">Chi tiết lớp học</p>
         </div>
         <div class="mainView">
-            <form action="" method="POST">
+            <form class="editView" action="" method="POST">
             <!-- Information of Class -->
                 <input  type="hidden"
                         name="classID"
                         value="<?php echo $class->getId();?>">
 
                 <div class="field">
-                    <p class="fieldName">Class Name: </p>
+                    <p class="fieldName">Tên lớp: </p>
                     <input type="text" class="textField" name="classNameNew" value="<?php echo $class->getName(); ?>" placeholder="Enter class name" required>
                 </div>
 
                 <div class="field">
-                    <p class="fieldName">Teacher</p>
+                    <p class="fieldName">Giảng viên phụ trách:</p>
                     <script>
                         $(document).ready(function() {
                             $('#teacherIDNew').val('<?php echo $class->getTeacherID(); ?>');
@@ -205,27 +205,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
 
                 <!-- Edit and Delete button -->
-                <button type="submit" name="editBtn" class="editBtn" >Edit</button>
+                <button type="submit" name="editBtn" class="editBtn" >Sửa</button>
                 <button type="submit" 
                         name="deleteBtn" 
                         class="deleteBtn"
                         onclick="return confirm('Bạn có chắc muốn xóa lớp này không?')"
-                        >Delete</button>
+                        >Xoá</button>
                 <br>
-            </form>
+            </form><br>
            <!-- Student Table -->
            <div class="allStudent">
-                <p class="fieldName">All Students</p>
+                <p class="fieldName" style="font-size: 30px;">Danh sách sinh viên</p>
                 <table class="studentTable">
                     <tr>
-                        <th style="text-align: center">StudentID</th>
-                        <th>Student's name</th>
-                        <th>Student's email</th>
-                        <th>Gender</th>
-                        <th>Address</th>
-                        <th>Phone Number</th>
-                        <th>Birthday</th>
-                        <th>Action</th>
+                        <th style="text-align: center">Mã sinh viên</th>
+                        <th>Họ và tên</th>
+                        <th>Email</th>
+                        <th>Giới tính</th>
+                        <th>Địa chỉ</th>
+                        <th>Số điện thoại</th>
+                        <th>Ngày sinh</th>
+                        <th></th>
                     </tr>
                     <?php
                         $students = AdminBLL::studentsInClass($class->getID());
@@ -261,13 +261,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                         echo '
                             <tr>
-                                <td>.</td>
-                                <td>.</td>
-                                <td>.</td>
-                                <td>.</td>
-                                <td>.</td>
-                                <td>.</td>
-                                <td>.</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                                 <td>
                                     <button id="addStudent" style="border: none; background: white;">
                                         <i class="bx bx-plus-circle bx-sm" style="color: red;"></i>

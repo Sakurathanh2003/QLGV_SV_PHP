@@ -53,9 +53,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $phoneNumber = $_POST['phoneNumber'] ?? '';
         $birthday = $_POST['birthday'] ?? '';
         $password = $_POST['password'] ?? '';
+        $majorID = $_POST['major'] ?? '';
 
         try {
-            AdminBLL::updateStudent($id, $name, $email, $password, $gender, $address, $phoneNumber, $birthday);
+            AdminBLL::updateStudent($id, $name, $email, $password, $gender, $address, $phoneNumber, $birthday, $majorID);
             echo '<script>
             alert("Sửa thành công!")
             </script>';
@@ -70,10 +71,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 <style>
-@import url("https://fonts.googleapis.com/css?family=Poppins");
+@import url("https://fonts.googleapis.com/css?family=Lexend Deca");
 
 * {
-    font-family: 'Poppins';
+    font-family: 'Lexend Deca';
 }
 
 #nav {
@@ -132,7 +133,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <div id="nav">
         <i class='bx bx-arrow-back bx-md'></i>
-        <p class="title">Detail Student</p>
+        <p class="title">Chi tiết sinh viên</p>
     </div>
     <div class="main">
         <form action="" method="POST">
@@ -141,8 +142,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         value="<?php echo $student->getID();?>">
 
             <div class="field">
-                <p class="fieldName">Student Name: </p>
+                <p class="fieldName">Họ tên sinh viên: </p>
                 <input type="text" class="textField" name="name" value="<?php echo AdminBLL::getStudentName($student->getID()); ?>" placeholder="Enter name" required>
+            </div>
+
+            <div class="field">
+                <p class="fieldName">Ngành học: </p>
+                <script>
+                    $(document).ready(function() {
+                        $('#major').val('<?php echo $student->getMajorID();?>');
+                    });
+                </script>
+                <select id="major" class="textField" name="major" required>
+                    <?php
+                        $majors = AdminBLL::majors();
+                        foreach ($majors as $major) {
+                            echo '<option value="'.$major->getId().'">'.$major->getName().'</option>';
+                        } 
+                    ?>
+                </select>
             </div>
 
             <div class="field">
@@ -151,15 +169,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
 
             <div class="field">
-                <p class="fieldName">Gender: </p>
+                <p class="fieldName">Giới tính: </p>
                 <script>
                     $(document).ready(function() {
                         $('#gender').val('<?php echo $student->gender;?>');
                     });
                 </script>
                 <select id="gender" class="textField" name="gender" required>
-                    <option value="0">Male</option>
-                    <option value="1">Female</option>
+                    <option value="0">Nam</option>
+                    <option value="1">Nữ</option>
                 </select>
             </div>
 

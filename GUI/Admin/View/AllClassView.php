@@ -14,6 +14,11 @@ require_once '../../../BLL/adminBLL.php';
 
 ?>
 <style>
+@import url("https://fonts.googleapis.com/css?family=Lexend Deca");
+
+* {
+    font-family: 'Lexend Deca';
+}
 .classTable {
     width: 100%;
     height: 100%;
@@ -53,15 +58,15 @@ tr:not(:last-child) td{
 <body>
     <div id="nav">
         <i class='bx bx-arrow-back bx-md'></i>
-        <p class="title">Classes</p>
+        <p class="title">Danh sách lớp học</p>
     </div>
     <div class="main">
         <table class="classTable">
             <tr>
-                <th>ClassID</th>
-                <th>Class name</th>
-                <th>Teacher</th>
-                <th>Number Of Student</th>
+                <th>Mã lớp</th>
+                <th>Tên lớp</th>
+                <th>Giảng viên phụ trách</th>
+                <th>Số lượng sinh viên</th>
                 <th>Action</th>
             </tr>
             <?php

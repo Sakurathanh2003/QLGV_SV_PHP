@@ -28,10 +28,11 @@
 	height: 36px;
 	object-fit: cover;
 	border-radius: 50%;
+    border: 1px solid black;
 }  
 </style>
 <nav>
-    <h1>Manager</h1>            
+    <h1></h1>            
     <a href="" class="profile" style="text-decoration: none; display: flex; color: black; align-items: center;">
         <p style="padding-right: 10px;">
             <?php
@@ -39,6 +40,6 @@
                 echo "Hi, ".$name;
             ?>
         </p>
-        <img src="../../resources/image/avt.jpg" alt="" style="size: 20px">
+        <img src="../../resources/image/admin.png" alt="" style="size: 20px">
     </a>
 </nav>

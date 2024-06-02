@@ -19,33 +19,41 @@
 }
 
 .top .card .main .number {
-    font-size: 25px;
-    font-weight: bold;
-}
+        font-size: 25px;
+        font-weight: bold;
+    }
+
 </style>
 <div>
-    <div class="top">
-        <div class="card">
-            <div class="main">
-                <p class="number">
-                    <?php 
-                        echo 0;
-                    ?>
-                </p>
-                <p class="title">Student</p>
+    <div>
+        <div class="top">
+            <div class="card">
+                <div class="main">
+                    <p class="number">
+                        <?php 
+                            echo count(TeacherBLL::getClass());
+                        ?>
+                    </p>
+                    <p class="title">Số lượng lớp dạy</p>
+                </div>
+                <img src="../../resources/image/class.png" alt="" style="width: 50px;">
             </div>
-            <i class='bx bxs-graduation bx-md' style="color: blue"></i>
+            <div class="card">
+                <div class="main">
+                    <p class="number">
+                        <?php 
+                            echo TeacherBLL::getTotalStudents();
+                        ?>
+                    </p>
+                    <p class="title">Số lượng học sinh</p>
+                </div>
+                <img src="../../resources/image/student.png" alt="" style="width: 50px;">
+            </div>
         </div>
-        <div class="card">
-            <div class="main">
-                <p class="number">
-                    <?php 
-                        echo 0;
-                    ?>
-                </p>
-                <p class="title">Teacher</p>
-            </div>
-            <i class='bx bx-body bx-md' style="color: red"></i>
+        <div id='calendar' style="padding: 30px;">
+            <?php
+                require_once '../../Common/Calendar.php';
+            ?>
         </div>
     </div>
 </div>

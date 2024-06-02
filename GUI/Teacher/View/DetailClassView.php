@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Detail Class</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <style>
-@import url("https://fonts.googleapis.com/css?family=Poppins");
 
 * {
-    font-family: 'Poppins';
+    font-family: 'Times New Roman', Times, serif;
 }
 
 /* MAIN VIEW */

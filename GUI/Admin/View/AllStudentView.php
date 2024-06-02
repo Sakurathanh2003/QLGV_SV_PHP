@@ -14,6 +14,11 @@ require_once '../../../BLL/adminBLL.php';
 
 ?>
 <style>
+@import url("https://fonts.googleapis.com/css?family=Lexend Deca");
+
+* {
+    font-family: 'Lexend Deca';
+}
 .studentTable {
     width: 100%;
     height: 100%;
@@ -53,28 +58,33 @@ tr:not(:last-child) td{
 <body>
     <div id="nav">
         <i class='bx bx-arrow-back bx-md'></i>
-        <p class="title">Students</p>
+        <p class="title">Danh sách sinh viên</p>
     </div>
     <div class="main">
         <table class="studentTable">
             <tr>
-                <th style="text-align: center">StudentID</th>
-                <th>Student's name</th>
-                <th>Student's email</th>
-                <th>Gender</th>
-                <th>Address</th>
-                <th>Phone Number</th>
-                <th>Birthday</th>
-                <th>Action</th>
+                <th style="text-align: center">Mã sinh viên</th>
+                <th>Họ tên sinh viên</th>
+                <th>Ngành học</th>
+                <th>Email</th>
+                <th>Giới tính</th>
+                <th>Địa chỉ</th>
+                <th>Số điện thoại</th>
+                <th>Ngày sinh</th>
+                <th></th>
             </tr>
             <?php
                 $students = AdminBLL::allStudent();
                 foreach ($students as $student) {
+                    $major = AdminBLL::getStudentMajor($student);
+                    $name = AdminBLL::getStudentName($student->getID());
+                    $email = AdminBLL::getStudentEmail($student->getID());
                     echo '
                     <tr>
                         <td style="text-align: center">'.$student->getID().'</td>
-                        <td>'.AdminBLL::getStudentName($student->getID()).'</td>
-                        <td>'.AdminBLL::getStudentEmail($student->getID()).'</td>
+                        <td>'.$name.'</td>
+                        <td>'.$major->getName().'</td>
+                        <td>'.$email.'</td>
                         <td>'.$student->getGender().'</td>
                         <td>'.$student->getAddress().'</td>
                         <td>'.$student->getPhoneNumber().'</td>

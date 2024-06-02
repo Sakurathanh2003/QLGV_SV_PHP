@@ -12,6 +12,11 @@ create TABLE if not exists Account(
 -- pass: Admin123@
 insert into Account(name, email, password, role) values ("Admin", "admin@gmail.com", "b39abbe763440b02c231b2653ebd9da3ea78dcb1", "admin");
 
+create table if not exists Major(
+    id int(11) not null AUTO_INCREMENT primary key,
+     name longtext not null 
+);
+
 create table if not exists Teacher(
     id int(11) not null AUTO_INCREMENT primary key,
     accountID int(11) not null,
@@ -25,11 +30,13 @@ create table if not exists Teacher(
 create table if not exists Student(
     id int(11) not null AUTO_INCREMENT primary key,
     accountID int(11) not null,
+    majorID int(11) not null,
     gender boolean not null,
     address longtext not null,
     phoneNumber varchar(15) not null,
     birthday date not null,
-	foreign key(accountID) references Account(id)
+	foreign key(accountID) references Account(id),
+    foreign key(majorID) references Major(id)
 );
 
 create table if not exists Class(

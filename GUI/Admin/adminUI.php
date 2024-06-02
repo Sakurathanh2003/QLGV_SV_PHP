@@ -12,8 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -56,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 ?>>
                     <a href="#Student" onClick="openTab('studentTab');">
                         <i class='bx bxs-graduation'></i>
-                        <span class="links-name">Student</span>
+                        <span class="links-name">Quản lý sinh viên</span>
                     </a>
                 </li>
 
@@ -69,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 ?>>
                     <a href="#Teacher" onClick="openTab('teacherTab');">
                         <i class='bx bx-body'></i>
-                        <span class="links-name">Teacher</span>
+                        <span class="links-name">Quản lý giảng viên</span>
                     </a>
                 </li>
 
@@ -82,7 +81,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 ?>>
                     <a href="#Class" onClick="openTab('classTab');">
                         <i class='bx bx-door-open'></i>
-                        <span class="links-name">Class</span>
+                        <span class="links-name">Quản lý lớp học</span>
+                    </a>
+                </li>
+
+                <li <?php
+                if ($_SESSION["currentTab"] != "majorTab") {
+                    echo 'class="list-item"';
+                } else {
+                    echo 'class="list-item active"';
+                }
+                ?>>
+                    <a href="#Class" onClick="openTab('majorTab');">
+                        <i class='bx bxs-grid'></i>
+                        <span class="links-name">Quản lý ngành học</span>
                     </a>
                 </li>
             </form>
@@ -93,7 +105,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <li>
                     <a href="#" onClick="login();">
                         <i class='bx bx-log-out'></i>
-                        <span class="links-name">Logout</span>
+                        <span class="links-name">Đăng xuất</span>
                     </a>
                 </li>
             </ul>
@@ -144,6 +156,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ?>>
             <?php
             include "../Admin/Tab/classTabUI.php";
+            ?>
+        </div>
+
+        <div id="majorTab" class="tab" <?php
+        if ($_SESSION["currentTab"] != "majorTab") {
+            echo 'style="display: none"';
+        }
+        ?>>
+            <?php
+            include "../Admin/Tab/majorTabUI.php";
             ?>
         </div>
     </div>

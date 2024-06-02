@@ -1,10 +1,4 @@
 <style>
-@import url("https://fonts.googleapis.com/css?family=Poppins");
-
-* {
-    font-family: 'Poppins';
-}
-
 .teacherTabContent {
     display: flex;
     align-items: top;
@@ -99,24 +93,24 @@
 <div class="teacherTabContent">
     <div class="table">
         <div class="tableHeader">
-            <p class="headerTitle">Teachers</p>
-            <button class="viewAllBtn" onclick="viewAllTeacher();">View All</button>
+            <p class="headerTitle">Danh sách giảng viên</p>
+            <button class="viewAllBtn" onclick="viewAllTeacher();">Xem tất cả</button>
         </div>
 
         <div class="main">
             <table class="teacherTable">
                 <tr>
-                    <th style="text-align: center; border-radius: 10px 0px 0px 0px;">TeacherID</th>
-                    <th style="text-align: center;">Teacher's name</th>
-                    <th style="text-align: center;">Teacher's email</th>
-                    <th style="text-align: center; border-radius: 0px 10px 0px 0px;">Phone Number</th>
+                    <th style="text-align: center; border-radius: 10px 0px 0px 0px;">Mã giảng viên</th>
+                    <th>Họ và tên</th>
+                    <th>Email</th>
+                    <th style="border-radius: 0px 10px 0px 0px;">Số điện thoại</th>
                 </tr>
                 <?php
                     $teachers = AdminBLL::allTeachers();
                     foreach ($teachers as $teacher) {
                         echo '
                         <tr>
-                            <td>'.$teacher->getID().'</td>
+                            <td style="text-align: center;">'.$teacher->getID().'</td>
                             <td>'.AdminBLL::getTeacherName($teacher->getID()).'</td>
                             <td>'.AdminBLL::getTeacherEmail($teacher->getID()).'</td>
                             <td>'.$teacher->getPhoneNumber().'</td>
@@ -129,48 +123,48 @@
     </div>
 
     <div class="addView">
-        <p class="headerTitle">Add Teachers</p>
+        <p class="headerTitle">Thêm giảng viên</p>
 
         <div class="main">
             <form action="/QuanLySinhVien/BLL/adminBLL.php" method="POST">
                 <input type="hidden" name="addTeacherForm" value="yes" >
                 <!-- Name -->
-                <p class="fieldName">Teacher Name</p>
-                <input type="text" class="textField" name="teacherName" placeholder="Enter teacher's name" required>
+                <p class="fieldName">Họ và tên giảng viên</p>
+                <input type="text" class="textField" name="teacherName" placeholder="Nhập họ và tên" required>
                 
                 <!-- Email -->
                 <p class="fieldName">Email</p>
-                <input type="text" class="textField" name="teacherEmail" placeholder="Enter email" required>
+                <input type="text" class="textField" name="teacherEmail" placeholder="Nhập email" required>
                 
                 <!-- Gender -->
-                <p class="fieldName">Gender</p>
+                <p class="fieldName">Giới tính</p>
                 <select class="textField" name="teacherGender" required>
-                    <option value="0">Male</option>
-                    <option value="1">Female</option>
+                    <option value="0">Nam</option>
+                    <option value="1">Nữ</option>
                 </select>
 
                 <!-- Address -->
-                <p class="fieldName">Address</p>
-                <input type="text" class="textField" placeholder="Enter address" name="teacherAddress" required>
+                <p class="fieldName">Địa chỉ</p>
+                <input type="text" class="textField" placeholder="Nhập địa chỉ" name="teacherAddress" required>
                 
                 <!-- Phone -->
-                <p class="fieldName">Phone Number</p>
-                <input type="text" class="textField" placeholder="Enter phone number" name="teacherPhoneNumber" required>
+                <p class="fieldName">Số điện thoại</p>
+                <input type="text" class="textField" placeholder="Nhập số điện thoại" name="teacherPhoneNumber" required>
                 
                 <!-- Birthday -->
-                <p class="fieldName">Birthday</p>
+                <p class="fieldName">Ngày sinh</p>
                 <input type="date" class="textField" name="teacherBirthday" required>
                 
                 <!-- Password -->
-                <p class="fieldName">Password</p>
+                <p class="fieldName">Mật khẩu</p>
                 <input  type="password" 
                         class="textField" 
-                        placeholder="Enter password" 
+                        placeholder="Nhập mật khẩu" 
                         name="teacherPassword" 
                         pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                         required>
                 <br>
-                <button type="submit" name="addTeacherBtn" class="addTeacherBtn" >Add Teacher</button>
+                <button type="submit" name="addTeacherBtn" class="addTeacherBtn" >Thêm</button>
             </form>
         </div>
     </div>

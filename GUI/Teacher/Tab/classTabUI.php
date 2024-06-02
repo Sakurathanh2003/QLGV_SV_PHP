@@ -17,25 +17,50 @@
 
 .classTabContent tr:nth-child(even){background-color: #f2f2f2}
 
-.classTabContent th {
+.classTabContent .custom {
   background-color: black;
   color: white;
 }
 
+table, th, tr, td {
+    border: 1px solid black;
+}
+
+
 </style>
 <div class="classTabContent"> 
-    <p>DANH SÁCH ĐIỂM</p>
-    <div>
-        <table>
-            <tr>
-                <th>STT</th>
-                <th>Mã lớp</th>
-                <th>Tên lớp</th>
-                <th>Action</t>
-            </tr>
+    <p style="font-size: 25px; font-weight: bold;">DANH SÁCH LỚP HỌC</p><br>
+    <table>
+        <tr>
+            <th>Họ và tên giảng viên</th>
+            <td><?php echo  $_SESSION["name"];?></td>
+        </tr>
+        <tr>
+            <th>Mã giảng viên</t>
+            <td><?php echo TeacherBLL::getTeacherID();?></td>
+        </tr>
+        <tr>
+            <th>Số lượng lớp dạy</t>
+            <td><?php echo count(TeacherBLL::getClass());?></td>
+        </tr>
+    </table>
+    <br>
+    <div>            
+        <?php
+            $classes = TeacherBLL::getClass();
 
-            <?php
-                $classes = TeacherBLL::getClass();
+            if (count($classes) == 0) {
+                echo "Hiện tại, giảng viên chưa phụ trách lớp học nào cả!";
+            } else{
+                echo '<table>';
+                echo '
+                <tr>
+                    <th class="custom">STT</th>
+                    <th class="custom">Mã lớp</th>
+                    <th class="custom">Tên lớp</th>
+                    <th class="custom">Action</t>
+                </tr>
+                ';
 
                 for ($i = 0; $i < count($classes); $i++) {
                     $class = $classes[$i];
@@ -58,7 +83,9 @@
                     </tr>
                     ';
                 }
-            ?>
-        </table>
+
+                echo ' </table>';
+            }
+        ?>
     </div>
 </div>

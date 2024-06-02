@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin</title>
+    <title>Giảng viên</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="teacherUI.css">
 </head>
@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="logo-content">
             <div class="logo">
                 <i class='bx bxs-invader'></i>
-                <h3>Student</h3>
+                <h3>Giảng viên</h3>
             </div>
             <i class='bx bx-menu' id="btn"></i>
         </div>
@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 ?>>
                     <a href="#Class" onClick="openTab('classTab');">
                         <i class='bx bx-door-open'></i>
-                        <span class="links-name">Class</span>
+                        <span class="links-name">Lớp học</span>
                     </a>
                 </li>
             </form>
@@ -66,7 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <li>
                     <a href="#" onClick="login();">
                         <i class='bx bx-log-out'></i>
-                        <span class="links-name">Logout</span>
+                        <span class="links-name">Đăng xuất</span>
                     </a>
                 </li>
             </ul>

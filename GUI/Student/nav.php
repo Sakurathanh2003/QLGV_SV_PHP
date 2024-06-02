@@ -28,6 +28,7 @@
 	height: 36px;
 	object-fit: cover;
 	border-radius: 50%;
+    border: 1px solid black;
 }  
 </style>
 <nav>
@@ -38,6 +39,6 @@
                 echo "Hi, ".$_SESSION["name"];
             ?>
         </p>
-        <img src="../../resources/image/avt.jpg" alt="" style="size: 20px">
+        <img src="../../resources/image/student.png" alt="" style="size: 20px">
     </a>
 </nav>

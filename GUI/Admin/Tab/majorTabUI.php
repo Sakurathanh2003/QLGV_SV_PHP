@@ -1,12 +1,12 @@
 <style>
-.classTabContent {
+.majorTabContent {
     display: flex;
     align-items: top;
     justify-content: space-between;
     padding: 20px;
 }
 
-.classTabContent .table {
+.majorTabContent .table {
     border: 1px solid black;
     border-radius: 20px;
     width: calc((100% - 40px) / 6 * 4);
@@ -15,7 +15,7 @@
     padding: 10px;
 }
 
-.classTabContent .addView {
+.majorTabContent .addView {
     border: 1px solid black;
     border-radius: 20px;
     width: calc((100% - 40px) / 6 * 2);
@@ -43,7 +43,7 @@
     padding-bottom: 5px;
 }
 
-.addClasstBtn {
+.addMajorBtn {
     width: 100%;
     height: 40px;
     background-color: black;
@@ -93,58 +93,45 @@ tr:not(:last-child) td{
 
 </style>
 <script>
-    function viewAllClasses() {
-        window.location.href = "../Admin/View/AllClassView.php";
+    function viewAllMajor() {
+        window.location.href = "../Admin/View/AllMajorView.php";
     }
 </script>
-<div class="classTabContent">
+<div class="majorTabContent">
     <div class="addView">
-        <p class="headerTitle">Thêm lớp học</p>
+        <p class="headerTitle">Thêm ngành học</p>
 
         <div class="main">
             <form action="/QuanLySinhVien/BLL/adminBLL.php" method="POST">
-                <input type="hidden" name="addClassForm" value="yes" >
-                <p class="fieldName">Tên lớp</p>
-                <input type="text" class="textField" name="className" placeholder="Enter name" required>
-                <p class="fieldName">Giảng viên</p>
-                <select id="gender" class="textField" name="teacherID" required>
-                    <?php
-                        $teachers = AdminBLL::allTeachers();
-                        foreach ($teachers as $teacher) {
-                            echo '
-                            <option value="'.$teacher->getID().'">'.AdminBLL::getTeacherName($teacher->getID())." (mã giảng viên: ".$teacher->getID().")".'</option>
-                            ';
-                        }
-                    ?>
-                </select><br>
-                <button type="submit" name="addClasstBtn" class="addClasstBtn" >Thêm</button>
+                <input type="hidden" name="addMajorForm" value="yes" >
+                <p class="fieldName">Tên ngành</p>
+                <input type="text" class="textField" name="majorName" placeholder="Enter name" required><br>
+                <button type="submit" name="addMajorBtn" class="addMajorBtn" >Thêm</button>
             </form>
         </div>
     </div>
 
     <div class="table">
         <div class="tableHeader">
-            <p class="headerTitle">Danh sách lớp học</p>
-            <button class="viewAllBtn" onclick="viewAllClasses();">Xem tất cả</button>
+            <p class="headerTitle">Danh sách ngành học</p>
+            <button class="viewAllBtn" onclick="viewAllMajor();">Xem tất cả</button>
         </div>
 
         <div class="main">
             <table class="classTable">
                 <tr>
-                    <th style="text-align: center; border-radius: 10px 0px 0px 0px;">Mã lớp</th>
-                    <th>Tên lớp</th>
-                    <th>Giảng viên phụ trách</th>
+                    <th style="text-align: center; border-radius: 10px 0px 0px 0px;">Mã ngành</th>
+                    <th>Tên ngành</th>
                     <th style="border-radius: 0px 10px 0px 0px;">Số lượng sinh viên</th>
                 </tr>
                 <?php
-                    $classes = AdminBLL::allClasses();
-                    foreach ($classes as $class) {
+                    $majors = AdminBLL::majors();
+                    foreach ($majors as $major) {
                         echo '
                         <tr>
-                            <td>'.$class->getId().'</td>
-                            <td>'.$class->getName().'</td>
-                            <td>'.AdminBLL::getTeacherName($class->getTeacherID()).'</td>
-                            <td>'.AdminBLL::numberOfStudentInClass($class->getId()).'</td>
+                            <td>'.$major->getId().'</td>
+                            <td>'.$major->getName().'</td>
+                            <td>'.count(AdminBLL::studentInMajor($major->getId())).'</td>
                         </tr>
                         ';
                     }

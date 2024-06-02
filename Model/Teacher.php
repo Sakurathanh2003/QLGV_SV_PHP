@@ -25,11 +25,11 @@ class Teacher {
     }
 
     public function getGender() {
-        if ($this->gender = 1) {
-            return 'Female';
+        if ($this->gender == 1) {
+            return 'Nữ';
         }
 
-        return 'Male';
+        return 'Nam';
     }
 
     public function getAddress() {

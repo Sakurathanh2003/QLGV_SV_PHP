@@ -1,10 +1,4 @@
 <style>
-@import url("https://fonts.googleapis.com/css?family=Poppins");
-
-* {
-    font-family: 'Poppins';
-}
-
 .studentTabContent {
     display: flex;
     align-items: top;
@@ -88,8 +82,7 @@
 
 .studentTable tr {
     height: 40px;
-    border-top: 1px solid black;
-    
+    border-bottom: 1px solid black;
 }
 
 tr:not(:last-child) td{
@@ -103,65 +96,75 @@ tr:not(:last-child) td{
 </script>
 <div class="studentTabContent">
     <div class="addView">
-        <p class="headerTitle">Add Student</p>
+        <p class="headerTitle">Thêm sinh viên</p>
 
         <div class="main">
             <form action="/QuanLySinhVien/BLL/adminBLL.php" method="POST">
                 <input type="hidden" name="addStudentForm" value="yes" >
                 <!-- Name -->
-                <p class="fieldName">Student Name</p>
-                <input type="text" class="textField" name="studentName" placeholder="Enter student's name" required>
+                <p class="fieldName">Họ và tên</p>
+                <input type="text" class="textField" name="studentName" placeholder="Nhập họ và tên" required>
+
+                <p class="fieldName">Ngành học</p>
+                <select class="textField" name="majorID" required>
+                    <?php
+                        $majors = AdminBLL::majors();
+                        foreach ($majors as $major) {
+                            echo '<option value="'.$major->getId().'">'.$major->getName().'</option>';
+                        } 
+                    ?>
+                </select>
 
                 <!-- Email -->
                 <p class="fieldName">Email</p>
-                <input type="text" class="textField" name="studentEmail" placeholder="Enter email" required>
+                <input type="text" class="textField" name="studentEmail" placeholder="Nhập email" required>
 
                 <!-- Gender -->
-                <p class="fieldName">Gender</p>
+                <p class="fieldName">Giới tính</p>
                 <select class="textField" name="studentGender" required>
-                    <option value="0">Male</option>
-                    <option value="1">Female</option>
+                    <option value="0">Nam</option>
+                    <option value="1">Nữ</option>
                 </select>
 
                 <!-- Address -->
-                <p class="fieldName">Address</p>
-                <input type="text" class="textField" placeholder="Enter address" name="studentAddress" required>
+                <p class="fieldName">Địa chỉ</p>
+                <input type="text" class="textField" placeholder="Nhập địa chỉ" name="studentAddress" required>
 
                 <!-- Phone -->
-                <p class="fieldName">Phone Number</p>
-                <input type="text" class="textField" placeholder="Enter phone number" name="studentPhoneNumber" required>
+                <p class="fieldName">Số điện thoại</p>
+                <input type="text" class="textField" placeholder="Nhập số điện thoại" name="studentPhoneNumber" required>
 
                 <!-- Birthday -->
-                <p class="fieldName">Birthday</p>
+                <p class="fieldName">Ngày sinh</p>
                 <input type="date" class="textField" name="studentBirthday" required>
 
                 <!-- Password -->
-                <p class="fieldName">Password</p>
+                <p class="fieldName">Mật khẩu</p>
                 <input  type="password" 
                         class="textField" 
-                        placeholder="Enter password" 
+                        placeholder="Nhập mật khẩu" 
                         name="studentPassword" 
                         pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                         required>
                 <br>
-                <button type="submit" name="addStudentBtn" class="addStudentBtn" >Add Student</button>
+                <button type="submit" name="addStudentBtn" class="addStudentBtn" >Thêm</button>
             </form>
         </div>
     </div>
 
     <div class="table">
         <div class="tableHeader">
-            <p class="headerTitle">Students</p>
-            <button class="viewAllBtn" onclick="viewAllStudent();">View All</button>
+            <p class="headerTitle">Danh sách sinh viên</p>
+            <button class="viewAllBtn" onclick="viewAllStudent();">Xem tất cả</button>
         </div>
 
         <div class="main">
             <table class="studentTable">
                 <tr>
-                    <th>StudentID</th>
-                    <th>Student's name</th>
-                    <th>Student's email</th>
-                    <th>Phone Number</th>
+                    <th style="text-align: center; border-radius: 10px 0px 0px 0px;">Mã sinh viên</th>
+                    <th>Họ tên sinh viên</th>
+                    <th>Email</th>
+                    <th style="border-radius: 0px 10px 0px 0px;">Số điện thoại</th>
                 </tr>
                 <?php
                     $students = AdminBLL::allStudent();

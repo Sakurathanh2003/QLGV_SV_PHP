@@ -2,14 +2,16 @@
 class Student {
     public $id;
     public $accountID;
+    public $majorID;
     public $gender;
     public $address;
     public $phoneNumber;
     public $birthDay;
 
-    public function __construct($id, $accountID, $gender, $address, $phoneNumber, $birthDay) {
+    public function __construct($id, $accountID, $majorID, $gender, $address, $phoneNumber, $birthDay) {
         $this->id = $id;
         $this->accountID = $accountID;
+        $this->majorID = $majorID;
         $this->gender = $gender;
         $this->address = $address;
         $this->phoneNumber = $phoneNumber;
@@ -26,10 +28,14 @@ class Student {
 
     public function getGender() {
         if ($this->gender = 1) {
-            return 'Female';
+            return 'Nữ';
         }
 
-        return 'Male';
+        return 'Nam';
+    }
+
+    public function getMajorID() {
+        return $this->majorID;
     }
 
     public function getAddress() {
