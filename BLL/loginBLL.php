@@ -15,7 +15,8 @@ if (isset($_POST["login"])) {
     if (AccountDAO::isExitsAccount($email)) {
         $account = AccountDAO::getAccount($email);
 
-        $_SESSION["didLogin"] = true;
+        if ($account->getPassword() == sha1($password)) {
+            $_SESSION["didLogin"] = true;
             $_SESSION["role"] = $account->getRole();
             $_SESSION["name"] = $account->getName();
             $_SESSION["id"] = $account->getID();
@@ -26,26 +27,13 @@ if (isset($_POST["login"])) {
             alert("Login succesful")
             document.location = "/QuanLySinhVien/index.php"
             </script>';
-
-        // if ($account->getPassword() == sha1($password)) {
-        //     $_SESSION["didLogin"] = true;
-        //     $_SESSION["role"] = $account->getRole();
-        //     $_SESSION["name"] = $account->getName();
-        //     $_SESSION["id"] = $account->getID();
-    
-        //     $_SESSION["currentTab"] = "dashboardTab";
-    
-        //     echo '<script>
-        //     alert("Login succesful")
-        //     document.location = "/QuanLySinhVien/index.php"
-        //     </script>';
-        // } else {
-        //     $error = "Your password is wrong. Please login again!";
-        //     echo '<script>
-        //     alert("'.$error.'")
-        //     document.location = "/QuanLySinhVien/index.php"
-        //     </script>'; 
-        // }
+        } else {
+            $error = "Your password is wrong. Please login again!";
+            echo '<script>
+            alert("'.$error.'")
+            document.location = "/QuanLySinhVien/index.php"
+            </script>'; 
+        }
     } else {
         $error = "Your password or email is wrong. Please login again!";
         echo '<script>

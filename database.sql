@@ -14,8 +14,10 @@ insert into Account(name, email, password, role) values ("Admin", "admin@gmail.c
 
 create table if not exists Major(
     id int(11) not null AUTO_INCREMENT primary key,
-     name longtext not null 
+    name longtext not null UNIQUE
 );
+
+insert into Major(name) values ('Kĩ thuật phần mềm'), ('Khoa học máy tính'), ('Hệ thống thông tin'), ('Công nghệ thông tin');
 
 create table if not exists Teacher(
     id int(11) not null AUTO_INCREMENT primary key,

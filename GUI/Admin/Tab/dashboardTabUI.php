@@ -10,7 +10,7 @@
     background-color: white;
     border-radius: 20px;
     border: 1px solid black;
-    width: calc((100% - 20px * 4) / 3);
+    width: calc((100% - 20px * 5) / 4);
     height: 130px;
     padding: 25px;
     display: flex;
@@ -57,6 +57,17 @@
                 <p class="title">Lớp học</p>
             </div>
             <img src="../../resources/image/class.png" alt="" style="width: 50px;">
+        </div>
+        <div class="card">
+            <div class="main">
+                <p class="number">
+                    <?php 
+                        echo count(AdminBLL::majors());
+                    ?>
+                </p>
+                <p class="title">Ngành học</p>
+            </div>
+            <img src="../../resources/image/majority.png" alt="" style="width: 50px;">
         </div>
     </div>
     <div id='calendar' style="padding: 30px;">
