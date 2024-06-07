@@ -82,7 +82,7 @@ class StudentBLL {
             AccountDAO::updateEmail($account->getID(), $email);
             AccountDAO::updateName($account->getID(), $name);
 
-            if (isset($password)) {
+            if (isset($password) && strlen($password) > 0) {
                 AccountDAO::updatePassword($id, $password);
             }
 
