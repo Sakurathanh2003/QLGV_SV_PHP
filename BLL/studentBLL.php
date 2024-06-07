@@ -32,6 +32,20 @@ class StudentBLL {
         return ClassDAO::getClassBy($id);
     }
 
+    public static function getStudentEmail() {
+        $id = StudentBLL::getStudentID();
+        $student = StudentDAO::getStudentBy($id);
+        $account = AccountDAO::getAccountByID($student->getAccountID());
+        return $account->getEmail();
+    }
+
+    public static function getStudentName() {
+        $id = StudentBLL::getStudentID();
+        $student = StudentDAO::getStudentBy($id);
+        $account = AccountDAO::getAccountByID($student->getAccountID());
+        return $account->getName();
+    }
+
     public static function getClass() {
         $studentID = StudentBLL::getStudentID();
         $listClasses = ClassDetailDAO::getClassOfStudent($studentID);
@@ -54,6 +68,28 @@ class StudentBLL {
     public static function getMajor() {
         $student = StudentBLL::getStudent();
         return MajorDAO::getMajorBy($student->getMajorID());
+    }
+
+    public static function majors() {
+        return MajorDAO::getAllMajor();
+    }
+
+    public static function updateStudent($id, $name, $email,$password, $gender, $address, $phoneNumber, $birthday, $majorID) {
+        try {
+            $accountID = StudentBLL::getAccountID();
+            $account = AccountDAO::getAccountByID($accountID);
+
+            AccountDAO::updateEmail($account->getID(), $email);
+            AccountDAO::updateName($account->getID(), $name);
+
+            if (isset($password)) {
+                AccountDAO::updatePassword($id, $password);
+            }
+
+            StudentDAO::updateStudent($id, $gender, $address, $phoneNumber, $birthday, $majorID);
+        } catch (Exception $e) {
+            throw $e;
+        }
     }
 }
 ?>

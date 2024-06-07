@@ -33,12 +33,17 @@
 </style>
 <nav>
     <h1></h1>            
-    <a href="" class="profile" style="text-decoration: none; display: flex; color: black; align-items: center;">
+    <a class="profile" style="text-decoration: none; display: flex; color: black; align-items: center;" onclick="seeInfo()">
         <p style="padding-right: 10px;">
             <?php
-                echo "Hi, ".$_SESSION["name"];
+                echo "Hi, ".StudentBLL::getStudentName();;
             ?>
         </p>
         <img src="../../resources/image/student.png" alt="" style="size: 20px">
     </a>
+    <script>
+        function seeInfo() {
+            window.location.href = "View/Information.php";
+        }
+    </script>
 </nav>
