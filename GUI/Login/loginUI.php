@@ -37,13 +37,13 @@ if (isset($_SESSION["didLogin"])) {
 
                 <i class='bx bxs-lock-alt'></i>
             </div>
-            <div class="remember-forgot">
+            <div class="remember-forgot" style="display: none;">
                 <label><input type="checkbox">Remember me</label>
                 <a href="">Forgot password?</a>
             </div>
 
             <button type="submit" class="btn" name="login">Login</button>
-            <div class="register-link">
+            <div class="register-link" style="display: none;">
                 <p>Don't have an account?<a href="">Register</a></p>
             </div>
         </form>
