@@ -8,100 +8,99 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <style>
-@import url("https://fonts.googleapis.com/css?family=Lexend Deca");
+    @import url("https://fonts.googleapis.com/css?family=Lexend Deca");
 
-* {
-    font-family: 'Lexend Deca';
-}
-/* MAIN VIEW */
-/* Navigation */
-#navigation {
+    * {
+        font-family: 'Lexend Deca';
+    }
+    /* MAIN VIEW */
+    /* Navigation */
+    #navigation {
+        width: 100%;
+        height: 50px;
+        display: flex;
+        align-items: center;
+    }
+
+    #navigation .title {
+        font-size: 30px;
+        font-weight: bold;
+        padding-left: 30px;
+    }
+
+    .mainView {
+        padding-left: 60px;
+        padding-right: 60px;
+        padding-top: 10px;
+    }
+
+    .editBtn {
+        background: blue;
+        font-size: 20px;
+        font-weight: bold;
+        color: white;
+        height: 50px;
+        width: 100px;
+        border-radius: 10px;
+    }
+
+    .mainView table {
+    border-collapse: collapse;
     width: 100%;
-    height: 50px;
-    display: flex;
-    align-items: center;
-}
+    }
 
-#navigation .title {
-    font-size: 30px;
-    font-weight: bold;
-    padding-left: 30px;
-}
+    .mainView th, td {
+    text-align: left;
+    padding: 8px;
+    }
 
-.mainView {
-    padding-left: 60px;
-    padding-right: 60px;
-    padding-top: 10px;
-}
+    .mainView tr:nth-child(even){background-color: #f2f2f2}
 
-.editBtn {
-    background: blue;
-    font-size: 20px;
-    font-weight: bold;
+    .mainView .custom {
+    background-color: black;
     color: white;
-    height: 50px;
-    width: 100px;
-    border-radius: 10px;
-}
+    }
 
-.mainView table {
-  border-collapse: collapse;
-  width: 100%;
-}
+    table, th, tr, td {
+        border: 1px solid black;
+        font-size: 14px;
+    }
 
-.mainView th, td {
-  text-align: left;
-  padding: 8px;
-}
+    .textField {
+        width: 100%;
+        height: 100%;
+        border: none;
+        background-color: rgba(0, 0, 0, 0);
+    }
 
-.mainView tr:nth-child(even){background-color: #f2f2f2}
+    .imageView {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding-bottom: 10px;
+    }
 
-.mainView .custom {
-  background-color: black;
-  color: white;
-}
+    .submitView {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding-bottom: 10px;
+    }
 
-table, th, tr, td {
-    border: 1px solid black;
-    font-size: 14px;
-}
-
-.textField {
-    width: 100%;
-    height: 100%;
-    border: none;
-    background-color: rgba(0, 0, 0, 0);
-}
-
-.imageView {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding-bottom: 10px;
-}
-
-.submitView {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding-bottom: 10px;
-}
-
-.imageView img {
-    width: 300px;
-    height: 300px;
-	object-fit: cover;
-}  
-
+    .imageView img {
+        width: 300px;
+        height: 300px;
+        object-fit: cover;
+    }  
+</style>
 <?php
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 require_once '../../../BLL/teacherBLL.php';
-session_start();
 
 $teacher = TeacherBLL::getTeacher();
 

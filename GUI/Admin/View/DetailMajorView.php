@@ -8,146 +8,145 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <style>
-@import url("https://fonts.googleapis.com/css?family=Lexend Deca");
+    @import url("https://fonts.googleapis.com/css?family=Lexend Deca");
 
-* {
-    font-family: 'Lexend Deca';
-}
+    * {
+        font-family: 'Lexend Deca';
+    }
 
-/* MAIN VIEW */
-/* Navigation */
-#navigation {
-    width: 100%;
-    height: 50px;
-    display: flex;
-    align-items: center;
-}
+    /* MAIN VIEW */
+    /* Navigation */
+    #navigation {
+        width: 100%;
+        height: 50px;
+        display: flex;
+        align-items: center;
+    }
 
-#navigation .title {
-    font-size: 30px;
-    font-weight: bold;
-    padding-left: 30px;
-}
+    #navigation .title {
+        font-size: 30px;
+        font-weight: bold;
+        padding-left: 30px;
+    }
 
-.mainView {
-    padding-left: 60px;
-    padding-right: 60px;
-    padding-top: 10px;
-}
+    .mainView {
+        padding-left: 60px;
+        padding-right: 60px;
+        padding-top: 10px;
+    }
 
-.fieldName {
-    font-size: 20px;
-    width: 350px;
-}
+    .fieldName {
+        font-size: 20px;
+        width: 350px;
+    }
 
-.field {
-    display: flex;
-    align-items: center;
-}
+    .field {
+        display: flex;
+        align-items: center;
+    }
 
-.textField {
-    height: 40px;
-    width: 250px;
-}
+    .textField {
+        height: 40px;
+        width: 250px;
+    }
 
-.editBtn {
-    background: blue;
-    font-size: 20px;
-    font-weight: bold;
-    color: white;
-    height: 50px;
-    width: 100px;
-    border-radius: 10px;
-}
+    .editBtn {
+        background: blue;
+        font-size: 20px;
+        font-weight: bold;
+        color: white;
+        height: 50px;
+        width: 100px;
+        border-radius: 10px;
+    }
 
-.deleteBtn {
-    background: red;
-    font-size: 20px;
-    font-weight: bold;
-    color: white;
-    height: 50px;
-    width: 100px;
-    border-radius: 10px;
-}
+    .deleteBtn {
+        background: red;
+        font-size: 20px;
+        font-weight: bold;
+        color: white;
+        height: 50px;
+        width: 100px;
+        border-radius: 10px;
+    }
 
-.studentTable {
-    width: 100%;
-    height: 100%;
-    border-collapse: collapse;
-}
+    .studentTable {
+        width: 100%;
+        height: 100%;
+        border-collapse: collapse;
+    }
 
-.studentTable th {
-    text-align: center;
-    background-color: black;
-    color: white;
-}
+    .studentTable th {
+        text-align: center;
+        background-color: black;
+        color: white;
+    }
 
-.studentTable tr {
-    height: 40px;
-    border-bottom: 1px solid black;
-}
+    .studentTable tr {
+        height: 40px;
+        border-bottom: 1px solid black;
+    }
 
-tr:not(:last-child) td{
-  border-bottom: 1px solid gray;
-}
+    tr:not(:last-child) td{
+    border-bottom: 1px solid gray;
+    }
 
-td {
-    text-align: center;
-}
+    td {
+        text-align: center;
+    }
 </style>
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
 
-require_once '../../../BLL/adminBLL.php';
+    require_once '../../../BLL/adminBLL.php';
 
-$major = new Major("", "");
+    $major = new Major("", "");
 
-if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    $id = $_GET["id"];
-    $major = AdminBLL::majorByID($id);
-}
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $id = $_POST['id'];
-    
-    if (isset($_POST["deleteBtn"])) {
-        try {
-            AdminBLL::deleteMajor($id);
-            echo '<script>
-            alert("Xoá thành công!")
-            document.location = "/QuanLySinhVien/GUI/Admin/View/AllMajorView.php"
-            </script>';
-        } catch (Exception $e) {
-            echo '
-            <script>
-                alert("Không thể xoá vì còn một số sinh viên học ngành này!")
-             </script>
-            ';
-        }
+    if ($_SERVER["REQUEST_METHOD"] == "GET") {
+        $id = $_GET["id"];
+        $major = AdminBLL::majorByID($id);
     }
 
-    if (isset($_POST["editBtn"])) {
-        $majorName = $_POST["majorName"];
-        try {
-            MajorDAO::updateMajor($id, $majorName);
-            echo '<script>
-            alert("Sửa thành công!")
-            </script>';
-        } catch (Exception $e) {
-            echo '
-            <script>
-                alert("Không thể xoá vì còn một số sinh viên học ngành này!")
-             </script>
-            ';
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $id = $_POST['id'];
+        
+        if (isset($_POST["deleteBtn"])) {
+            try {
+                AdminBLL::deleteMajor($id);
+                echo '<script>
+                alert("Xoá thành công!")
+                document.location = "/QuanLySinhVien/GUI/Admin/View/AllMajorView.php"
+                </script>';
+            } catch (Exception $e) {
+                echo '
+                <script>
+                    alert("Không thể xoá vì còn một số sinh viên học ngành này!")
+                </script>
+                ';
+            }
         }
-    }
 
-    $major = AdminBLL::majorByID($id);
-}
+        if (isset($_POST["editBtn"])) {
+            $majorName = $_POST["majorName"];
+            try {
+                MajorDAO::updateMajor($id, $majorName);
+                echo '<script>
+                alert("Sửa thành công!")
+                </script>';
+            } catch (Exception $e) {
+                echo '
+                <script>
+                    alert("Không thể xoá vì còn một số sinh viên học ngành này!")
+                </script>
+                ';
+            }
+        }
+
+        $major = AdminBLL::majorByID($id);
+    }
 ?>
-</style>
 <body>
     <div class="mainContainer">
         <div id="navigation">

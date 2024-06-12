@@ -8,128 +8,126 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <style>
-@import url("https://fonts.googleapis.com/css?family=Lexend Deca");
+    @import url("https://fonts.googleapis.com/css?family=Lexend Deca");
 
-* {
-    font-family: 'Lexend Deca';
-}
-/* MAIN VIEW */
-/* Navigation */
-#navigation {
-    width: 100%;
-    height: 50px;
-    display: flex;
-    align-items: center;
-}
-
-#navigation .title {
-    font-size: 30px;
-    font-weight: bold;
-    padding-left: 30px;
-}
-
-.mainView {
-    padding-left: 60px;
-    padding-right: 60px;
-    padding-top: 10px;
-}
-
-.editBtn {
-    background: blue;
-    font-size: 20px;
-    font-weight: bold;
-    color: white;
-    height: 50px;
-    width: 100px;
-    border-radius: 10px;
-}
-
-.mainView table {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-.mainView th, td {
-  text-align: left;
-  padding: 8px;
-}
-
-.mainView tr:nth-child(even){background-color: #f2f2f2}
-
-.mainView .custom {
-  background-color: black;
-  color: white;
-}
-
-table, th, tr, td {
-    border: 1px solid black;
-    font-size: 14px;
-}
-
-.textField {
-    width: 100%;
-    height: 100%;
-    border: none;
-    background-color: rgba(0, 0, 0, 0);
-}
-
-.imageView {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding-bottom: 10px;
-}
-
-.submitView {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding-bottom: 10px;
-}
-
-.imageView img {
-    width: 300px;
-    height: 300px;
-	object-fit: cover;
-}  
-
-<?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-require_once '../../../BLL/studentBLL.php';
-session_start();
-
-$student = StudentBLL::getStudent();
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST["editBtn"])) {
-        $name = $_POST['name'] ?? '';
-        $email = $_POST['email'] ?? '';
-        $gender = $_POST['gender'] ?? '';
-        $address = $_POST['address'] ?? '';
-        $phoneNumber = $_POST['phoneNumber'] ?? '';
-        $birthday = $_POST['birthday'] ?? '';
-        $password = $_POST['password'] ?? '';
-
-        try {
-            StudentBLL::updateStudent($student->getID(), $name, $email, $password, $gender, $address, $phoneNumber, $birthday, $student->majorID);
-            echo '<script>
-            alert("Sửa thành công!")
-            </script>';
-        } catch (Exception $e) {
-            echo '<script>
-            alert("'.$e->getMessage().'")
-            </script>';
-        }
+    * {
+        font-family: 'Lexend Deca';
+    }
+    /* MAIN VIEW */
+    /* Navigation */
+    #navigation {
+        width: 100%;
+        height: 50px;
+        display: flex;
+        align-items: center;
     }
 
-    $student = StudentBLL::getStudent();
-}
+    #navigation .title {
+        font-size: 30px;
+        font-weight: bold;
+        padding-left: 30px;
+    }
 
+    .mainView {
+        padding-left: 60px;
+        padding-right: 60px;
+        padding-top: 10px;
+    }
+
+    .editBtn {
+        background: blue;
+        font-size: 20px;
+        font-weight: bold;
+        color: white;
+        height: 50px;
+        width: 100px;
+        border-radius: 10px;
+    }
+
+    .mainView table {
+    border-collapse: collapse;
+    width: 100%;
+    }
+
+    .mainView th, td {
+    text-align: left;
+    padding: 8px;
+    }
+
+    .mainView tr:nth-child(even){background-color: #f2f2f2}
+
+    .mainView .custom {
+    background-color: black;
+    color: white;
+    }
+
+    table, th, tr, td {
+        border: 1px solid black;
+        font-size: 14px;
+    }
+
+    .textField {
+        width: 100%;
+        height: 100%;
+        border: none;
+        background-color: rgba(0, 0, 0, 0);
+    }
+
+    .imageView {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding-bottom: 10px;
+    }
+
+    .submitView {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding-bottom: 10px;
+    }
+
+    .imageView img {
+        width: 300px;
+        height: 300px;
+        object-fit: cover;
+    }  
+</style>
+<?php
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+
+    require_once '../../../BLL/studentBLL.php';
+
+    $student = StudentBLL::getStudent();
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if (isset($_POST["editBtn"])) {
+            $name = $_POST['name'] ?? '';
+            $email = $_POST['email'] ?? '';
+            $gender = $_POST['gender'] ?? '';
+            $address = $_POST['address'] ?? '';
+            $phoneNumber = $_POST['phoneNumber'] ?? '';
+            $birthday = $_POST['birthday'] ?? '';
+            $password = $_POST['password'] ?? '';
+
+            try {
+                StudentBLL::updateStudent($student->getID(), $name, $email, $password, $gender, $address, $phoneNumber, $birthday, $student->majorID);
+                echo '<script>
+                alert("Sửa thành công!")
+                </script>';
+            } catch (Exception $e) {
+                echo '<script>
+                alert("'.$e->getMessage().'")
+                </script>';
+            }
+        }
+
+        $student = StudentBLL::getStudent();
+    }
 ?>
 </style>
 <body>

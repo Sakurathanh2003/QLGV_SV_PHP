@@ -48,6 +48,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         try {
             AdminBLL::updateTeacher($id, $teacherName, $teacherEmail, $teacherPassword, $teacherGender, $teacherAddress, $teacherPhoneNumber, $teacherBirthday);
+            echo '<script>
+                alert("Sửa thành công!")
+                </script>';
         } catch (Exception $e) {
             echo $e;
         }
