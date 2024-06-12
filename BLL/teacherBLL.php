@@ -29,6 +29,36 @@ class TeacherBLL {
         return $teacher->getID();
     }
 
+    public static function getTeacherName() {
+        $teacher = TeacherBLL::getTeacher();
+        $account = AccountDAO::getAccountByID($teacher->getAccountID());
+        return $account->getName();
+    }
+
+    public static function getTeacherEmail() {
+        $teacher = TeacherBLL::getTeacher();
+        $account = AccountDAO::getAccountByID($teacher->getAccountID());
+        return $account->getEmail();
+    }
+
+    public static function updateTeacher($id, $name, $email,$password, $gender, $address, $phoneNumber, $birthday) {
+        try {
+            $accountID = TeacherBLL::getAccountID();
+            $account = AccountDAO::getAccountByID($accountID);
+
+            AccountDAO::updateEmail($account->getID(), $email);
+            AccountDAO::updateName($account->getID(), $name);
+
+            if (isset($password) && strlen($password) > 0) {
+                AccountDAO::updatePassword($id, $password);
+            }
+
+            TeacherDAO::updateTeacher($id, $gender, $address, $phoneNumber, $birthday);
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
     //MARK: - Class
     public static function classByID($id) {
         return ClassDAO::getClassBy($id);

@@ -226,7 +226,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <button type="submit" 
                         name="editBtn"
                         class="editBtn" 
-                        onclick="return confirm('Bạn có chắc muốn sửa sinh viên này không?')"
+                        onclick="return confirm('Bạn có chắc muốn sửa không?')"
                         >Sửa</button>
                 </div>  
             </form><br>          
