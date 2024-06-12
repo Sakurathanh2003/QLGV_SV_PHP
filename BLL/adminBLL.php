@@ -108,8 +108,8 @@ class AdminBLL {
             AccountDAO::updateEmail($account->getID(), $teacherEmail);
             AccountDAO::updateName($account->getID(), $teacherName);
 
-            if (isset($teacherPassword)) {
-                AccountDAO::updatePassword($id, $teacherPassword);
+            if (isset($teacherPassword) && !empty($teacherPassword)) {
+                AccountDAO::updatePassword($account->getID(), $teacherPassword);
             }
 
             TeacherDAO::updateTeacher($id, $teacherGender, $teacherAddress, $teacherPhoneNumber, $teacherBirthday);
@@ -171,14 +171,14 @@ class AdminBLL {
 
     public static function updateStudent($id, $name, $email,$password, $gender, $address, $phoneNumber, $birthday, $majorID) {
         try {
-            $teacher = AdminBLL::studentByID($id);
-            $account = AccountDAO::getAccountByID($teacher->getAccountID());
+            $student = AdminBLL::studentByID($id);
+            $account = AccountDAO::getAccountByID($student->getAccountID());
 
             AccountDAO::updateEmail($account->getID(), $email);
             AccountDAO::updateName($account->getID(), $name);
 
-            if (isset($password)) {
-                AccountDAO::updatePassword($id, $password);
+            if (isset($password) && !empty($password)) {
+                AccountDAO::updatePassword($account->getID(), $password);
             }
 
             StudentDAO::updateStudent($id, $gender, $address, $phoneNumber, $birthday, $majorID);
