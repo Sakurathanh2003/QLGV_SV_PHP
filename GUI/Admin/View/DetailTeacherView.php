@@ -8,121 +8,121 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-require_once '../../../BLL/adminBLL.php';
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+    require_once '../../../BLL/adminBLL.php';
 
-$teacher = new Teacher("", "", "", "", "", "", "");
+    $teacher = new Teacher("", "", "", "", "", "", "");
 
-if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    $id = $_GET["id"];
-    $teacher = AdminBLL::teacherByID($id);
-}
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $id = $_POST["id"];
-    
-    if (isset($_POST["deleteBtn"])) {
-        try {
-            AdminBLL::deleteTeacher($id);
-            echo '<script>
-                alert("Xoá thành công!")
-                document.location = "/QuanLySinhVien/GUI/Admin/View/AllTeacherView.php"
-                </script>';
-        } catch (Exception $e) {
-            echo '<script>
-                alert("'.$e->getMessage().'")
-                </script>';
-        }
+    if ($_SERVER["REQUEST_METHOD"] == "GET") {
+        $id = $_GET["id"];
+        $teacher = AdminBLL::teacherByID($id);
     }
 
-    if (isset($_POST["editBtn"])) {
-        $teacherName = $_POST['name'] ?? '';
-        $teacherEmail = $_POST['email'] ?? '';
-        $teacherGender = $_POST['gender'] ?? '';
-        $teacherAddress = $_POST['address'] ?? '';
-        $teacherPhoneNumber = $_POST['phoneNumber'] ?? '';
-        $teacherBirthday = $_POST['birthday'] ?? '';
-        $teacherPassword = $_POST['password'] ?? '';
-
-        try {
-            AdminBLL::updateTeacher($id, $teacherName, $teacherEmail, $teacherPassword, $teacherGender, $teacherAddress, $teacherPhoneNumber, $teacherBirthday);
-            echo '<script>
-                alert("Sửa thành công!")
-                </script>';
-        } catch (Exception $e) {
-            echo $e;
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $id = $_POST["id"];
+        
+        if (isset($_POST["deleteBtn"])) {
+            try {
+                AdminBLL::deleteTeacher($id);
+                echo '<script>
+                    alert("Xoá thành công!")
+                    document.location = "/QuanLySinhVien/GUI/Admin/View/AllTeacherView.php"
+                    </script>';
+            } catch (Exception $e) {
+                echo '<script>
+                    alert("'.$e->getMessage().'")
+                    </script>';
+            }
         }
-    }
 
-    $teacher = AdminBLL::teacherByID($id);
-}
+        if (isset($_POST["editBtn"])) {
+            $teacherName = $_POST['name'] ?? '';
+            $teacherEmail = $_POST['email'] ?? '';
+            $teacherGender = $_POST['gender'] ?? '';
+            $teacherAddress = $_POST['address'] ?? '';
+            $teacherPhoneNumber = $_POST['phoneNumber'] ?? '';
+            $teacherBirthday = $_POST['birthday'] ?? '';
+            $teacherPassword = $_POST['password'] ?? '';
+
+            try {
+                AdminBLL::updateTeacher($id, $teacherName, $teacherEmail, $teacherPassword, $teacherGender, $teacherAddress, $teacherPhoneNumber, $teacherBirthday);
+                echo '<script>
+                    alert("Sửa thành công!")
+                    </script>';
+            } catch (Exception $e) {
+                echo $e;
+            }
+        }
+
+        $teacher = AdminBLL::teacherByID($id);
+    }
 ?>
 <style>
-@import url("https://fonts.googleapis.com/css?family=Poppins");
+    @import url("https://fonts.googleapis.com/css?family=Poppins");
 
-* {
-    font-family: 'Poppins';
-}
+    * {
+        font-family: 'Poppins';
+    }
 
-#nav {
-    width: 100%;
-    height: 50px;
-    display: flex;
-    align-items: center;
-}
+    #nav {
+        width: 100%;
+        height: 50px;
+        display: flex;
+        align-items: center;
+    }
 
-#nav .title {
-    font-size: 30px;
-    font-weight: bold;
-    padding-left: 30px;
-}
+    #nav .title {
+        font-size: 30px;
+        font-weight: bold;
+        padding-left: 30px;
+    }
 
-.main {
-    padding-left: 60px;
-    padding-top: 10px;
-}
+    .main {
+        padding-left: 60px;
+        padding-top: 10px;
+    }
 
-.fieldName {
-    font-size: 20px;
-    width: 200px;
-}
+    .fieldName {
+        font-size: 20px;
+        width: 250px;
+    }
 
-.field {
-    display: flex;
-    align-items: center;
-}
+    .field {
+        display: flex;
+        align-items: center;
+    }
 
-.textField {
-    height: 40px;
-    width: 250px;
-}
+    .textField {
+        height: 40px;
+        width: 250px;
+    }
 
-.editBtn {
-    background: blue;
-    font-size: 20px;
-    font-weight: bold;
-    color: white;
-    height: 50px;
-    width: 100px;
-    border-radius: 10px;
-}
+    .editBtn {
+        background: blue;
+        font-size: 20px;
+        font-weight: bold;
+        color: white;
+        height: 50px;
+        width: 100px;
+        border-radius: 10px;
+    }
 
-.deleteBtn {
-    background: red;
-    font-size: 20px;
-    font-weight: bold;
-    color: white;
-    height: 50px;
-    width: 100px;
-    border-radius: 10px;
-}
+    .deleteBtn {
+        background: red;
+        font-size: 20px;
+        font-weight: bold;
+        color: white;
+        height: 50px;
+        width: 100px;
+        border-radius: 10px;
+    }
 </style>
 <body>
     <div id="nav">
         <i class='bx bx-arrow-back bx-md'></i>
-        <p class="title">Detail Teacher</p>
+        <p class="title">Chi tiết giảng viên</p>
     </div>
     <div class="main">
         <form action="" method="POST">
@@ -131,48 +131,48 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     value="<?php echo $teacher->getID();?>">
 
             <div class="field">
-                <p class="fieldName">Teacher Name: </p>
-                <input type="text" class="textField" name="name" value="<?php echo AdminBLL::getTeacherName($teacher->getID()); ?>" placeholder="Enter student's name" required>
+                <p class="fieldName">Họ và tên giảng viên: </p>
+                <input type="text" class="textField" name="name" value="<?php echo AdminBLL::getTeacherName($teacher->getID()); ?>" placeholder="Nhập họ và tên" required>
             </div>
 
             <div class="field">
                 <p class="fieldName">Email: </p>
-                <input type="text" class="textField" name="email" value="<?php echo AdminBLL::getTeacherEmail($teacher->getID()); ?>" placeholder="Enter email" required>
+                <input type="text" class="textField" name="email" value="<?php echo AdminBLL::getTeacherEmail($teacher->getID()); ?>" placeholder="Nhập email" required>
             </div>
 
             <div class="field">
-                <p class="fieldName">Gender: </p>
+                <p class="fieldName">Giới tính: </p>
                 <script>
                     $(document).ready(function() {
                         $('#gender').val('<?php echo $teacher->gender;?>');
                     });
                 </script>
                 <select id="gender" class="textField" name="gender" required>
-                    <option value="0">Male</option>
-                    <option value="1">Female</option>
+                    <option value="0">Nam</option>
+                    <option value="1">Nữ</option>
                 </select>
             </div>
 
             <div class="field">
-                <p class="fieldName">Address: </p>
-                <input type="text" class="textField" name="address" placeholder="Enter address" value="<?php echo $teacher->getAddress(); ?>"  required>
+                <p class="fieldName">Địa chỉ: </p>
+                <input type="text" class="textField" name="address" placeholder="Nhập địa chỉ" value="<?php echo $teacher->getAddress(); ?>"  required>
             </div>
 
             <div class="field">
-                <p class="fieldName">Phone Number: </p>
-                <input type="text" class="textField" name="phoneNumber" placeholder="Enter phone number" value="<?php echo $teacher->getPhoneNumber(); ?>"  required>
+                <p class="fieldName">Số điện thoại: </p>
+                <input type="text" class="textField" name="phoneNumber" placeholder="Nhập số điện thoại" value="<?php echo $teacher->getPhoneNumber(); ?>"  required>
             </div>
 
             <div class="field">
-                <p class="fieldName">Birthday: </p>
+                <p class="fieldName">Ngày sinh: </p>
                 <input type="date" class="textField" name="birthday" value="<?php echo $teacher->getBirthDay(); ?>" required>
             </div>
 
             <div class="field">
-                <p class="fieldName">Password: </p>
+                <p class="fieldName">Mật khẩu: </p>
                 <input  type="password" 
                         class="textField" 
-                        placeholder="Enter password" 
+                        placeholder="Nhập mật khẩu" 
                         name="password" 
                         pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
             </div>
@@ -182,12 +182,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     name="editBtn" 
                     class="editBtn" 
                     onclick="return confirm('Bạn có chắc muốn sửa giáo viên này không?')"
-                    >Edit</button>
+                    >Sửa</button>
             <button type="submit" 
                     name="deleteBtn" 
                     class="deleteBtn"
                     onclick="return confirm('Bạn có chắc muốn xóa giáo viên này không?')"
-                    >Delete</button>
+                    >Xoá</button>
         </form>
     </div>
 </body>

@@ -8,125 +8,124 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <style>
-
-* {
-    font-family: 'Times New Roman', Times, serif;
-}
-
-/* MAIN VIEW */
-/* Navigation */
-#navigation {
-    width: 100%;
-    height: 50px;
-    display: flex;
-    align-items: center;
-}
-
-#navigation .title {
-    font-size: 30px;
-    font-weight: bold;
-    padding-left: 30px;
-}
-
-.mainView {
-    padding-left: 60px;
-    padding-right: 60px;
-    padding-top: 10px;
-}
-
-.fieldName {
-    font-size: 20px;
-}
-
-.field {
-    display: flex;
-    align-items: center;
-}
-
-.textField {
-    height: 40px;
-    width: 250px;
-}
-
-.editBtn {
-    background: blue;
-    font-size: 20px;
-    font-weight: bold;
-    color: white;
-    height: 50px;
-    width: 100px;
-    border-radius: 10px;
-}
-
-.deleteBtn {
-    background: red;
-    font-size: 20px;
-    font-weight: bold;
-    color: white;
-    height: 50px;
-    width: 100px;
-    border-radius: 10px;
-}
-
-table {
-    border-collapse: collapse;
-    width: 100%;
-}
-
-table, th, tr, td {
-    border: 1px solid black;
-}
-
-.studentTable tr {
-    height: 40px;
-}
-
-td {
-    text-align: center;
-}
-
-input {
-    width: calc(100% - 10px);
-    height: 40px;
-    border: none;
-}
-<?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-require_once '../../../BLL/teacherBLL.php';
-
-$class = new SchoolClass("", "", "");
-
-if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    echo "get";
-    $id = $_GET["id"];
-    $class = TeacherBLL::classByID($id);
-}
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $classID = $_POST["classID"];    
-    $class = TeacherBLL::classByID($classID);
-
-    $students = TeacherBLL::studentsInClass($class->getID());
-    foreach ($students as $student) {
-        $score = TeacherBLL::ScoreOfStudent($class->getID(), $student->getID());
-        $score1 = ((isset($_POST["score1+". $student->getID()]) && !empty($_POST["score1+". $student->getID()])) ? $_POST["score1+". $student->getID()] : NULL);
-        $score2 = ((isset($_POST["score2+". $student->getID()]) && !empty($_POST["score2+". $student->getID()])) ? $_POST["score2+". $student->getID()] : NULL);
-        $score3 = ((isset($_POST["score3+". $student->getID()]) && !empty($_POST["score3+". $student->getID()])) ? $_POST["score3+". $student->getID()] : NULL);
-
-        echo $score2;
-        TeacherBLL::updateScore($score->getID(), $score1, $score2, $score3);
+    * {
+        font-family: 'Times New Roman', Times, serif;
     }
-}
-?>
+
+    /* MAIN VIEW */
+    /* Navigation */
+    #navigation {
+        width: 100%;
+        height: 50px;
+    display: flex;
+    align-items: center;
+    }
+
+    #navigation .title {
+        font-size: 30px;
+        font-weight: bold;
+        padding-left: 30px;
+    }
+
+    .mainView {
+        padding-left: 60px;
+        padding-right: 60px;
+        padding-top: 10px;
+    }
+
+    .fieldName {
+        font-size: 20px;
+    }
+
+    .field {
+        display: flex;
+        align-items: center;
+    }
+
+    .textField {
+        height: 40px;
+        width: 250px;
+    }
+
+    .editBtn {
+        background: blue;
+        font-size: 20px;
+        font-weight: bold;
+        color: white;
+        height: 50px;
+        width: 100px;
+        border-radius: 10px;
+    }
+
+    .deleteBtn {
+        background: red;
+        font-size: 20px;
+        font-weight: bold;
+        color: white;
+        height: 50px;
+        width: 100px;
+        border-radius: 10px;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    table, th, tr, td {
+        border: 1px solid black;
+    }
+
+    .studentTable tr {
+        height: 40px;
+    }
+
+    td {
+        text-align: center;
+    }
+
+    input {
+        width: calc(100% - 10px);
+        height: 40px;
+        border: none;
+    }
 </style>
+<?php
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+
+    require_once '../../../BLL/teacherBLL.php';
+
+    $class = new SchoolClass("", "", "");
+
+    if ($_SERVER["REQUEST_METHOD"] == "GET") {
+        echo "get";
+        $id = $_GET["id"];
+        $class = TeacherBLL::classByID($id);
+    }
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $classID = $_POST["classID"];    
+        $class = TeacherBLL::classByID($classID);
+
+        $students = TeacherBLL::studentsInClass($class->getID());
+        foreach ($students as $student) {
+            $score = TeacherBLL::ScoreOfStudent($class->getID(), $student->getID());
+            $score1 = ((isset($_POST["score1+". $student->getID()]) && !empty($_POST["score1+". $student->getID()])) ? $_POST["score1+". $student->getID()] : NULL);
+            $score2 = ((isset($_POST["score2+". $student->getID()]) && !empty($_POST["score2+". $student->getID()])) ? $_POST["score2+". $student->getID()] : NULL);
+            $score3 = ((isset($_POST["score3+". $student->getID()]) && !empty($_POST["score3+". $student->getID()])) ? $_POST["score3+". $student->getID()] : NULL);
+
+            echo $score2;
+            TeacherBLL::updateScore($score->getID(), $score1, $score2, $score3);
+        }
+    }
+?>
 <body>
     <div class="mainContainer">
         <div id="navigation">
             <i class='bx bx-arrow-back bx-md'></i>
-            <p class="title">Detail Class</p>
+            <p class="title">Chi tiết lớp học</p>
         </div>
         <div class="mainView">
             <div class="field">
@@ -180,7 +179,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <button type="submit" 
                         name="editBtn"
                         class="editBtn" 
-                        >Edit</button>
+                        >Sửa</button>
                 </div>
            </form>
         </div>

@@ -8,119 +8,119 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-require_once '../../../BLL/adminBLL.php';
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+    require_once '../../../BLL/adminBLL.php';
 
-$student = new Student("", "", "", "", "", "", "");
+    $student = new Student("", "", "", "", "", "", "");
 
-if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    $id = $_GET["id"];
-    $student = AdminBLL::studentByID($id);
-}
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $id = $_POST["id"];
-
-    if (isset($_POST["deleteBtn"])) {
-        try {
-            AdminBLL::deleteStudent($id);
-            echo '<script>
-            alert("Xoá thành công!")
-            document.location = "/QuanLySinhVien/GUI/Admin/View/AllStudentView.php"
-            </script>';
-        } catch (Exception $e) {
-            echo '<script>
-            alert("'.$e->getMessage().'")
-            </script>';
-        }
+    if ($_SERVER["REQUEST_METHOD"] == "GET") {
+        $id = $_GET["id"];
+        $student = AdminBLL::studentByID($id);
     }
 
-    if (isset($_POST["editBtn"])) {
-        $name = $_POST['name'] ?? '';
-        $email = $_POST['email'] ?? '';
-        $gender = $_POST['gender'] ?? '';
-        $address = $_POST['address'] ?? '';
-        $phoneNumber = $_POST['phoneNumber'] ?? '';
-        $birthday = $_POST['birthday'] ?? '';
-        $password = $_POST['password'] ?? '';
-        $majorID = $_POST['major'] ?? '';
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $id = $_POST["id"];
 
-        try {
-            AdminBLL::updateStudent($id, $name, $email, $password, $gender, $address, $phoneNumber, $birthday, $majorID);
-            echo '<script>
-            alert("Sửa thành công!")
-            </script>';
-        } catch (Exception $e) {
-            echo '<script>
-            alert("'.$e->getMessage().'")
-            </script>';
+        if (isset($_POST["deleteBtn"])) {
+            try {
+                AdminBLL::deleteStudent($id);
+                echo '<script>
+                alert("Xoá thành công!")
+                document.location = "/QuanLySinhVien/GUI/Admin/View/AllStudentView.php"
+                </script>';
+            } catch (Exception $e) {
+                echo '<script>
+                alert("'.$e->getMessage().'")
+                </script>';
+            }
         }
-    }
 
-    $student = AdminBLL::studentByID($id);
-}
+        if (isset($_POST["editBtn"])) {
+            $name = $_POST['name'] ?? '';
+            $email = $_POST['email'] ?? '';
+            $gender = $_POST['gender'] ?? '';
+            $address = $_POST['address'] ?? '';
+            $phoneNumber = $_POST['phoneNumber'] ?? '';
+            $birthday = $_POST['birthday'] ?? '';
+            $password = $_POST['password'] ?? '';
+            $majorID = $_POST['major'] ?? '';
+
+            try {
+                AdminBLL::updateStudent($id, $name, $email, $password, $gender, $address, $phoneNumber, $birthday, $majorID);
+                echo '<script>
+                alert("Sửa thành công!")
+                </script>';
+            } catch (Exception $e) {
+                echo '<script>
+                alert("'.$e->getMessage().'")
+                </script>';
+            }
+        }
+
+        $student = AdminBLL::studentByID($id);
+    }
 ?>
 <style>
-@import url("https://fonts.googleapis.com/css?family=Lexend Deca");
+    @import url("https://fonts.googleapis.com/css?family=Lexend Deca");
 
-* {
-    font-family: 'Lexend Deca';
-}
+    * {
+        font-family: 'Lexend Deca';
+    }
 
-#nav {
-    width: 100%;
-    height: 50px;
-    display: flex;
-    align-items: center;
-}
+    #nav {
+        width: 100%;
+        height: 50px;
+        display: flex;
+        align-items: center;
+    }
 
-#nav .title {
-    font-size: 30px;
-    font-weight: bold;
-    padding-left: 30px;
-}
+    #nav .title {
+        font-size: 30px;
+        font-weight: bold;
+        padding-left: 30px;
+    }
 
-.main {
-    padding-left: 60px;
-    padding-top: 10px;
-}
+    .main {
+        padding-left: 60px;
+        padding-top: 10px;
+    }
 
-.fieldName {
-    font-size: 20px;
-    width: 200px;
-}
+    .fieldName {
+        font-size: 20px;
+        width: 200px;
+    }
 
-.field {
-    display: flex;
-    align-items: center;
-}
+    .field {
+        display: flex;
+        align-items: center;
+    }
 
-.textField {
-    height: 40px;
-    width: 250px;
-}
+    .textField {
+        height: 40px;
+        width: 250px;
+    }
 
-.editBtn {
-    background: blue;
-    font-size: 20px;
-    font-weight: bold;
-    color: white;
-    height: 50px;
-    width: 100px;
-    border-radius: 10px;
-}
+    .editBtn {
+        background: blue;
+        font-size: 20px;
+        font-weight: bold;
+        color: white;
+        height: 50px;
+        width: 100px;
+        border-radius: 10px;
+    }
 
-.deleteBtn {
-    background: red;
-    font-size: 20px;
-    font-weight: bold;
-    color: white;
-    height: 50px;
-    width: 100px;
-    border-radius: 10px;
-}
+    .deleteBtn {
+        background: red;
+        font-size: 20px;
+        font-weight: bold;
+        color: white;
+        height: 50px;
+        width: 100px;
+        border-radius: 10px;
+    }
 </style>
 <body>
     <div id="nav">
@@ -135,7 +135,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <div class="field">
                 <p class="fieldName">Họ tên sinh viên: </p>
-                <input type="text" class="textField" name="name" value="<?php echo AdminBLL::getStudentName($student->getID()); ?>" placeholder="Enter name" required>
+                <input type="text" class="textField" name="name" value="<?php echo AdminBLL::getStudentName($student->getID()); ?>" placeholder="Nhập họ và tên" required>
             </div>
 
             <div class="field">
@@ -157,7 +157,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <div class="field">
                 <p class="fieldName">Email: </p>
-                <input type="text" class="textField" name="email" value="<?php echo AdminBLL::getStudentEmail($student->getID()); ?>" placeholder="Enter email" required>
+                <input type="text" class="textField" name="email" value="<?php echo AdminBLL::getStudentEmail($student->getID()); ?>" placeholder="Nhập email" required>
             </div>
 
             <div class="field">
@@ -174,25 +174,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
 
             <div class="field">
-                <p class="fieldName">Address: </p>
-                <input type="text" class="textField" name="address" placeholder="Enter address" value="<?php echo $student->getAddress(); ?>"  required>
+                <p class="fieldName">Địa chỉ: </p>
+                <input type="text" class="textField" name="address" placeholder="Nhập địa chỉ" value="<?php echo $student->getAddress(); ?>"  required>
             </div>
 
             <div class="field">
-                <p class="fieldName">Phone Number: </p>
-                <input type="text" class="textField" name="phoneNumber" placeholder="Enter phone number" value="<?php echo $student->getPhoneNumber(); ?>"  required>
+                <p class="fieldName">Số điện thoại: </p>
+                <input type="text" class="textField" name="phoneNumber" placeholder="Nhập số điện thoại" value="<?php echo $student->getPhoneNumber(); ?>"  required>
             </div>
 
             <div class="field">
-                <p class="fieldName">Birthday: </p>
+                <p class="fieldName">Ngày sinh: </p>
                 <input type="date" class="textField" name="birthday" value="<?php echo $student->getBirthDay(); ?>" required>
             </div>
 
             <div class="field">
-                <p class="fieldName">Password: </p>
+                <p class="fieldName">Mật khẩu: </p>
                 <input  type="password" 
                         class="textField" 
-                        placeholder="Enter password" 
+                        placeholder="Nhập mật khẩu" 
                         name="password" 
                         pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
             </div>
