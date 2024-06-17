@@ -24,18 +24,18 @@ if (isset($_POST["login"])) {
             $_SESSION["currentTab"] = "dashboardTab";
     
             echo '<script>
-            alert("Login succesful")
+            alert("Đăng nhập thành công!")
             document.location = "/QuanLySinhVien/index.php"
             </script>';
         } else {
-            $error = "Your password is wrong. Please login again!";
+            $error = "Mật khẩu sai. Vui lòng đăng nhập lại!";
             echo '<script>
             alert("'.$error.'")
             document.location = "/QuanLySinhVien/index.php"
             </script>'; 
         }
     } else {
-        $error = "Your password or email is wrong. Please login again!";
+        $error = "Tài khoản không tồn tại. Vui lòng đăng nhập lại!";
         echo '<script>
         alert("'.$error.'")
         document.location = "/QuanLySinhVien/index.php"

@@ -28,7 +28,7 @@ class AdminBLL {
     }
 
     public static function addMajor($name) {
-        MajorDAO::addMajor($name);
+        return MajorDAO::addMajor($name);
     }
 
     public static function studentInMajor($majorID) {
@@ -205,10 +205,7 @@ class AdminBLL {
             ClassDetailDAO::removeClassDetailWithClassID($id);
             ClassDAO::removeClass($id);
         } catch (Exception $e) {
-            echo '<script>
-            alert("'.$e->getMessage().'")
-            document.location = "/QuanLySinhVien/index.php"
-            </script>';
+            throw $e;
         }
     }
 
@@ -218,7 +215,6 @@ class AdminBLL {
         } catch (Exception $e) {
             echo '<script>
             alert("'.$e->getMessage().'")
-            document.location = "/QuanLySinhVien/index.php"
             </script>';
         }
     }
@@ -261,7 +257,6 @@ class AdminBLL {
         } catch (Exception $e) {
             echo '<script>
             alert("'.$e->getMessage().'")
-            document.location = "/QuanLySinhVien/index.php"
             </script>';
         }
     }
@@ -273,7 +268,6 @@ class AdminBLL {
         } catch (Exception $e) {
             echo '<script>
             alert("'.$e->getMessage().'")
-            document.location = "/QuanLySinhVien/index.php"
             </script>';
         }
     }
@@ -326,8 +320,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $teacherID = $_POST['teacherID'] ?? '';
 
         try {
-            ClassDAO::addClass($className, $teacherID);
-            header("Location: /QuanLySinhVien/index.php");
+            $message = ClassDAO::addClass($className, $teacherID);
+            echo '<script>
+            alert("'.$message.'")
+            document.location = "/QuanLySinhVien/index.php"
+            </script>';
         } catch (Exception $e) {
             echo '<script>
             alert("'.$e->getMessage().'")
@@ -340,8 +337,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $name = $_POST['majorName'] ?? '';
 
         try {
-            AdminBLL::addMajor($name);
-            header("Location: /QuanLySinhVien/index.php");
+            $message = AdminBLL::addMajor($name);
+            echo '<script>
+            alert("'.$message.'")
+            document.location = "/QuanLySinhVien/index.php"
+            </script>';
         } catch (Exception $e) {
             echo '<script>
             alert("'.$e->getMessage().'")

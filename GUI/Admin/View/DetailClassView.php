@@ -8,165 +8,182 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <style>
-@import url("https://fonts.googleapis.com/css?family=Lexend Deca");
+    @import url("https://fonts.googleapis.com/css?family=Lexend Deca");
 
-* {
-    font-family: 'Lexend Deca';
-}
-
-/* DIALOG ADD */
-.dialogAdd {
-    background: rgba(0, 0, 0, 0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-    opacity: 0;
-    pointer-events: none;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    width: 100vw;
-    transition: .3s ease;
-}
-
-.dialogAdd.show {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-.modal {
-    background-color: white;
-    border-radius: 12px;
-    padding: 30px 50px;
-    width: 600px;
-    max-width: 100%;
-}
-
-/* MAIN VIEW */
-/* Navigation */
-#navigation {
-    width: 100%;
-    height: 50px;
-    display: flex;
-    align-items: center;
-}
-
-#navigation .title {
-    font-size: 30px;
-    font-weight: bold;
-    padding-left: 30px;
-}
-
-.mainView {
-    padding-left: 60px;
-    padding-right: 60px;
-    padding-top: 10px;
-}
-
-.fieldName {
-    font-size: 20px;
-    width: 350px;
-}
-
-.field {
-    display: flex;
-    align-items: center;
-}
-
-.textField {
-    height: 40px;
-    width: 250px;
-}
-
-.editBtn {
-    background: blue;
-    font-size: 20px;
-    font-weight: bold;
-    color: white;
-    height: 50px;
-    width: 100px;
-    border-radius: 10px;
-}
-
-.deleteBtn {
-    background: red;
-    font-size: 20px;
-    font-weight: bold;
-    color: white;
-    height: 50px;
-    width: 100px;
-    border-radius: 10px;
-}
-
-.studentTable {
-    width: 100%;
-    height: 100%;
-    border-collapse: collapse;
-}
-
-.studentTable th {
-    text-align: center;
-    background-color: black;
-    color: white;
-}
-
-.studentTable tr {
-    height: 40px;
-    border-bottom: 1px solid black;
-}
-
-tr:not(:last-child) td{
-  border-bottom: 1px solid gray;
-}
-
-td {
-    text-align: center;
-}
-<?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-require_once '../../../BLL/adminBLL.php';
-
-$class = new SchoolClass("", "", "");
-
-if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    echo "get";
-    $id = $_GET["id"];
-    $class = AdminBLL::classByID($id);
-}
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $classID = $_POST["classID"];
-    $class = AdminBLL::classByID($classID);
-
-    // Delete class
-    if (isset($_POST["deleteBtn"])) {
-        AdminBLL::deleteClass($classID);
-        header("Location: /QuanLySinhVien/GUI/Admin/View/AllClassView.php");
+    * {
+        font-family: 'Lexend Deca';
     }
 
-    if (isset($_POST["editBtn"])) {
-        $className = $_POST["classNameNew"];
-        $teacherID = $_POST["teacherIDNew"];   
-        AdminBLL::updateClass($classID, $className, $teacherID);
+    /* DIALOG ADD */
+    .dialogAdd {
+        background: rgba(0, 0, 0, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        opacity: 0;
+        pointer-events: none;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100vw;
+        transition: .3s ease;
+    }
+
+    .dialogAdd.show {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .modal {
+        background-color: white;
+        border-radius: 12px;
+        padding: 30px 50px;
+        width: 600px;
+        max-width: 100%;
+    }
+
+    /* MAIN VIEW */
+    /* Navigation */
+    #navigation {
+        width: 100%;
+        height: 50px;
+        display: flex;
+        align-items: center;
+    }
+
+    #navigation .title {
+        font-size: 30px;
+        font-weight: bold;
+        padding-left: 30px;
+    }
+
+    .mainView {
+        padding-left: 60px;
+        padding-right: 60px;
+        padding-top: 10px;
+    }
+
+    .fieldName {
+        font-size: 20px;
+        width: 350px;
+    }
+
+    .field {
+        display: flex;
+        align-items: center;
+    }
+
+    .textField {
+        height: 40px;
+        width: 250px;
+    }
+
+    .editBtn {
+        background: blue;
+        font-size: 20px;
+        font-weight: bold;
+        color: white;
+        height: 50px;
+        width: 100px;
+        border-radius: 10px;
+    }
+
+    .deleteBtn {
+        background: red;
+        font-size: 20px;
+        font-weight: bold;
+        color: white;
+        height: 50px;
+        width: 100px;
+        border-radius: 10px;
+    }
+
+    .studentTable {
+        width: 100%;
+        height: 100%;
+        border-collapse: collapse;
+    }
+
+    .studentTable th {
+        text-align: center;
+        background-color: black;
+        color: white;
+    }
+
+    .studentTable tr {
+        height: 40px;
+        border-bottom: 1px solid black;
+    }
+
+    tr:not(:last-child) td{
+    border-bottom: 1px solid gray;
+    }
+
+    td {
+        text-align: center;
+    }
+</style>
+<?php
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+
+    require_once '../../../BLL/adminBLL.php';
+
+    $class = new SchoolClass("", "", "");
+
+    if ($_SERVER["REQUEST_METHOD"] == "GET") {
+        $id = $_GET["id"];
+        $class = AdminBLL::classByID($id);
+    }
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $classID = $_POST["classID"];
+        $class = AdminBLL::classByID($classID);
+
+        if (isset($_POST["deleteBtn"])) {
+            try {
+                AdminBLL::deleteClass($classID);
+                echo '<script>
+                alert("Xoá lớp học thành công!")
+                document.location = "/QuanLySinhVien/GUI/Admin/View/AllClassView.php"
+                </script>';
+            } catch (Exception $e) {
+                echo '<script>
+                alert("'.$e->getMessage().'")
+                </script>';
+            }
+        }
+
+        if (isset($_POST["editBtn"])) {
+            $className = $_POST["classNameNew"];
+            $teacherID = $_POST["teacherIDNew"];   
+            AdminBLL::updateClass($classID, $className, $teacherID);
+            echo '<script>
+            alert("Sửa thành công!")
+            </script>';
+        }
+
+        if (isset($_POST["addStudentBtn"])) {
+            $studentID = $_POST["addStudentID"];
+            AdminBLL::addStudentInClass($classID, $studentID);
+            echo '<script>
+            alert("Thêm thành công!")
+            </script>';
+        }
+
+        if (isset($_POST["removeStudentForm"])) {
+            $studentID = $_POST["removeStudentID"];
+            AdminBLL::deleteStudentInClass($class->getId(), $studentID);
+            echo '<script>
+            alert("Xoá thành công!")
+            </script>';
+        }
+
         $class = AdminBLL::classByID($classID);
     }
-
-    if (isset($_POST["addStudentForm"])) {
-        $studentID = $_POST["studentID"];
-        AdminBLL::addStudentInClass($classID, $studentID);
-    }
-
-    if (isset($_POST["removeStudentForm"])) {
-        $studentID = $_POST["removeStudentID"];
-        AdminBLL::deleteStudentInClass($class->getId(), $studentID);
-    }
-}
 ?>
-</style>
 <body>
     <div class="mainContainer">
         <div id="navigation">
@@ -175,7 +192,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
         <div class="mainView">
             <form class="editView" action="" method="POST">
-            <!-- Information of Class -->
                 <input  type="hidden"
                         name="classID"
                         value="<?php echo $class->getId();?>">
@@ -205,14 +221,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
 
                 <!-- Edit and Delete button -->
-                <button type="submit" name="editBtn" class="editBtn" >Sửa</button>
+                <button type="submit" 
+                        name="editBtn" 
+                        class="editBtn"
+                        onclick="return confirm('Bạn có chắc muốn sửa lớp này không?')"
+                         >Sửa</button>
                 <button type="submit" 
                         name="deleteBtn" 
                         class="deleteBtn"
                         onclick="return confirm('Bạn có chắc muốn xóa lớp này không?')"
                         >Xoá</button>
                 <br>
-            </form><br>
+            </form>
+            <br>
            <!-- Student Table -->
            <div class="allStudent">
                 <p class="fieldName" style="font-size: 30px;">Danh sách sinh viên</p>
@@ -282,14 +303,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!-- DIALOG -->
     <div class="dialogAdd" id="dialogAdd">
         <div class="modal">
-            <h1>Add Student</h1>
+            <h1>Thêm sinh viên</h1>
+            
             <form action="" method="post">
                 <input  type="hidden"
                         name="classID"
                         value="<?php echo $class->getId();?>">
 
-                <p>Student: </p>
-                <select name="studentID" id="">
+                <p>Sinh viên: </p>
+                <select name="addStudentID" id="">
                     <?php
                          $students = AdminBLL::studentWithinClass($class->getId());
 
@@ -300,11 +322,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         }
                     ?>
                     <option value=""></option>
-                </select><br><br>
-                <button id="close">Close</button>
-                <button name="addStudentForm">Add</button>
+                </select>
+                <br><br>
+                <button id="close">Đóng</button>
+                <button type="submit" name="addStudentBtn">Thêm</button>
             </form>
-            
         </div>
     </div>
 </body>

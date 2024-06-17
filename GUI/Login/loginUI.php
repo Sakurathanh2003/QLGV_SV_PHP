@@ -19,10 +19,10 @@ if (isset($_SESSION["didLogin"])) {
 <body>
     <div class="wrapper">
         <form action="/QuanLySinhVien/BLL/loginBLL.php" method="POST">
-            <h1>Login</h1>
+            <h1>Đăng nhập</h1>
             <div class="input-box">
                 <input  type="text" 
-                        placeholder="Email"
+                        placeholder="Nhập email"
                         name="email" 
                         required>
 
@@ -30,7 +30,7 @@ if (isset($_SESSION["didLogin"])) {
             </div>
             <div class="input-box">
                 <input  type="password" 
-                        placeholder="password" 
+                        placeholder="Nhập mật khẩu" 
                         name="password"
                         pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" 
                         required>
@@ -42,7 +42,7 @@ if (isset($_SESSION["didLogin"])) {
                 <a href="">Forgot password?</a>
             </div>
 
-            <button type="submit" class="btn" name="login">Login</button>
+            <button type="submit" class="btn" name="login">Đăng nhập</button>
             <div class="register-link" style="display: none;">
                 <p>Don't have an account?<a href="">Register</a></p>
             </div>

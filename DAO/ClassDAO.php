@@ -62,10 +62,20 @@ class ClassDAO {
         $query = 'insert into Class(name, teacherID) VALUES (?,?)';
         $stmp = $connection->prepare($query);
         $stmp->bind_param("si", $name, $teacherID);
-        $stmp->execute();
-    
-        $stmp->close();
-        $connection->close();
+
+        try {
+            $stmp->execute();
+            if ($stmp->execute()) {
+                return "Thêm thành công!";
+            } else {
+                return "Tên lớp học đã tồn tại. Vui lòng nhập tên lớp học khác!";
+            }
+        } catch (mysqli_sql_exception $e) {
+            return $e->getMessage();
+        } finally {
+            $stmp->close();
+            $connection->close();
+        }
     }
 
     //MARK: - Remove

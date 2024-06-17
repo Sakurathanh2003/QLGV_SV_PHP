@@ -45,10 +45,19 @@ class MajorDAO {
         $query = 'insert into Major(name) VALUES (?)';
         $stmp = $connection->prepare($query);
         $stmp->bind_param("s", $name);
-        $stmp->execute();
-    
-        $stmp->close();
-        $connection->close();
+
+        try {
+            if ($stmp->execute()) {
+                return "Thêm thành công!";
+            } else {
+                return "Tên ngành học đã tồn tại. Vui lòng nhập tên ngành học khác!";
+            }
+        } catch (mysqli_sql_exception $e) {
+            return $e->getMessage();
+        } finally {
+            $stmp->close();
+            $connection->close();
+        }
     }
 
     //MARK: - Remove
@@ -59,7 +68,12 @@ class MajorDAO {
 
         try {
             $stmp->bind_param("i", $id);
-            $stmp->execute();
+
+            if ($stmp->execute()) {
+                return "Xoá thành công!";
+            } else {
+                throw new Exception("Cannot remove");
+            }
         } catch (mysqli_sql_exception $e) {
             throw $e;
         } finally {
@@ -68,19 +82,20 @@ class MajorDAO {
         }
     }
 
-    
     //MARK: - Update
     public static function updateMajor($id, $name) {
         $connection = getConnection();
         $query = 'update Major set name = ? where id = ?';
-        try {
-            $stmp = $connection->prepare($query);
+        $stmp = $connection->prepare($query);
             $stmp->bind_param("si", $name, $id);
-            $stmp->execute();
-            $stmp->close();
+        try {
+            if (!$stmp->execute()) {
+                throw new Exception("Sửa không thành công!");
+            }            
         } catch (mysqli_sql_exception $e) {
             throw $e;
         } finally {
+            $stmp->close();
             $connection->close();
         }
     }
