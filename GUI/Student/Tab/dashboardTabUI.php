@@ -29,7 +29,8 @@
             <div class="main">
                 <p class="number">
                     <?php
-                    echo 0;
+                    $classes =  StudentBLL::getClass();
+                    echo count($classes);
                     ?>
                 </p><br>
                 <ie class="title">Số lớp học tham gia</p>
@@ -40,7 +41,7 @@
             <div class="main">
                 <p class="number">
                     <?php
-                    echo 0;
+                    echo StudentBLL::getCountOfScoreWord('A');
                     ?>
                 </p><br>
                 <p class="title">Số điểm A</p>
@@ -51,7 +52,7 @@
             <div class="main">
                 <p class="number">
                     <?php
-                    echo 0;
+                    echo StudentBLL::getCountOfScoreWord('B');
                     ?>
                 </p><br>
                 <p class="title">Số điểm B</p>
@@ -64,7 +65,7 @@
             <div class="main">
                 <p class="number">
                     <?php
-                    echo 0;
+                    echo StudentBLL::getCountOfScoreWord('C');
                     ?>
                 </p><br>
                 <p class="title">Số điểm C</p>
@@ -75,7 +76,7 @@
             <div class="main">
                 <p class="number">
                     <?php
-                    echo 0;
+                    echo StudentBLL::getCountOfScoreWord('D');
                     ?>
                 </p><br>
                 <p class="title">Số điểm D</p>
@@ -86,7 +87,7 @@
             <div class="main">
                 <p class="number">
                     <?php
-                    echo 0;
+                    echo StudentBLL::getCountOfScoreWord('F');
                     ?>
                 </p><br>
                 <p class="title">Số điểm F</p>

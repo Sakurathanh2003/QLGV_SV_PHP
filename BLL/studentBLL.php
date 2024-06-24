@@ -59,10 +59,26 @@ class StudentBLL {
         return $classes;
     }
 
+    //MARK:- Score
     public static function ScoreOfClass($classID) {
         $studentID = StudentBLL::getStudentID();
         $score = ScoreDAO::getScoreOfStudent($classID, $studentID);
         return $score;
+    }
+
+    public static function getCountOfScoreWord($word) {
+        $count = 0;
+        $classes = StudentBLL::getClass();
+
+        for ($i = 0; $i < count($classes); $i++) {
+            $class = $classes[$i];
+            $score = StudentBLL::ScoreOfClass($class->getID());
+            if ($score->getScoreWord() == $word) {
+                $count += 1;
+            }
+        }
+
+        return $count;
     }
 
     public static function getMajor() {

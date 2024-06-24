@@ -100,7 +100,6 @@
     $class = new SchoolClass("", "", "");
 
     if ($_SERVER["REQUEST_METHOD"] == "GET") {
-        echo "get";
         $id = $_GET["id"];
         $class = TeacherBLL::classByID($id);
     }
@@ -116,7 +115,6 @@
             $score2 = ((isset($_POST["score2+". $student->getID()]) && !empty($_POST["score2+". $student->getID()])) ? $_POST["score2+". $student->getID()] : NULL);
             $score3 = ((isset($_POST["score3+". $student->getID()]) && !empty($_POST["score3+". $student->getID()])) ? $_POST["score3+". $student->getID()] : NULL);
 
-            echo $score2;
             TeacherBLL::updateScore($score->getID(), $score1, $score2, $score3);
         }
     }
