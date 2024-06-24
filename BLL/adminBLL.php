@@ -3,6 +3,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+
 include($_SERVER['DOCUMENT_ROOT'].'/QuanLySinhVien/Common/commonfunction.php');
 include($_SERVER['DOCUMENT_ROOT'].'/QuanLySinhVien/DAO/AccountDAO.php');
 include($_SERVER['DOCUMENT_ROOT'].'/QuanLySinhVien/DAO/TeacherDAO.php');
@@ -92,10 +93,13 @@ class AdminBLL {
     }
 
     public static function addTeacher($teacherName, $teacherEmail,$teacherPassword, $teacherGender, $teacherAddress, $teacherPhoneNumber, $teacherBirthday) {
+        $accountID = "";
+        
         try {
             $accountID = AccountDAO::addAccount($teacherName, $teacherEmail, $teacherPassword, "teacher");
             TeacherDAO::addTeacher($accountID, $teacherGender, $teacherAddress, $teacherPhoneNumber, $teacherBirthday);
         } catch (Exception $e) {
+            AccountDAO::removeAccount($accountID);
             throw $e;
         }
     }
@@ -161,10 +165,13 @@ class AdminBLL {
     }
 
     public static function addStudent($name, $email,$password, $gender, $address, $phoneNumber, $birthday, $majorID) {
+        $accountID = "";
+
         try {
             $accountID = AccountDAO::addAccount($name, $email, $password, "student");
             StudentDAO::addStudent($accountID, $majorID, $gender, $address, $phoneNumber, $birthday);
         } catch (Exception $e) {
+            AccountDAO::removeAccount($accountID);
             throw $e;
         }
     }
@@ -306,7 +313,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         try {
             AdminBLL::addStudent($name, $email, $password, $gender, $address, $phoneNumber, $birthday, $majorID);
-            header("Location: /QuanLySinhVien/index.php");
+            echo '<script>
+            alert("Thêm thành công!")
+            document.location = "/QuanLySinhVien/index.php"
+            </script>';
         } catch (Exception $e) {
             echo '<script>
             alert("'.$e->getMessage().'")

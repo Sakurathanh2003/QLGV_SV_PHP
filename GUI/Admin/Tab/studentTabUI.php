@@ -1,93 +1,93 @@
 <style>
-.studentTabContent {
-    display: flex;
-    align-items: top;
-    justify-content: space-between;
-    padding: 20px;
-}
+    .studentTabContent {
+        display: flex;
+        align-items: top;
+        justify-content: space-between;
+        padding: 20px;
+    }
 
-.studentTabContent .table {
-    border: 1px solid black;
-    border-radius: 20px;
-    width: calc((100% - 40px) / 6 * 4);
-    height: calc(100%);
-    min-height: 500px;
-    padding: 10px;
-}
+    .studentTabContent .table {
+        border: 1px solid black;
+        border-radius: 20px;
+        width: calc((100% - 40px) / 6 * 4);
+        height: calc(100%);
+        min-height: 500px;
+        padding: 10px;
+    }
 
-.studentTabContent .addView {
-    border: 1px solid black;
-    border-radius: 20px;
-    width: calc((100% - 40px) / 6 * 2);
-    height: 100%;
-    padding: 10px;
-}
+    .studentTabContent .addView {
+        border: 1px solid black;
+        border-radius: 20px;
+        width: calc((100% - 40px) / 6 * 2);
+        height: 100%;
+        padding: 10px;
+    }
 
-.headerTitle {
-    font-size: 25px;
-    font-weight: bolder;
-}
+    .headerTitle {
+        font-size: 25px;
+        font-weight: bolder;
+    }
 
-.addView .main {
-    padding: 10px;
-}
+    .addView .main {
+        padding: 10px;
+    }
 
-.textField {
-    display: flex;
-    width: 100%;
-    height: 35px;
-}
+    .textField {
+        display: flex;
+        width: 100%;
+        height: 35px;
+    }
 
-.fieldName {
-    padding-top: 10px;
-    padding-bottom: 5px;
-}
+    .fieldName {
+        padding-top: 10px;
+        padding-bottom: 5px;
+    }
 
-.addStudentBtn {
-    width: 100%;
-    height: 40px;
-    background-color: black;
-    color: white;
-    border-radius: 10px;
-}
+    .addStudentBtn {
+        width: 100%;
+        height: 40px;
+        background-color: black;
+        color: white;
+        border-radius: 10px;
+    }
 
-.tableHeader {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-bottom: 20px;
-}
+    .tableHeader {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 20px;
+    }
 
-.viewAllBtn {
-    width: 100px;
-    height: 30px;
-    background-color: black;
-    color: white;
-    border-radius: 5px;
-}
+    .viewAllBtn {
+        width: 100px;
+        height: 30px;
+        background-color: black;
+        color: white;
+        border-radius: 5px;
+    }
 
-/* TABLE */
-.studentTable {
-    width: 100%;
-    height: 100%;
-    border-collapse: collapse;
-}
+    /* TABLE */
+    .studentTable {
+        width: 100%;
+        height: 100%;
+        border-collapse: collapse;
+    }
 
-.studentTable th {
-    text-align: left;
-    background-color: black;
-    color: white;
-    min-width: 20px;
-}
+    .studentTable th {
+        text-align: left;
+        background-color: black;
+        color: white;
+        min-width: 20px;
+    }
 
-.studentTable tr {
-    height: 40px;
-    border-bottom: 1px solid black;
-}
+    .studentTable tr {
+        height: 40px;
+        border-bottom: 1px solid black;
+    }
 
-tr:not(:last-child) td{
-  border-bottom: 1px solid gray;
-}
+    tr:not(:last-child) td{
+    border-bottom: 1px solid gray;
+    }
 </style>
 <script>
     function viewAllStudent() {
