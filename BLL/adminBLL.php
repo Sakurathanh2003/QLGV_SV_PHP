@@ -94,7 +94,7 @@ class AdminBLL {
 
     public static function addTeacher($teacherName, $teacherEmail,$teacherPassword, $teacherGender, $teacherAddress, $teacherPhoneNumber, $teacherBirthday) {
         $accountID = "";
-        
+
         try {
             $accountID = AccountDAO::addAccount($teacherName, $teacherEmail, $teacherPassword, "teacher");
             TeacherDAO::addTeacher($accountID, $teacherGender, $teacherAddress, $teacherPhoneNumber, $teacherBirthday);
@@ -290,12 +290,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $teacherBirthday = $_POST['teacherBirthday'] ?? '';
         $teacherPassword = $_POST['teacherPassword'] ?? '';
 
-        try {
-            AdminBLL::addTeacher($teacherName, $teacherEmail, $teacherPassword, $teacherGender, $teacherAddress, $teacherPhoneNumber, $teacherBirthday);
-            header("Location: /QuanLySinhVien/index.php");
-        } catch (Exception $e) {
+        $teacherEmail = trim($teacherEmail);
+        $teacherName = trim($teacherName);
+        $teacherAddress = trim($teacherAddress);
+        $teacherPhoneNumber = trim($teacherPhoneNumber);
+
+        $message = "";
+
+        if (!checkEmail($teacherEmail)) {
+            $message .= "Email không đúng. ";
+        }
+
+        if (!checkName($teacherName)) {
+            $message .= "Tên chứa kí tự đặc biệt. ";
+        }
+
+        if (!checkAddress($teacherAddress)) {
+            $message .= "Địa chỉ chứa kí tự đặc biệt. ";
+        }
+
+        if (!checkPhoneNumber($teacherPhoneNumber)) {
+            $message .= "Số điện thoại không đúng. ";
+        }
+
+        if (empty($message)) {
+            try {
+                AdminBLL::addTeacher($teacherName, $teacherEmail, $teacherPassword, $teacherGender, $teacherAddress, $teacherPhoneNumber, $teacherBirthday);
+                echo '<script>
+                alert("Thêm thành công!")
+                document.location = "/QuanLySinhVien/index.php"
+                </script>';
+            } catch (Exception $e) {
+                echo '<script>
+                alert("'.$e->getMessage().'")
+                document.location = "/QuanLySinhVien/index.php"
+                </script>';
+            }
+        } else {
             echo '<script>
-            alert("'.$e->getMessage().'")
+            alert("'.$message.'")
             document.location = "/QuanLySinhVien/index.php"
             </script>';
         }
@@ -311,15 +344,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $password = $_POST['studentPassword'] ?? '';
         $majorID = $_POST['majorID'];
 
-        try {
-            AdminBLL::addStudent($name, $email, $password, $gender, $address, $phoneNumber, $birthday, $majorID);
+        $email = trim($email);
+        $name = trim($name);
+        $address = trim($address);
+        $phoneNumber = trim($phoneNumber);
+
+        $message = "";
+
+        if (!checkEmail($email)) {
+            $message .= "Email không đúng. ";
+        }
+
+        if (!checkName($name)) {
+            $message .= "Tên chứa kí tự đặc biệt. ";
+        }
+
+        if (!checkAddress($address)) {
+            $message .= "Địa chỉ chứa kí tự đặc biệt. ";
+        }
+
+        if (!checkPhoneNumber($phoneNumber)) {
+            $message .= "Số điện thoại không đúng. ";
+        }
+
+        if (empty($message)) {
+            try {
+                AdminBLL::addStudent($name, $email, $password, $gender, $address, $phoneNumber, $birthday, $majorID);
+                echo '<script>
+                alert("Thêm thành công!")
+                document.location = "/QuanLySinhVien/index.php"
+                </script>';
+            } catch (Exception $e) {
+                echo '<script>
+                alert("'.$e->getMessage().'")
+                document.location = "/QuanLySinhVien/index.php"
+                </script>';
+            }
+        } else {
             echo '<script>
-            alert("Thêm thành công!")
-            document.location = "/QuanLySinhVien/index.php"
-            </script>';
-        } catch (Exception $e) {
-            echo '<script>
-            alert("'.$e->getMessage().'")
+            alert("'.$message.'")
             document.location = "/QuanLySinhVien/index.php"
             </script>';
         }
