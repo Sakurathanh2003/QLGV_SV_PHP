@@ -63,8 +63,7 @@ class ClassDAO {
         $stmp = $connection->prepare($query);
         $stmp->bind_param("si", $name, $teacherID);
 
-        try {
-            $stmp->execute();
+        try {            
             if ($stmp->execute()) {
                 return "Thêm thành công!";
             } else {

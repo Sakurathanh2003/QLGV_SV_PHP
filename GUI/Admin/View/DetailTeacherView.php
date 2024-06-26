@@ -46,13 +46,37 @@
             $teacherBirthday = $_POST['birthday'] ?? '';
             $teacherPassword = $_POST['password'] ?? '';
 
-            try {
-                AdminBLL::updateTeacher($id, $teacherName, $teacherEmail, $teacherPassword, $teacherGender, $teacherAddress, $teacherPhoneNumber, $teacherBirthday);
+            $message = "";
+
+            if (!checkEmail($teacherEmail)) {
+                $message .= "Email không đúng. ";
+            }
+
+            if (!checkName($teacherName)) {
+                $message .= "Tên chứa kí tự đặc biệt. ";
+            }
+
+            if (!checkAddress($teacherAddress)) {
+                $message .= "Địa chỉ chứa kí tự đặc biệt. ";
+            }
+
+            if (!checkPhoneNumber($teacherPhoneNumber)) {
+                $message .= "Số điện thoại không đúng. ";
+            }
+
+            if (empty($message)) {
+                try {
+                    AdminBLL::updateTeacher($id, $teacherName, $teacherEmail, $teacherPassword, $teacherGender, $teacherAddress, $teacherPhoneNumber, $teacherBirthday);
+                    echo '<script>
+                        alert("Sửa thành công!")
+                        </script>';
+                } catch (Exception $e) {
+                    echo $e;
+                }
+            } else {
                 echo '<script>
-                    alert("Sửa thành công!")
-                    </script>';
-            } catch (Exception $e) {
-                echo $e;
+                alert("'.$message.'")
+                </script>';
             }
         }
 
@@ -60,12 +84,12 @@
     }
 ?>
 <style>
-    @import url("https://fonts.googleapis.com/css?family=Poppins");
+    @import url("https://fonts.googleapis.com/css?family=Lexend Deca");
 
     * {
-        font-family: 'Poppins';
+        font-family: 'Lexend Deca';
     }
-
+    
     #nav {
         width: 100%;
         height: 50px;

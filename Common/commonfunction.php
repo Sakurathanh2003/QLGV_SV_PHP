@@ -40,6 +40,6 @@ function checkAddress($address) {
 }
 
 function containsSpecialChars($str) {
-    return preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $str) > 0;
+    return false;
 }
 ?>

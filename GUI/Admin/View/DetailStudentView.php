@@ -47,14 +47,43 @@
             $password = $_POST['password'] ?? '';
             $majorID = $_POST['major'] ?? '';
 
-            try {
-                AdminBLL::updateStudent($id, $name, $email, $password, $gender, $address, $phoneNumber, $birthday, $majorID);
+            $email = trim($email);
+            $name = trim($name);
+            $address = trim($address);
+            $phoneNumber = trim($phoneNumber);
+
+            $message = "";
+
+            if (!checkEmail($email)) {
+                $message .= "Email không đúng. ";
+            }
+
+            if (!checkName($name)) {
+                $message .= "Tên chứa kí tự đặc biệt. ";
+            }
+
+            if (!checkAddress($address)) {
+                $message .= "Địa chỉ chứa kí tự đặc biệt. ";
+            }
+
+            if (!checkPhoneNumber($phoneNumber)) {
+                $message .= "Số điện thoại không đúng. ";
+            }
+
+            if (empty($message)) {
+                try {
+                    AdminBLL::updateStudent($id, $name, $email, $password, $gender, $address, $phoneNumber, $birthday, $majorID);
+                    echo '<script>
+                    alert("Sửa thành công!")
+                    </script>';
+                } catch (Exception $e) {
+                    echo '<script>
+                    alert("'.$e->getMessage().'")
+                    </script>';
+                }
+            } else {
                 echo '<script>
-                alert("Sửa thành công!")
-                </script>';
-            } catch (Exception $e) {
-                echo '<script>
-                alert("'.$e->getMessage().'")
+                alert("'.$message.'")
                 </script>';
             }
         }
@@ -63,7 +92,7 @@
     }
 ?>
 <style>
-    @import url("https://fonts.googleapis.com/css?family=Lexend Deca");
+     @import url("https://fonts.googleapis.com/css?family=Lexend Deca");
 
     * {
         font-family: 'Lexend Deca';

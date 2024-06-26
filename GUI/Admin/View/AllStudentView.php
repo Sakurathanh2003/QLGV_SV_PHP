@@ -19,6 +19,7 @@ require_once '../../../BLL/adminBLL.php';
 * {
     font-family: 'Lexend Deca';
 }
+
 .studentTable {
     width: 100%;
     height: 100%;
