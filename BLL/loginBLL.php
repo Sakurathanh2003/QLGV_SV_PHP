@@ -12,6 +12,8 @@ if (isset($_POST["login"])) {
     $email = $_POST["email"];
     $password = $_POST["password"];
 
+    $email = trim($email);
+
     if (AccountDAO::isExitsAccount($email)) {
         $account = AccountDAO::getAccount($email);
 

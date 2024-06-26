@@ -50,7 +50,7 @@ class TeacherBLL {
             AccountDAO::updateName($account->getID(), $name);
 
             if (isset($password) && strlen($password) > 0) {
-                AccountDAO::updatePassword($id, $password);
+                AccountDAO::updatePassword($account->getID(), $password);
             }
 
             TeacherDAO::updateTeacher($id, $gender, $address, $phoneNumber, $birthday);

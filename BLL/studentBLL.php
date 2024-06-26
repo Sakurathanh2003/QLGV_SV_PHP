@@ -99,7 +99,7 @@ class StudentBLL {
             AccountDAO::updateName($account->getID(), $name);
 
             if (isset($password) && strlen($password) > 0) {
-                AccountDAO::updatePassword($id, $password);
+                AccountDAO::updatePassword($account->getID(), $password);
             }
 
             StudentDAO::updateStudent($id, $gender, $address, $phoneNumber, $birthday, $majorID);

@@ -214,7 +214,7 @@
                             <input  type="password" 
                                     class="textField" 
                                     placeholder="Nhập mật khẩu" 
-                                    name="studentPassword" 
+                                    name="password" 
                                     pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
                         </td>
                     </tr>
