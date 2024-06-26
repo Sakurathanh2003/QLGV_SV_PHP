@@ -131,6 +131,8 @@
 
     require_once '../../../BLL/adminBLL.php';
 
+    navigateIfNeed('admin');
+
     $class = new SchoolClass("", "", "");
 
     if ($_SERVER["REQUEST_METHOD"] == "GET") {

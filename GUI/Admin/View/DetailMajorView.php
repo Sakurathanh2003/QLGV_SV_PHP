@@ -102,6 +102,8 @@
 
     require_once '../../../BLL/adminBLL.php';
 
+    navigateIfNeed('admin');
+
     $major = new Major("", "");
 
     if ($_SERVER["REQUEST_METHOD"] == "GET") {

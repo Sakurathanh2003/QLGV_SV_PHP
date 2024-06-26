@@ -13,6 +13,8 @@
     error_reporting(E_ALL);
     require_once '../../../BLL/adminBLL.php';
 
+    navigateIfNeed('admin');
+
     $student = new Student("", "", "", "", "", "", "");
 
     if ($_SERVER["REQUEST_METHOD"] == "GET") {

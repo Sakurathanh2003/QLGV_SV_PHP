@@ -96,6 +96,7 @@
     error_reporting(E_ALL);
 
     require_once '../../../BLL/teacherBLL.php';
+    navigateIfNeed('teacher');
 
     $class = new SchoolClass("", "", "");
 

@@ -13,7 +13,9 @@
     error_reporting(E_ALL);
     require_once '../../../BLL/adminBLL.php';
 
-    $teacher = new Teacher("", "", "", "", "", "", "");
+    $teacher = new Teacher("", "", "", "", "", "");
+
+    navigateIfNeed('admin');
 
     if ($_SERVER["REQUEST_METHOD"] == "GET") {
         $id = $_GET["id"];
@@ -89,7 +91,7 @@
     * {
         font-family: 'Lexend Deca';
     }
-    
+
     #nav {
         width: 100%;
         height: 50px;

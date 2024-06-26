@@ -102,6 +102,8 @@
 
     require_once '../../../BLL/studentBLL.php';
 
+    navigateIfNeed('student');
+
     $student = StudentBLL::getStudent();
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {

@@ -13,6 +13,9 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 require_once '../../../BLL/adminBLL.php';
+
+navigateIfNeed('admin');
+
 ?>
 <style>
 @import url("https://fonts.googleapis.com/css?family=Lexend Deca");
